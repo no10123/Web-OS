@@ -58,22 +58,32 @@
         }
 
         .os-shell {
-            padding: 13px 13px 8px;
+            position: fixed;
+            left: 15px;
+            right: 15px;
+            bottom: 0;
+            z-index: 4;
+            padding: 10px 16px;
             display: flex;
-            flex-direction: column;
-            gap: 12px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-direction: row;
+            border-radius: 18px 18px 0 0;
+            margin: 0;
         }
 
         .os-header {
             display: flex;
-            align-items: flex-start;
+            align-items: center;
             justify-content: space-between;
             gap: 16px;
+            width: 100%;
         }
 
         .os-title {
             color: var(--text);
-            font-size: 20px;
+            font-size: 16px;
             font-weight: 700;
             line-height: 1.2;
         }
@@ -96,7 +106,7 @@
             left: 0;
             right: 0;
             top: 92px;
-            bottom: 0;
+            bottom: 70px;
             z-index: 2;
         }
 
@@ -201,13 +211,15 @@
             line-height: 1;
         }
 
-        #welcome-msg {
+        #welcome-msg,
+        #settings {
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
         }
 
-        #welcome-msg.fullscreen {
+        #welcome-msg.fullscreen,
+        #settings.fullscreen {
             left: 0 !important;
             top: 0 !important;
             width: 100% !important;
@@ -216,7 +228,8 @@
             margin: 0;
         }
 
-        #welcome-msg.fullscreen .text {
+        #welcome-msg.fullscreen .text,
+        #settings.fullscreen .text {
             width: 100%;
             height: calc(100% - 52px);
             overflow: auto;
@@ -445,11 +458,13 @@
             font-size: 14px;
             line-height: 1.5;
         }
-        #welcome-msg {
+        #welcome-msg,
+        #settings {
             opacity: 1;
             transition: opacity 0.35s ease;
         }
-        #welcome-msg.hidden {
+        #welcome-msg.hidden,
+        #settings.hidden {
             opacity: 0;
             pointer-events: none;
         }
@@ -480,24 +495,25 @@
         </div>
     </div>
 
-    <div class="frosted-glass os-shell">
-        <div class="os-header">
-            <span class="os-title">Birb OS</span>
-            <span class="os-time" id="timeElement">Time: </span>
-        </div>
-    </div>
-
     <div id="veiwport">
         <div class="apps-panel" id="apps">
             <button class="app-launcher" type="button" onclick="openWelcomeWindow()">
                 <img src="txt.png" alt="TxT">
                 <span>welcome msg</span>
             </button>
+            <button class="app-launcher" type="button" onclick="openWelcomeWindow()">
+                <img src="txt.png" alt="TxT">
+                <span>txt editor</span>
+            </button>
+            <button class="app-launcher" type="button" onclick="openWelcomeWindow()">
+                <img src="txt.png" alt="TxT">
+                <span>code editor</span>
+            </button>
             <button class="app-launcher" type="button">
                 <span class="app-plus" aria-hidden="true">+</span>
                 <span>add app</span>
             </button>
-            <button class="app-launcher" type="button">
+            <button class="app-launcher" type="button" onclick="openSettingsWindow()">
                 <span class="app-plus" aria-hidden="true">*</span>
                 <span>settings</span>
             </button>
@@ -522,6 +538,48 @@
                     </ul>
                 </div>
             </div>
+            <div id="settings" class="dragable hidden">
+                <div class="drag" id="settingsheader">
+                    <img src="txt.png" alt="TxT">
+                    <span class="wTitle">Settings</span>
+                    <div class="window-controls">
+                        <button type="button" onclick="minimizeSettingsWindow()">-</button>
+                        <button type="button" onclick="toggleSettingsFullscreen()">[]</button>
+                        <button type="button" onclick="closeSettingsWindow()">x</button>
+                    </div>
+                </div>
+                <div class="text frosted-glass">
+                    <h1>Settings:</h1>
+                    <div class="fav-color-container">
+                        <span class="color-text">color theme: </span>
+                        <input id="colorPicker" class="copy" type="color" value="#976fb6">
+                    </div>
+                    <div class="fav-color-container">
+                        <span class="color-text">Bird counter: </span>
+                        <input id="bird-count" class="copy pointer" type="number" value="75" min="0">
+                        <button class="copy" onclick="clickButton(7)">+</button>
+                        <button class="copy" onclick="clickButton(8)">-</button>
+                    </div>
+                    <div class="fav-color-container">
+                        <span class="color-text">Bird colors: </span>
+                        <input id="bird-color-count" class="copy pointer" type="number" value="3" min="1" max="8">
+                        <button class="copy" onclick="clickButton(11)">+</button>
+                        <button class="copy" onclick="clickButton(12)">-</button>
+                    </div>
+                    <br>
+                    <div class="fav-color-container" id="bird-colors-container">
+                        <span class="color-text">Bird color list: </span>
+                    </div>
+                    <p class="settings-note">Tip: the color picker updates the background glow and glass panel instantly.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="fav-color-container os-shell">
+        <div class="os-header">
+            <span class="os-title">Birb OS</span>
+            <span class="os-time" id="timeElement">Time: </span>
         </div>
     </div>
 
@@ -539,8 +597,16 @@
         const apps = document.getElementById("apps");
         const wm = document.getElementById("welcome-msg")
         const wmHeader = document.getElementById('welcome-msgheader');
+        const settingsWin = document.getElementById("settings");
+        const settingsHeader = document.getElementById('settingsheader');
+        const colorPicker = document.getElementById('colorPicker');
+        const birdCounter = document.getElementById('bird-count');
+        const birdColorCountInput = document.getElementById('bird-color-count');
+        const birdColorsContainer = document.getElementById('bird-colors-container');
+        const blobLayer = document.querySelector('.blob-layer');
         const timeText = document.getElementById("timeElement");
         let currentTime = new Date().toLocaleString();
+        let openWindows = [];
         timeText.textContent = `Time: ${currentTime}`
         function updateTime() {
             currentTime = new Date().toLocaleString();
@@ -555,6 +621,18 @@
         let isMouseDown = false;
         let birds = [];
         let welcomeIsFullscreen = false;
+        let settingsIsFullscreen = false;
+        let birdCount = 75;
+        const defaultBirdColors = ['#b4befe', '#cba6f7', '#cdd6f4'];
+        let birdColors = [...defaultBirdColors];
+
+        function hexToRGBA(hex, alpha = 0.35) {
+            const bigint = parseInt(hex.replace('#', ''), 16);
+            const r = (bigint >> 16) & 255;
+            const g = (bigint >> 8) & 255;
+            const b = bigint & 255;
+            return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+        }
 
         function resize() {
             width = canvas.width = window.innerWidth;
@@ -562,22 +640,33 @@
             if (!wm.classList.contains('hidden') && !welcomeIsFullscreen) {
                 centerWelcomeWindow();
             }
+            if (!settingsWin.classList.contains('hidden') && !settingsIsFullscreen) {
+                centerSettingsWindow();
+            }
         }
 
-        function getWelcomeWindowBounds() {
+        function getWindowBounds(elmnt) {
             const viewportRect = veiwport.getBoundingClientRect();
-            const windowRect = wm.getBoundingClientRect();
+            const windowRect = elmnt.getBoundingClientRect();
             return {
                 left: Math.max(15, Math.round((viewportRect.width - windowRect.width) / 2)),
                 top: Math.max(15, Math.round((viewportRect.height - windowRect.height) / 2)),
             };
         }
 
+        function centerWindow(elmnt) {
+            const bounds = getWindowBounds(elmnt);
+            elmnt.style.left = `${bounds.left}px`;
+            elmnt.style.top = `${bounds.top}px`;
+            elmnt.style.transform = 'none';
+        }
+
         function centerWelcomeWindow() {
-            const bounds = getWelcomeWindowBounds();
-            wm.style.left = `${bounds.left}px`;
-            wm.style.top = `${bounds.top}px`;
-            wm.style.transform = 'none';
+            centerWindow(wm);
+        }
+
+        function centerSettingsWindow() {
+            centerWindow(settingsWin);
         }
 
         function openWelcomeWindow() {
@@ -590,6 +679,12 @@
         }
 
         function closeWelcomeWindow() {
+            wm.classList.add('hidden');
+            welcomeIsFullscreen = false;
+            wm.classList.remove('fullscreen');
+        }
+
+        function minimizeWelcomeWindow() {
             wm.classList.add('hidden');
             welcomeIsFullscreen = false;
             wm.classList.remove('fullscreen');
@@ -610,6 +705,45 @@
                 wm.style.width = '';
                 wm.style.height = '';
                 centerWelcomeWindow();
+            }
+        }
+
+        function openSettingsWindow() {
+            settingsWin.classList.remove('hidden');
+            settingsIsFullscreen = false;
+            settingsWin.classList.remove('fullscreen');
+            settingsWin.style.width = '';
+            settingsWin.style.height = '';
+            centerSettingsWindow();
+        }
+
+        function closeSettingsWindow() {
+            settingsWin.classList.add('hidden');
+            settingsIsFullscreen = false;
+            settingsWin.classList.remove('fullscreen');
+        }
+
+        function minimizeSettingsWindow() {
+            settingsWin.classList.add('hidden');
+            settingsIsFullscreen = false;
+            settingsWin.classList.remove('fullscreen');
+        }
+
+        function toggleSettingsFullscreen() {
+            if (settingsWin.classList.contains('hidden')) return;
+
+            settingsIsFullscreen = !settingsIsFullscreen;
+            settingsWin.classList.toggle('fullscreen', settingsIsFullscreen);
+
+            if (settingsIsFullscreen) {
+                settingsWin.style.left = '0px';
+                settingsWin.style.top = '0px';
+                settingsWin.style.width = '100%';
+                settingsWin.style.height = '100%';
+            } else {
+                settingsWin.style.width = '';
+                settingsWin.style.height = '';
+                centerSettingsWindow();
             }
         }
 
@@ -653,16 +787,46 @@
             }
         }
 
+        function updateBirdColors() {
+            birdColorCountInput.value = String(birdColors.length);
+
+            birdColorsContainer.querySelectorAll('input[type="color"]').forEach(input => input.remove());
+
+            birdColors.forEach((birdColor, index) => {
+                const input = document.createElement('input');
+                input.className = 'copy pointer';
+                input.type = 'color';
+                input.value = birdColor;
+                input.dataset.index = String(index);
+                input.addEventListener('input', (event) => {
+                    birdColors[index] = event.target.value;
+                    birds.forEach(bird => {
+                        bird.updateColor();
+                    });
+                });
+                birdColorsContainer.appendChild(input);
+            });
+
+            birds.forEach(bird => {
+                bird.updateColor();
+            });
+        }
+
+        function setBirdColorCount(nextCount) {
+            const targetCount = Math.max(1, Number(nextCount) || 1);
+
+            while (birdColors.length < targetCount) {
+                birdColors.push(defaultBirdColors[birdColors.length % defaultBirdColors.length]);
+            }
+
+            birdColors.length = targetCount;
+            updateBirdColors();
+        }
+
         async function clickButton(i) {
             if (i==1) {
                 await navigator.clipboard.writeText("#a6e3a1")
                 //alert("copeid!")
-            } else if (i == 2) {
-                mb = (mb % maxM) + 1;
-                MB.textContent = mb;
-            } else if (i == 3) {
-                mb = Math.ceil(Math.random() * maxM);
-                MB.textContent = mb;
             } else if (i == 7) {
                 birdCount += 1;
                 birds.push(new Bird());
@@ -676,7 +840,7 @@
             } else if (i == 11) {
                 setBirdColorCount(Math.min(birdColors.length + 1,8));
             } else if (i == 12) {
-                setBirdColorCount(Math.max(birdColors.length - 1,0));
+                setBirdColorCount(Math.max(birdColors.length - 1,1));
             }
         }
 
@@ -726,7 +890,7 @@
                 this.vy = (Math.random() - 0.5) * 1;
                 this.Vx = this.vx;
                 this.Vy = this.vy;
-                this.color = ['#b4befe', '#cba6f7', '#cdd6f4'][Math.floor(Math.random() * 3)];
+                this.color = birdColors[Math.floor(Math.random() * birdColors.length)];
                 this.size = Math.random() * 1.5 + 1;
                 this.wingSpeed = (Math.random() * 0.01) + 0.005;
                 this.wingOffset = Math.random() * Math.PI * 2;
@@ -762,16 +926,51 @@
                 ctx.stroke();
                 ctx.restore();
             }
+
+            updateColor() {
+                this.color = birdColors[Math.floor(Math.random() * birdColors.length)];
+            }
         }
 
-        for (let index = 0; index < 75; index += 1) {
+        for (let index = 0; index < birdCount; index += 1) {
             birds.push(new Bird());
         }
+        birdCounter.value = String(birdCount);
+        updateBirdColors();
 
         if (!wm.classList.contains('hidden')) {
             centerWelcomeWindow();
         }
         dragElement(wm);
+        dragElement(settingsWin);
+
+        colorPicker.addEventListener('input', (event) => {
+            const color = event.target.value;
+            const rgba = hexToRGBA(color, 0.35);
+            document.querySelectorAll('.frosted-glass').forEach((el) => {
+                el.style.backgroundColor = rgba;
+            });
+            if (blobLayer) {
+                blobLayer.style.background = `radial-gradient(circle at 30% 30%, ${hexToRGBA(color, 0.32)}, rgba(57,25,55,0.75))`;
+            }
+        });
+
+        birdCounter.addEventListener('input', (event) => {
+            const i = event.target.value - birdCount;
+            if (i > 0) {
+                for (let j = 0; j < i; j++) {
+                    clickButton(7);
+                }
+            } else if (i < 0) {
+                for (let j = 0; j < Math.abs(i); j++) {
+                    clickButton(8);
+                }
+            }
+        });
+
+        birdColorCountInput.addEventListener('input', (event) => {
+            setBirdColorCount(event.target.value);
+        });
 
         function animateBirds() {
             ctx.clearRect(0, 0, width, height);
@@ -804,6 +1003,8 @@
             loginBypass,
             hideLogin,
             showLoginError,
+            openWelcomeWindow,
+            openSettingsWindow,
         };
     </script>
 </body>
