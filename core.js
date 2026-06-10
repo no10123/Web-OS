@@ -6,7 +6,7 @@ const loginForm = document.getElementById('login-form');
 const loginUsername = document.getElementById('login-username');
 const loginPassword = document.getElementById('login-password');
 const loginError = document.getElementById('login-error');
-const osTarget = '../../Web-OS/index.html?login=true';
+const osTarget = 'index.html?login=true';
 const veiwport = document.getElementById("veiwport");
 const apps = document.getElementById("apps");
 const wm = document.getElementById("welcome-msg")
