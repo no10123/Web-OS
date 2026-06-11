@@ -642,3 +642,9 @@ button:hover, .pointer:hover {
     border-radius: 0 0 28px 28px;
     max-height: none;
 }
+
+#apps {
+    padding-top: 60px;
+    position: relative;
+    z-index: 1;
+}

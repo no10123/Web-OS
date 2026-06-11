@@ -548,3 +548,9 @@ function animateBirds() {
 
 // Start everything up
 init();
+
+// Ensure all windows are hidden at startup
+document.getElementById('welcome-msg').classList.add('hidden');
+document.getElementById('txt-editor').classList.add('hidden');
+document.getElementById('code-editor').classList.add('hidden');
+document.getElementById('settings').classList.add('hidden');
