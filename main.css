@@ -10,10 +10,14 @@ body {
     min-width: 100vw;
     min-height: 100vh;
     box-sizing: border-box;
-    background-image: url("CozyPixels-main/Catppuccin/Abstract-Artistic/waves.png");
+    background-image: url("CozyPixels-main/Catppuccin/Abstract%20%26%20Artistic/waves.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+}
+
+.hidden {
+    display: none !important;
 }
 
 canvas {

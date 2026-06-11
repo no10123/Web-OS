@@ -33,17 +33,17 @@
         </div>
     </div>
 
-    <div id="veiwport">
+    <div id="viewport">
         <div class="apps-panel" id="apps">
             <button class="app-launcher" type="button" onclick="openWelcomeWindow()">
                 <img src="txt.png" alt="TxT">
                 <span>welcome msg</span>
             </button>
-            <button class="app-launcher" type="button" onclick="openWelcomeWindow()">
+            <button class="app-launcher" type="button" onclick="openTxtEditorWindow()">
                 <img src="txt.png" alt="TxT">
                 <span>txt editor</span>
             </button>
-            <button class="app-launcher" type="button" onclick="openWelcomeWindow()">
+            <button class="app-launcher" type="button" onclick="openCodeEditorWindow()">
                 <img src="txt.png" alt="TxT">
                 <span>code editor</span>
             </button>
@@ -58,6 +58,7 @@
         </div>
 
         <div id="windows">
+            
             <div id="welcome-msg" class="dragable hidden">
                 <div class="drag" id="welcome-msgheader">
                     <img src="txt.png" alt="TxT">
@@ -73,9 +74,54 @@
                     <p>This is a bird themed web-os with tools:</p>
                     <ul>
                         <li>text editor</li>
+                        <li>code editor</li>
                     </ul>
                 </div>
             </div>
+
+            <div id="txt-editor" class="dragable hidden">
+                <div class="drag" id="txt-editorheader">
+                    <img src="txt.png" alt="TxT">
+                    <span class="wTitle">Txt Editor</span>
+                    <div class="window-controls">
+                        <button type="button" onclick="minimizeTxtEditorWindow()">-</button>
+                        <button type="button" onclick="toggleTxtEditorFullscreen()">[]</button>
+                        <button type="button" onclick="closeTxtEditorWindow()">x</button>
+                    </div>
+                </div>
+                <div class="text frosted-glass" style="height: calc(100% - 40px); display: flex; flex-direction: column; box-sizing: border-box;">
+                    <textarea style="width: 100%; height: 100%; background: transparent; border: none; color: inherit; resize: none; outline: none; font-family: inherit; padding: 10px; box-sizing: border-box;" placeholder="Start typing your notes here..."></textarea>
+                </div>
+            </div>
+
+            <div id="code-editor" class="dragable hidden">
+                <div class="drag" id="code-editorheader">
+                    <img src="txt.png" alt="TxT">
+                    <span class="wTitle">Code Editor</span>
+                    <div class="window-controls">
+                        <button type="button" onclick="minimizeCodeEditorWindow()">-</button>
+                        <button type="button" onclick="toggleCodeEditorFullscreen()">[]</button>
+                        <button type="button" onclick="closeCodeEditorWindow()">x</button>
+                    </div>
+                </div>
+                <div class="text frosted-glass" style="height: calc(100% - 40px); padding: 10px; box-sizing: border-box;">
+                    <textarea spellcheck="false" style="width: 100%; height: 100%; background: #1e1e1e; color: #d4d4d4; border: none; resize: none; outline: none; font-family: monospace; padding: 15px; border-radius: 8px; box-sizing: border-box;">
+import socket
+
+# Birb OS - Serverless LAN UDP Messenger
+UDP_IP = "127.0.0.1"
+UDP_PORT = 5005
+MESSAGE = b"Chirp chirp! Packet incoming."
+
+print("UDP target IP:", UDP_IP)
+print("UDP target port:", UDP_PORT)
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
+                    </textarea>
+                </div>
+            </div>
+            
             <div id="settings" class="dragable hidden">
                 <div class="drag" id="settingsheader">
                     <img src="txt.png" alt="TxT">
@@ -87,30 +133,47 @@
                     </div>
                 </div>
                 <div class="text frosted-glass">
-                    <h1>Settings:</h1>
+                    <h1>Settings: </h1>
+                    <p>Change the color theme and jump back to the main message.</p>
                     <div class="fav-color-container">
                         <span class="color-text">color theme: </span>
                         <input id="colorPicker" class="copy" type="color" value="#976fb6">
                     </div>
                     <div class="fav-color-container">
                         <span class="color-text">Bird counter: </span>
-                        <input id="bird-count" class="copy pointer" type="number" value="75" min="0">
-                        <button class="copy" onclick="clickButton(7)">+</button>
-                        <button class="copy" onclick="clickButton(8)">-</button>
+                        <input id="bird-count" class="copy pointer" type="number" value="1" min="1">
+                        <button class="copy" data-action="addBird">+</button>
+                        <button class="copy" data-action="removeBird">-</button>
                     </div>
                     <div class="fav-color-container">
                         <span class="color-text">Bird colors: </span>
                         <input id="bird-color-count" class="copy pointer" type="number" value="3" min="1" max="8">
-                        <button class="copy" onclick="clickButton(11)">+</button>
-                        <button class="copy" onclick="clickButton(12)">-</button>
+                        <button class="copy" data-action="addBirdColor">+</button>
+                        <button class="copy" data-action="removeBirdColor">-</button>
+                    </div>
+                    <div class="fav-color-container">
+                        <span class="color-text">Contrast Theme: </span>
+                        <button class="copy" data-action="toggleCT" id="CT-btn">Dark</button>
                     </div>
                     <br>
                     <div class="fav-color-container" id="bird-colors-container">
                         <span class="color-text">Bird color list: </span>
                     </div>
+                    <div class="fav-color-container" style="display: flex; flex-direction: column; align-items: flex-start; width: calc(100% - 48px); box-sizing: border-box; gap: 10px;">
+                        <span class="color-text"><i class="fa-solid fa-images"></i> BG selection: </span>
+                        <div class="explorer-container">
+                            <div id="explorer-header" class="explorer-header"></div>
+                            <div id="explorer-body" class="explorer-body"></div>
+                        </div>
+                    </div>
                     <p class="settings-note">Tip: the color picker updates the background glow and glass panel instantly.</p>
+                    <div class="fav-color-container">
+                        <button class="copy" data-action="ShowHome">Back to main</button>
+                        <button class="copy" data-action="HideMsg">Hide msg</button>
+                    </div>
                 </div>
             </div>
+
         </div>
     </div>
 
