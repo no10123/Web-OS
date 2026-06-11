@@ -28,6 +28,8 @@ function updateTime() {
 };
 setInterval(updateTime, 1000);
 
+blobLayer.style.display = "none"; // ========================= temp fix
+
 let width;
 let height;
 let mouseX = -1000;

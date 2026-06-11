@@ -1,3 +1,4 @@
+/* base */
 body {
     position: relative;
     background-color: var(--base);
@@ -9,8 +10,60 @@ body {
     min-width: 100vw;
     min-height: 100vh;
     box-sizing: border-box;
+    background-image: url("CozyPixels-main/Catppuccin/Abstract-Artistic/waves.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
+canvas {
+    position: fixed;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* text elements */
+h1, p, ul, .fav-color-container, .coppy {
+    position: relative;
+    z-index: 2;
+}
+
+h1 {
+    color: var(--text);
+    margin-top: 24px;
+    margin-left: 24px;
+    font-size: 48px;
+}
+
+p {
+    color: var(--subtext1);
+    font-size: 18px;
+    margin: 0 0 12px 0;
+    padding-left: 24px;
+}
+
+ul {
+    list-style-type: square;
+    color: var(--subtext1);
+    margin: 0 0 24px 0;
+    padding-left: 44px;
+}
+
+a {
+    color: var(--text);
+}
+
+a:hover {
+    color: var(--subtext1);
+    text-decoration: underline;
+}
+
+a:visited {
+    color: var(--base);
+}
+
+/* BG + Layers */
 .blob-layer {
     /*from - https://backseasy.com/nebula-effect*/
     position: fixed;
@@ -48,11 +101,19 @@ body {
     overflow: hidden;
 }
 
+/* bigger frosted glass for website */
+.frosted-glass-large {
+    padding: 32px;
+    max-width: 800px;
+    margin: 30px;
+}
+
+/* web OS */
 .os-shell {
     position: fixed;
     left: 15px;
     right: 15px;
-    bottom: 0;
+    top: 0;
     z-index: 4;
     padding: 10px 16px;
     display: flex;
@@ -107,6 +168,7 @@ body {
     pointer-events: none;
 }
 
+/* app launcher + icons*/
 .apps-panel {
     display: flex;
     align-items: flex-start;
@@ -152,6 +214,7 @@ body {
     text-transform: lowercase;
 }
 
+/* drag windows */
 .dragable {
     position: absolute;
     z-index: 9;
@@ -202,139 +265,7 @@ body {
     line-height: 1;
 }
 
-#welcome-msg,
-#settings {
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
-
-#welcome-msg.fullscreen,
-#settings.fullscreen {
-    left: 0 !important;
-    top: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    transform: none !important;
-    margin: 0;
-}
-
-#welcome-msg.fullscreen .text,
-#settings.fullscreen .text {
-    width: 100%;
-    height: calc(100% - 52px);
-    overflow: auto;
-    border-radius: 0 0 28px 28px;
-}
-
-canvas {
-    position: fixed;
-    inset: 0;
-    z-index: 1;
-    pointer-events: none;
-}
-h1,
-p,
-ul,
-.fav-color-container,
-.coppy {
-    position: relative;
-    z-index: 2;
-}
-
-h1 {
-    color: var(--text);
-    margin-top: 24px;
-    margin-left: 24px;
-    font-size: 48px;
-}
-
-p {
-    color: var(--subtext1);
-    font-size: 18px;
-    margin: 0 0 12px 0;
-    padding-left: 24px;
-}
-
-ul {
-    list-style-type: square;
-    color: var(--subtext1);
-    margin: 0 0 24px 0;
-    padding-left: 44px;
-}
-
-.fav-color-container {
-    display: inline-flex;
-    align-items: center;
-    background-color: #25283f;
-    padding: 6px 10px;
-    border-radius: 4px;
-    font-family: 'Courier New', Courier, monospace;
-    color: #cad3f5;
-    margin: 0 0 24px 24px;
-}
-
-.color-box {
-    display: inline-block;
-    width: 14px;
-    height: 14px;
-    margin-right: 8px;
-    border: 1px solid #ffffff;
-}
-
-.copy {
-    color: var(--text);
-    background-color: #353b67;
-    border-radius: 4px;
-    border: none;
-    padding: 4px 8px;
-    margin-left: 10px;
-}
-
-button:hover {
-    cursor: pointer;
-}
-
-.pointer:hover {
-    cursor: pointer;
-}
-
-a {
-    color: var(--text);
-}
-a:hover {
-    color: var(--subtext1);
-    text-decoration: underline;
-}
-
-/* Link after being visited */
-a:visited {
-    color: var(--base);
-}
-
-#msg {
-    opacity: 1;
-    transition: opacity 0.35s ease;
-}
-#msg.hidden {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.page {
-    display: none;
-}
-
-.page.active {
-    display: block;
-}
-
-.settings-note {
-    color: var(--subtext1);
-    font-size: 14px;
-    margin: 0 0 12px 24px;
-}
-
+/* login */
 .login-overlay {
     position: fixed;
     inset: 0;
@@ -439,23 +370,271 @@ a:visited {
     margin-top: 4px;
 }
 
-.circle {
-    border-radius: 50%;
-}
-
 .login-note {
     margin: 0;
     color: var(--subtext1);
     font-size: 14px;
     line-height: 1.5;
 }
-#welcome-msg,
-#settings {
+
+/* bg File layout */
+.explorer-container {
+    width: 100%;
+    background: rgba(24, 24, 37, 0.4);
+    border-radius: 12px;
+    padding: 12px;
+    box-sizing: border-box;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.explorer-header {
+    margin-bottom: 12px;
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text);
+}
+
+.explorer-back-btn {
+    background: #353b67;
+    color: var(--text);
+    border: none;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+}
+
+.explorer-body {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 12px;
+    max-height: 70px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* File / Folder Item Styling */
+.explorer-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 6px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--subtext1);
+    text-align: center;
+    font-size: 12px;
+    transition: all 0.15s ease;
+    border: 1px solid transparent;
+}
+
+.explorer-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.explorer-item i {
+    font-size: 26px;
+    margin-bottom: 6px;
+}
+
+.explorer-item i.fa-folder {
+    color: #f9e2af; /* Catppuccin Yellow for folders */
+}
+
+.explorer-item i.fa-image {
+    color: #89b4fa; /* Catppuccin Blue for images */
+}
+
+/* Scrollbar adjustment */
+.explorer-body::-webkit-scrollbar {
+    width: 6px;
+}
+.explorer-body::-webkit-scrollbar-thumb {
+    background: var(--surface2);
+    border-radius: 4px;
+}
+
+/* ui */
+.fav-color-container {
+    display: inline-flex;
+    align-items: center;
+    background-color: #25283f;
+    padding: 6px 10px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #cad3f5;
+    margin: 0 0 24px 24px;
+}
+
+.color-box {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin-right: 8px;
+    border: 1px solid #ffffff;
+}
+
+.copy {
+    color: var(--text);
+    background-color: #353b67;
+    border-radius: 4px;
+    border: none;
+    padding: 4px 8px;
+    margin-left: 10px;
+}
+
+.circle {
+    border-radius: 50%;
+}
+
+button:hover, .pointer:hover {
+    cursor: pointer;
+}
+
+.page {
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+#clock-page.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 300px;
+    color: var(--text);
+}
+
+/* Window body container */
+.dragable .text {
+    max-height: 55vh;   /* Keeps the window bound to the screen so scrolling activates */
+    overflow-y: auto;   /* Overrides the 'overflow: hidden' from .frosted-glass */
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    
+    /* Adds a bit of padding so text doesn't touch the custom scrollbar */
+    padding-right: 12px;
+}
+
+/* Catppuccin Scrollbar with rounded corner avoidance */
+.dragable .text::-webkit-scrollbar {
+    width: 18px; /* Slightly wider to accommodate the visual gap */
+}
+
+.dragable .text::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dragable .text::-webkit-scrollbar-thumb {
+    background: var(--mauve);
+    
+    /* The Offset Trick */
+    border-right: 8px solid transparent;   /* Pushes it away from the right edge */
+    border-top: 26px solid transparent;    /* Avoids the top 28px curve */
+    border-bottom: 26px solid transparent; /* Avoids the bottom 28px curve */
+    
+    background-clip: padding-box;
+    border-radius: 9999px; /* Makes the visible part a smooth pill shape */
+}
+
+.dragable .text::-webkit-scrollbar-thumb:hover {
+    background: var(--text);
+    background-clip: padding-box;
+}
+
+#clock-display {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.settings-note {
+    color: var(--subtext1);
+    font-size: 14px;
+    margin: 0 0 12px 24px;
+}
+
+/* sidebar + nav buttons (sidebar right) */
+.sidebar {
+    position: fixed;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px 15px;
+    margin: 0;
+    z-index: 10;
+    width: auto;
+}
+
+.nav-btn {
+    background: transparent;
+    border: none;
+    color: var(--subtext1, #a6adc8);
+    font-size: 24px;
+    cursor: pointer;
+    padding: 12px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-btn:hover {
+    color: var(--text, #cdd6f4);
+    background: rgba(8, 7, 8, 0.696);
+}
+
+.nav-btn.active {
+    color: hsl(0, 0%, 100%);
+}
+
+#msg {
+    margin-right: 90px;
+}
+
+/* Visibility toggles and transitions */
+#msg, #welcome-msg, #settings {
     opacity: 1;
     transition: opacity 0.35s ease;
 }
-#welcome-msg.hidden,
-#settings.hidden {
+
+#msg.hidden, #welcome-msg.hidden, #settings.hidden {
     opacity: 0;
     pointer-events: none;
+}
+
+/* Fullscreen modifiers */
+#welcome-msg, #settings {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#welcome-msg.fullscreen, #settings.fullscreen {
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+    margin: 0;
+}
+
+#welcome-msg.fullscreen .text, #settings.fullscreen .text {
+    width: 100%;
+    height: calc(100% - 52px);
+    overflow: auto;
+    border-radius: 0 0 28px 28px;
+    max-height: none;
 }
