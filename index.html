@@ -56,6 +56,10 @@
                 <span class="app-plus" aria-hidden="true">*</span>
                 <span class="appName">settings</span>
             </button>
+            <button class="app-launcher" type="button" onclick="openMailWindow()">
+                <i class="fa-solid fa-envelope fa-2x" style="color: var(--text); margin-bottom: 5px;"></i>
+                <span class="appName">Hire Me</span>
+            </button>
         </div>
 
         <div id="windows">
@@ -174,6 +178,31 @@ sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
                     </div>
                 </div>
             </div>
+
+            <div id="mail-app" class="dragable hidden">
+                <div class="drag" id="mail-appheader">
+                    <i class="fa-solid fa-envelope"></i>
+                    <span class="wTitle">Birb Mail - Hire Me</span>
+                    <div class="window-controls">
+                        <button type="button" onclick="minimizeMailWindow()">-</button>
+                        <button type="button" onclick="toggleMailFullscreen()">[]</button>
+                        <button type="button" onclick="closeMailWindow()">x</button>
+                    </div>
+                </div>
+                
+                <div class="text frosted-glass" style="height: calc(100% - 40px); display: flex; flex-direction: column; gap: 10px; padding: 15px; box-sizing: border-box;">
+                    <p style="margin: 0; font-size: 0.9em; opacity: 0.8;">To: reimacdougall@gmail.com</p>
+                    
+                    <input type="text" id="mail-subject" placeholder="Subject (e.g., Job Opportunity)" value="Interested in your work!" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: inherit; padding: 8px; border-radius: 4px; font-family: inherit; outline: none;">
+                    
+                    <textarea id="mail-body" placeholder="Write your message here..." style="flex-grow: 1; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: inherit; resize: none; outline: none; font-family: inherit; padding: 10px; border-radius: 4px;"></textarea>
+                    
+                    <button onclick="sendEmailViaMailto()" class="copy pointer" style="padding: 10px; border-radius: 4px; font-weight: bold; display: flex; justify-content: center; gap: 8px; align-items: center;">
+                        Send Email <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
 
         </div>
     </div>

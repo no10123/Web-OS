@@ -36,6 +36,7 @@ let welcomeIsFullscreen = false;
 let settingsIsFullscreen = false;
 let txtEditorIsFullscreen = false;
 let codeEditorIsFullscreen = false;
+let mailIsFullscreen = false
 
 // birdie attributes
 let birds = [];
@@ -76,6 +77,7 @@ function resize() {
     if (!settingsWin.classList.contains('hidden') && !settingsIsFullscreen) centerWindow(settingsWin);
     if (!txtEditorWin.classList.contains('hidden') && !txtEditorIsFullscreen) centerWindow(txtEditorWin);
     if (!codeEditorWin.classList.contains('hidden') && !codeEditorIsFullscreen) centerWindow(codeEditorWin);
+    if (!mailWindow.classList.contains('hidden') && !mailIsFullscreen) centerWindow(mailWindow);
 }
 
 function getWindowBounds(elmnt) {
@@ -523,6 +525,36 @@ function setupEventListeners() {
     }
 }
 
+// hire me app logic
+const mailWindow = document.getElementById('mail-app');
+
+function openMailWindow() {
+    mailWindow.classList.remove('hidden');
+}
+
+function closeMailWindow() {
+    mailWindow.classList.add('hidden');
+    document.getElementById('mail-body').value = '';
+}
+
+function minimizeMailWindow() {
+    mailWindow.classList.add('hidden'); 
+}
+
+function toggleMailFullscreen() {
+    mailIsFullscreen = toggleFullscreen(mailWindow, mailIsFullscreen);
+}
+
+// send logic
+function sendEmailViaMailto() {
+    const emailAddress = "reimacdougall@gmail.com";
+    const subject = document.getElementById('mail-subject').value;
+    const body = document.getElementById('mail-body').value;
+    const mailtoLink = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.open(mailtoLink, '_blank');
+    closeMailWindow(); //when they hit send
+}
+
 function init() {
     resize();
     setupEventListeners();
@@ -539,6 +571,7 @@ function init() {
     dragElement(settingsWin);
     dragElement(txtEditorWin);
     dragElement(codeEditorWin);
+    dragElement(mailWindow);
 
     renderWallpaperExplorer();
 
