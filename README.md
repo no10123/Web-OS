@@ -1,8 +1,9 @@
 # Birb OS
 a bird themed, fully customizeable, dynamic web-os.
 
-username - robopugo
-password - Birb103!
+username - robopugo <br>
+password - Birb103! <br>
+?login=true
 
 feutures:
 * BG selector
