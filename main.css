@@ -648,3 +648,12 @@ button:hover, .pointer:hover {
     position: relative;
     z-index: 1;
 }
+
+/* CT mode for img bgs*/
+.appName {
+    color: var(--text);
+}
+
+body.dark-mode .appName {
+    color: var(--base);
+}

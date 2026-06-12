@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Birb OS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="cat.css">
     <link rel="stylesheet" href="cursor.css">
     <link rel="stylesheet" href="main.css">
@@ -37,23 +38,23 @@
         <div class="apps-panel" id="apps">
             <button class="app-launcher" type="button" onclick="openWelcomeWindow()">
                 <img src="txt.png" alt="TxT">
-                <span>welcome msg</span>
+                <span class="appName">welcome msg</span>
             </button>
             <button class="app-launcher" type="button" onclick="openTxtEditorWindow()">
                 <img src="txt.png" alt="TxT">
-                <span>txt editor</span>
+                <span class="appName">txt editor</span>
             </button>
             <button class="app-launcher" type="button" onclick="openCodeEditorWindow()">
                 <img src="txt.png" alt="TxT">
-                <span>code editor</span>
+                <span class="appName">code editor</span>
             </button>
             <button class="app-launcher" type="button">
                 <span class="app-plus" aria-hidden="true">+</span>
-                <span>add app</span>
+                <span class="appName">add app</span>
             </button>
             <button class="app-launcher" type="button" onclick="openSettingsWindow()">
                 <span class="app-plus" aria-hidden="true">*</span>
-                <span>settings</span>
+                <span class="appName">settings</span>
             </button>
         </div>
 
@@ -184,6 +185,7 @@ sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
         </div>
     </div>
 
+    <script src="imageTree.js"></script>
     <script src="core.js"></script>
 </body>
 </html>

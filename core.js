@@ -410,12 +410,9 @@ const actions = {
     },
     toggleCT: (btn) => {
         document.body.classList.toggle('dark-mode');
-        if (document.body.classList.contains('dark-mode')) {
-            if(btn) btn.textContent = 'Light';
-            document.body.style.filter = 'invert(1) hue-rotate(180deg)';
-        } else {
-            if(btn) btn.textContent = 'Dark';
-            document.body.style.filter = 'none';
+
+        if (btn) {
+            btn.textContent = document.body.classList.contains('dark-mode') ? 'Light' : 'Dark';
         }
     },
 
