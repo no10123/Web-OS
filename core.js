@@ -253,7 +253,7 @@ function renderWallpaperExplorer() {
     }
 }
 
-function createExplorerNode(name, iconClass, clickCallback, dblClickCallback = null) {
+function createExplorerNode(name, iconClass, clickCallback,type="btn", dblClickCallback = null) {
     const item = document.createElement((type == "btn") ? 'button' : 'div')
     item.className = 'explorer-item pointer';
     item.style.border = 'none';
