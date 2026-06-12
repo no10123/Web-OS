@@ -212,6 +212,7 @@ function renderWallpaperExplorer() {
 
     if (!explorerPath.theme) {
         createExplorerNode("none", 'fa-image', () => updateBgImg("none"));
+        createExplorerNode("upload-img", 'fa-upload', () => {}, "input");
         createExplorerNode('Favorites', 'fa-star', () => {
             explorerPath.theme = 'Favorites';
             renderWallpaperExplorer();
@@ -231,7 +232,7 @@ function renderWallpaperExplorer() {
                 createExplorerNode(fav.imgName, 'fa-image', () => {
                     const fullUrl = `CozyPixels-main/${fav.theme}/${fav.category}/${fav.imgName}`;
                     updateBgImg(encodeURI(fullUrl));
-                }, () => handleFavorite(fav.theme, fav.category, fav.imgName));
+                },"btn", () => handleFavorite(fav.theme, fav.category, fav.imgName));
             });
         }
     } else if (!explorerPath.category) {
@@ -247,18 +248,45 @@ function renderWallpaperExplorer() {
             createExplorerNode(imgName, 'fa-image', () => {
                 const fullUrl = `CozyPixels-main/${explorerPath.theme}/${explorerPath.category}/${imgName}`;
                 updateBgImg(encodeURI(fullUrl));
-            }, () => handleFavorite(explorerPath.theme, explorerPath.category, imgName));
+            },"btn", () => handleFavorite(explorerPath.theme, explorerPath.category, imgName));
         });
     }
 }
 
 function createExplorerNode(name, iconClass, clickCallback, dblClickCallback = null) {
-    const item = document.createElement('button');
+    const item = document.createElement((type == "btn") ? 'button' : 'div')
     item.className = 'explorer-item pointer';
     item.style.border = 'none';
-    item.innerHTML = `<i class="fa-solid ${iconClass}"></i><span>${name.length < 20 ? name : "?"}</span>`;
+    if (type == "btn") {
+        item.innerHTML = `
+        <i class="fa-solid ${iconClass}"></i>
+        <span>${name.length < 20 ? name : "?"}</span>
+        `;
+    } else if (type == "input") {
+        item.innerHTML = `
+            <label style="cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 5px;">
+                <i class="fa-solid ${iconClass}"></i>
+                <span>${name}</span>
+                <input type="file" accept="image/*" style="display: none;" />
+            </label>
+        `;
+
+        const fileInput = item.querySelector('input');
+        fileInput.addEventListener('change', (e) => {
+            const uploadedFile = e.target.files[0];
+            if (uploadedFile) {
+                // temp url for uploaded img
+                const imgUrl = URL.createObjectURL(uploadedFile);
+                updateBgImg(imgUrl);
+            }
+        });
+    }
     item.onclick = clickCallback;
-    if (dblClickCallback) item.ondblclick = dblClickCallback;
+    
+    if (dblClickCallback) {
+        item.ondblclick = dblClickCallback;
+    }
+    
     expBody.appendChild(item);
 }
 
