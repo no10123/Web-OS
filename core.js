@@ -83,12 +83,13 @@ function resize() {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
     
-    // Keep visible, non-fullscreen windows centered on resize
     if (!wm.classList.contains('hidden') && !welcomeIsFullscreen) centerWindow(wm);
     if (!settingsWin.classList.contains('hidden') && !settingsIsFullscreen) centerWindow(settingsWin);
     if (!txtEditorWin.classList.contains('hidden') && !txtEditorIsFullscreen) centerWindow(txtEditorWin);
     if (!codeEditorWin.classList.contains('hidden') && !codeEditorIsFullscreen) centerWindow(codeEditorWin);
     if (!mailWindow.classList.contains('hidden') && !mailIsFullscreen) centerWindow(mailWindow);
+    if (!browserWin.classList.contains('hidden') && !browserIsFullscreen) centerWindow(browserWin);
+    if (!calculatorWin.classList.contains('hidden') && !calculatorIsFullscreen) centerWindow(calculatorWin);
 }
 
 function getWindowBounds(elmnt) {
@@ -110,16 +111,25 @@ function centerWindow(elmnt) {
 function toggleFullscreen(elmnt, isFullscreenVar) {
     const isFS = !isFullscreenVar;
     elmnt.classList.toggle('fullscreen', isFS);
-    
+
     if (isFS) {
+        elmnt.dataset.prevLeft = elmnt.style.left;
+        elmnt.dataset.prevTop = elmnt.style.top;
         elmnt.style.left = '0px';
         elmnt.style.top = '0px';
         elmnt.style.width = '100%';
         elmnt.style.height = '100%';
+        elmnt.style.zIndex = '9999';
     } else {
         elmnt.style.width = '';
         elmnt.style.height = '';
-        centerWindow(elmnt);
+        elmnt.style.zIndex = '';
+        if (elmnt.dataset.prevLeft && elmnt.dataset.prevTop) {
+            elmnt.style.left = elmnt.dataset.prevLeft;
+            elmnt.style.top = elmnt.dataset.prevTop;
+        } else {
+            centerWindow(elmnt);
+        }
     }
     return isFS;
 }

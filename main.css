@@ -704,3 +704,37 @@ body.dark-mode .appName {
     user-select: text;
     -webkit-user-select: text;
 }
+
+/* fixses fullscreen */
+.dragable {
+    position: absolute;
+    z-index: 9;
+    width: min(700px, calc(100vw - 30px));
+    box-sizing: border-box;
+    pointer-events: auto;
+}
+
+.dragable .text {
+    max-height: 55vh;   
+    overflow-y: auto;   
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    padding-right: 12px;
+}
+
+.dragable.fullscreen, #welcome-msg.fullscreen, #settings.fullscreen {
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+    margin: 0;
+}
+
+.dragable.fullscreen .text, #welcome-msg.fullscreen .text, #settings.fullscreen .text {
+    width: 100%;
+    height: calc(100% - 52px); /* Adjusts for header */
+    overflow: auto;
+    border-radius: 0 0 28px 28px;
+    max-height: none;
+}
