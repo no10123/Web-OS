@@ -36,7 +36,8 @@ let welcomeIsFullscreen = false;
 let settingsIsFullscreen = false;
 let txtEditorIsFullscreen = false;
 let codeEditorIsFullscreen = false;
-let mailIsFullscreen = false
+let mailIsFullscreen = false;
+let calculatorIsFullscreen = false;
 
 // birdie attributes
 let birds = [];
@@ -51,6 +52,12 @@ let useTime = true;
 let frameCount = -1;
 let explorerPath = { theme: null, category: null };
 let favorites = JSON.parse(localStorage.getItem('bgFavorites')) || [];
+
+//calculator vars
+const calculatorWin = document.getElementById("calculator-app");
+const calcDisplay = document.getElementById("calc-display");
+const calcButtons = document.getElementById("calculator-buttons");
+let currentCalcString = "";
 
 // basic stuff
 function updateTime() {
@@ -159,6 +166,14 @@ function openSettingsWindow() { settingsWin.classList.remove('hidden'); centerWi
 function closeSettingsWindow() { settingsWin.classList.add('hidden'); }
 function toggleSettingsFullscreen() { settingsIsFullscreen = toggleFullscreen(settingsWin, settingsIsFullscreen); }
 function minimizeSettingsWindow() { closeSettingsWindow(); }
+function openMailWindow() {mailWindow.classList.remove('hidden');}
+function closeMailWindow() {mailWindow.classList.add('hidden'); document.getElementById('mail-body').value = '';}
+function minimizeMailWindow() {mailWindow.classList.add('hidden');}
+function toggleMailFullscreen() {mailIsFullscreen = toggleFullscreen(mailWindow, mailIsFullscreen);}
+function openCalculatorWindow() { calculatorWin.classList.remove('hidden'); centerWindow(calculatorWin); }
+function closeCalculatorWindow() { calculatorWin.classList.add('hidden'); }
+function toggleCalculatorFullscreen() {calculatorIsFullscreen = toggleFullscreen(calculatorWin, calculatorIsFullscreen); }
+function minimizeCalculatorWindow() { closeCalculatorWindow(); }
 
 // BG changer
 function updateBgImg(url) {
@@ -422,6 +437,21 @@ function showLoginError(message) {
     if(loginError) loginError.textContent = message;
 }
 
+function handleCalculatorInput(value) {
+    if (value === "AC") {
+        currentCalcString = "";
+    } else if (value === "=") {
+        try {
+            currentCalcString = eval(currentCalcString).toString();
+        } catch {
+            currentCalcString = "Error";
+        }
+    } else {
+        currentCalcString += value;
+    }
+    calcDisplay.textContent = currentCalcString || "0";
+}
+
 function hideLogin() {
     loginOverlay.classList.remove('active');
     loginOverlay.setAttribute('aria-hidden', 'true');
@@ -523,27 +553,18 @@ function setupEventListeners() {
             }
         });
     }
+    if (calcButtons) {
+        calcButtons.addEventListener('click', (event) => {
+            const btn = event.target.closest('.Calc-btn');
+            if (btn) {
+                handleCalculatorInput(btn.dataset.value);
+            }
+        });
+    }
 }
 
 // hire me app logic
 const mailWindow = document.getElementById('mail-app');
-
-function openMailWindow() {
-    mailWindow.classList.remove('hidden');
-}
-
-function closeMailWindow() {
-    mailWindow.classList.add('hidden');
-    document.getElementById('mail-body').value = '';
-}
-
-function minimizeMailWindow() {
-    mailWindow.classList.add('hidden'); 
-}
-
-function toggleMailFullscreen() {
-    mailIsFullscreen = toggleFullscreen(mailWindow, mailIsFullscreen);
-}
 
 // send logic
 function sendEmailViaMailto() {
@@ -572,6 +593,7 @@ function init() {
     dragElement(txtEditorWin);
     dragElement(codeEditorWin);
     dragElement(mailWindow);
+    dragElement(calculatorWin);
 
     renderWallpaperExplorer();
 

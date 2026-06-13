@@ -657,3 +657,56 @@ button:hover, .pointer:hover {
 body.dark-mode .appName {
     color: var(--base);
 }
+
+/* Calculator Grid Layout */
+.calc-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-top: 10px;
+}
+
+/* calculator */
+.Calc-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text);
+    padding: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Segoe UI', sans-serif;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(5px);
+}
+
+.Calc-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.Calc-btn:active {
+    transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.Calc-btn[data-value="="] {
+    background: rgba(151, 111, 182, 0.4);
+    border-color: rgba(151, 111, 182, 0.6);
+}
+
+.Calc-btn[data-value="="]:hover {
+    background: rgba(151, 111, 182, 0.6);
+}
+
+#calc-display {
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: right;
+    color: var(--text);
+    font-family: 'Courier New', monospace;
+    font-size: 1.5em;
+    margin-bottom: 5px;
+}

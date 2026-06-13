@@ -48,6 +48,10 @@
                 <img src="txt.png" alt="TxT">
                 <span class="appName">code editor</span>
             </button>
+            <button class="app-launcher" type="button" onclick="openCalculatorWindow()">
+                <i class="fa-solid fa-calculator fa-2x" style="color: var(--text); margin-bottom: 5px;"></i>
+                <span class="appName">calculator</span>
+            </button>
             <button class="app-launcher" type="button">
                 <span class="app-plus" aria-hidden="true">+</span>
                 <span class="appName">add app</span>
@@ -63,7 +67,6 @@
         </div>
 
         <div id="windows">
-            
             <div id="welcome-msg" class="dragable hidden">
                 <div class="drag" id="welcome-msgheader">
                     <img src="txt.png" alt="TxT">
@@ -200,6 +203,47 @@ sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
                     <button onclick="sendEmailViaMailto()" class="copy pointer" style="padding: 10px; border-radius: 4px; font-weight: bold; display: flex; justify-content: center; gap: 8px; align-items: center;">
                         Send Email <i class="fa-solid fa-paper-plane"></i>
                     </button>
+                </div>
+            </div>
+
+            <div id="calculator-app" class="dragable hidden">
+                <div class="drag" id="calculator-appheader">
+                    <i class="fa-solid fa-calculator"></i>
+                    <span class="wTitle">Calculator</span>
+                    <div class="window-controls">
+                        <button type="button" onclick="minimizeCalculatorWindow()">-</button>
+                        <button type="button" onclick="toggleCalculatorFullscreen()">[]</button>
+                        <button type="button" onclick="closeCalculatorWindow()">x</button>
+                    </div>
+                </div>
+                
+                <div class="text frosted-glass" style="height: calc(100% - 40px); display: flex; flex-direction: column; gap: 10px; padding: 15px; box-sizing: border-box;">
+                    <div id="calc-display" style="background: rgba(0,0,0,0.2); padding: 10px; text-align: right; border-radius: 4px; font-family: monospace; font-size: 1.2em;">0</div>
+                    
+                    <div id="calculator-buttons" class="calc-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px;">
+                        <button type="button" class="Calc-btn" data-value="AC">AC</button>
+                        <button type="button" class="Calc-btn" data-value="%">%</button>
+                        <button type="button" class="Calc-btn" data-value="/">/</button>
+                        <button type="button" class="Calc-btn" data-value="*">*</button>
+                        
+                        <button type="button" class="Calc-btn" data-value="7">7</button>
+                        <button type="button" class="Calc-btn" data-value="8">8</button>
+                        <button type="button" class="Calc-btn" data-value="9">9</button>
+                        <button type="button" class="Calc-btn" data-value="-">-</button>
+                        
+                        <button type="button" class="Calc-btn" data-value="4">4</button>
+                        <button type="button" class="Calc-btn" data-value="5">5</button>
+                        <button type="button" class="Calc-btn" data-value="6">6</button>
+                        <button type="button" class="Calc-btn" data-value="+">+</button>
+                        
+                        <button type="button" class="Calc-btn" data-value="1">1</button>
+                        <button type="button" class="Calc-btn" data-value="2">2</button>
+                        <button type="button" class="Calc-btn" data-value="3">3</button>
+                        <button type="button" class="Calc-btn" data-value="=" style="grid-row: span 2;">=</button>
+                        
+                        <button type="button" class="Calc-btn" data-value="0" style="grid-column: span 2;">0</button>
+                        <button type="button" class="Calc-btn" data-value=".">.</button>
+                    </div>
                 </div>
             </div>
         </div>
