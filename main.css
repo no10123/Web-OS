@@ -67,9 +67,7 @@ a:visited {
     color: var(--base);
 }
 
-/* BG + Layers */
 .blob-layer {
-    /*from - https://backseasy.com/nebula-effect*/
     position: fixed;
     inset: 0;
     z-index: 0;
@@ -86,13 +84,12 @@ a:visited {
 }
 
 .frosted-glass {
-    /*from - https://backseasy.com/nebula-effect*/
     position: relative;
     z-index: 2;
     box-sizing: border-box;
     backdrop-filter: blur(10px) saturate(130%);
     -webkit-backdrop-filter: blur(10px) saturate(130%);
-    background-color: rgba(151, 111, 182, 0.349);
+    background-color: rgba(var(--theme), 0.35); 
     border-radius: 28px;
     border: 1px solid rgba(255, 255, 255, 0.18);
     box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22);
@@ -105,7 +102,6 @@ a:visited {
     overflow: hidden;
 }
 
-/* bigger frosted glass for website */
 .frosted-glass-large {
     padding: 32px;
     max-width: 800px;
@@ -381,7 +377,7 @@ a:visited {
     line-height: 1.5;
 }
 
-/* bg File layout */
+/* bg selector */
 .explorer-container {
     width: 100%;
     background: rgba(24, 24, 37, 0.4);
@@ -419,7 +415,7 @@ a:visited {
     padding-right: 4px;
 }
 
-/* File / Folder Item Styling */
+/* files */
 .explorer-item {
     display: flex;
     flex-direction: column;
@@ -447,19 +443,18 @@ a:visited {
 }
 
 .explorer-item i.fa-folder {
-    color: #f9e2af; /* Catppuccin Yellow for folders */
+    color: #f9e2af;
 }
 
 .explorer-item i.fa-image {
-    color: #89b4fa; /* Catppuccin Blue for images */
+    color: #89b4fa;
 }
 
-/* Scrollbar adjustment */
 .explorer-body::-webkit-scrollbar {
     width: 6px;
 }
 .explorer-body::-webkit-scrollbar-thumb {
-    background: var(--surface2);
+    background: #495085;
     border-radius: 4px;
 }
 
@@ -517,20 +512,17 @@ button:hover, .pointer:hover {
     color: var(--text);
 }
 
-/* Window body container */
 .dragable .text {
-    max-height: 55vh;   /* Keeps the window bound to the screen so scrolling activates */
-    overflow-y: auto;   /* Overrides the 'overflow: hidden' from .frosted-glass */
+    max-height: 55vh;   
+    overflow-y: auto;   
     overflow-x: hidden;
     scroll-behavior: smooth;
-    
-    /* Adds a bit of padding so text doesn't touch the custom scrollbar */
     padding-right: 12px;
 }
 
-/* Catppuccin Scrollbar with rounded corner avoidance */
+/* side bar */
 .dragable .text::-webkit-scrollbar {
-    width: 18px; /* Slightly wider to accommodate the visual gap */
+    width: 18px; 
 }
 
 .dragable .text::-webkit-scrollbar-track {
@@ -538,19 +530,16 @@ button:hover, .pointer:hover {
 }
 
 .dragable .text::-webkit-scrollbar-thumb {
-    background: var(--mauve);
-    
-    /* The Offset Trick */
-    border-right: 8px solid transparent;   /* Pushes it away from the right edge */
-    border-top: 26px solid transparent;    /* Avoids the top 28px curve */
-    border-bottom: 26px solid transparent; /* Avoids the bottom 28px curve */
-    
+    background: #353b67;
+    border-right: 8px solid transparent;  
+    border-top: 26px solid transparent;    
+    border-bottom: 26px solid transparent; 
     background-clip: padding-box;
-    border-radius: 9999px; /* Makes the visible part a smooth pill shape */
+    border-radius: 9999px; 
 }
 
 .dragable .text::-webkit-scrollbar-thumb:hover {
-    background: var(--text);
+    background: #495085;
     background-clip: padding-box;
 }
 
@@ -655,7 +644,7 @@ button:hover, .pointer:hover {
 }
 
 body.dark-mode .appName {
-    color: var(--base);
+    color: var(--fa-dark);
 }
 
 /* Calculator Grid Layout */
@@ -691,12 +680,12 @@ body.dark-mode .appName {
 }
 
 .Calc-btn[data-value="="] {
-    background: rgba(151, 111, 182, 0.4);
-    border-color: rgba(151, 111, 182, 0.6);
+    background: rgba(var(--theme), 0.4);
+    border-color: rgba(var(--theme), 0.6);
 }
 
 .Calc-btn[data-value="="]:hover {
-    background: rgba(151, 111, 182, 0.6);
+    background: rgba(var(--theme), 0.6);
 }
 
 #calc-display {
@@ -709,4 +698,9 @@ body.dark-mode .appName {
     font-family: 'Courier New', monospace;
     font-size: 1.5em;
     margin-bottom: 5px;
+}
+
+#browser input {
+    user-select: text;
+    -webkit-user-select: text;
 }

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="cursor.css">
     <link rel="stylesheet" href="main.css">
 </head>
-<body>
+<body class="dark-mode">
     <div class="blob-layer" aria-hidden="true"></div>
     <canvas id="canvas"></canvas>
 
@@ -37,31 +37,35 @@
     <div id="viewport">
         <div class="apps-panel" id="apps">
             <button class="app-launcher" type="button" onclick="openWelcomeWindow()">
-                <img src="txt.png" alt="TxT">
+                <i class="fa-solid fa-file-lines fa-2x appName" style="margin-bottom: 5px;"></i>
                 <span class="appName">welcome msg</span>
             </button>
             <button class="app-launcher" type="button" onclick="openTxtEditorWindow()">
-                <img src="txt.png" alt="TxT">
+                <i class="fa-solid fa-file-lines fa-2x appName" style="margin-bottom: 5px;"></i>
                 <span class="appName">txt editor</span>
             </button>
             <button class="app-launcher" type="button" onclick="openCodeEditorWindow()">
-                <img src="txt.png" alt="TxT">
+                <i class="fa-solid fa-file-lines fa-2x appName" style="margin-bottom: 5px;"></i>
                 <span class="appName">code editor</span>
             </button>
             <button class="app-launcher" type="button" onclick="openCalculatorWindow()">
-                <i class="fa-solid fa-calculator fa-2x" style="color: var(--text); margin-bottom: 5px;"></i>
+                <i class="fa-solid fa-calculator fa-2x appName" style="margin-bottom: 5px;"></i>
                 <span class="appName">calculator</span>
             </button>
+            <button class="app-launcher" type="button" onclick="openBrowserWindow()">
+                <i class="fa-brands fa-solid fa-chrome fa-2x appName" style="margin-bottom: 5px;"></i>
+                <span class="appName">Web browser</span>
+            </button>
             <button class="app-launcher" type="button">
-                <span class="app-plus" aria-hidden="true">+</span>
+                <i class="fa-solid fa-envelope fa-2x appName" style="margin-bottom: 5px;"></i>
                 <span class="appName">add app</span>
             </button>
             <button class="app-launcher" type="button" onclick="openSettingsWindow()">
-                <span class="app-plus" aria-hidden="true">*</span>
+                <i class="fa-solid fa-gear fa-2x appName" style="margin-bottom: 5px;"></i>
                 <span class="appName">settings</span>
             </button>
             <button class="app-launcher" type="button" onclick="openMailWindow()">
-                <i class="fa-solid fa-envelope fa-2x" style="color: var(--text); margin-bottom: 5px;"></i>
+                <i class="fa-solid fa-envelope fa-2x appName" style="margin-bottom: 5px;"></i>
                 <span class="appName">Hire Me</span>
             </button>
         </div>
@@ -69,7 +73,7 @@
         <div id="windows">
             <div id="welcome-msg" class="dragable hidden">
                 <div class="drag" id="welcome-msgheader">
-                    <img src="txt.png" alt="TxT">
+                    <i class="fa-solid fa-file-lines"></i>
                     <span class="wTitle">Welcome msg</span>
                     <div class="window-controls">
                         <button type="button">-</button>
@@ -89,7 +93,7 @@
 
             <div id="txt-editor" class="dragable hidden">
                 <div class="drag" id="txt-editorheader">
-                    <img src="txt.png" alt="TxT">
+                    <i class="fa-solid fa-file-lines"></i>
                     <span class="wTitle">Txt Editor</span>
                     <div class="window-controls">
                         <button type="button" onclick="minimizeTxtEditorWindow()">-</button>
@@ -104,7 +108,7 @@
 
             <div id="code-editor" class="dragable hidden">
                 <div class="drag" id="code-editorheader">
-                    <img src="txt.png" alt="TxT">
+                    <i class="fa-solid fa-file-lines"></i>
                     <span class="wTitle">Code Editor</span>
                     <div class="window-controls">
                         <button type="button" onclick="minimizeCodeEditorWindow()">-</button>
@@ -114,25 +118,24 @@
                 </div>
                 <div class="text frosted-glass" style="height: calc(100% - 40px); padding: 10px; box-sizing: border-box;">
                     <textarea spellcheck="false" style="width: 100%; height: 100%; background: #1e1e1e; color: #d4d4d4; border: none; resize: none; outline: none; font-family: monospace; padding: 15px; border-radius: 8px; box-sizing: border-box;">
-import socket
-
-# Birb OS - Serverless LAN UDP Messenger
-UDP_IP = "127.0.0.1"
-UDP_PORT = 5005
-MESSAGE = b"Chirp chirp! Packet incoming."
-
-print("UDP target IP:", UDP_IP)
-print("UDP target port:", UDP_PORT)
-
-sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
-                    </textarea>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+</textarea>
                 </div>
             </div>
             
             <div id="settings" class="dragable hidden">
                 <div class="drag" id="settingsheader">
-                    <img src="txt.png" alt="TxT">
+                    <i class="fa-solid fa-gear"></i>
                     <span class="wTitle">Settings</span>
                     <div class="window-controls">
                         <button type="button" onclick="minimizeSettingsWindow()">-</button>
@@ -145,7 +148,7 @@ sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
                     <p>Change the color theme and jump back to the main message.</p>
                     <div class="fav-color-container">
                         <span class="color-text">color theme: </span>
-                        <input id="colorPicker" class="copy" type="color" value="#976fb6">
+                        <input id="colorPicker" class="copy" type="color" value="#976fb6ff">
                     </div>
                     <div class="fav-color-container">
                         <span class="color-text">Bird counter: </span>
@@ -244,6 +247,23 @@ sock.sendto(MESSAGE, (UDP_IP, UDP_PORT))
                         <button type="button" class="Calc-btn" data-value="0" style="grid-column: span 2;">0</button>
                         <button type="button" class="Calc-btn" data-value=".">.</button>
                     </div>
+                </div>
+            </div>
+
+            <div id="browser" class="dragable hidden">
+                <div class="drag" id="browserheader">
+                    <i class="fa-brands fa-solid fa-chrome"></i>
+                    <span class="wTitle">Web Browser</span>
+                    <div class="window-controls">
+                        <button type="button" onclick="minimizeBrowserWindow()">-</button>
+                        <button type="button" onclick="toggleBrowserFullscreen()">[]</button>
+                        <button type="button" onclick="closeBrowserWindow()">x</button>
+                    </div>
+                </div>
+                
+                <div class="text frosted-glass" style="height: calc(100% - 40px); display: flex; flex-direction: column; gap: 10px; padding: 15px; box-sizing: border-box;">
+                    <input id="searchbar" type="text" value="home.html">
+                    <iframe id="searchwindow" src="home.html"></iframe>
                 </div>
             </div>
         </div>

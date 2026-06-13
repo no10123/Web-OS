@@ -11,6 +11,7 @@ const viewport = document.getElementById("viewport");
 const apps = document.getElementById("apps");
 const wm = document.getElementById("welcome-msg");
 const settingsWin = document.getElementById("settings");
+const browserWin = document.getElementById("browser");
 const txtEditorWin = document.getElementById("txt-editor");
 const codeEditorWin = document.getElementById("code-editor");
 const colorPicker = document.getElementById('colorPicker');
@@ -22,6 +23,8 @@ const birdCounter = document.getElementById('bird-count');
 const birdColorCountInput = document.getElementById('bird-color-count');
 const birdColorsContainer = document.getElementById('bird-colors-container');
 const MB = document.getElementById("bird-type");
+const searchbar = document.getElementById("searchbar")
+const searchwindow = document.getElementById("searchwindow")
 
 blobLayer.style.display = "none"; // temp fix
 
@@ -38,6 +41,7 @@ let txtEditorIsFullscreen = false;
 let codeEditorIsFullscreen = false;
 let mailIsFullscreen = false;
 let calculatorIsFullscreen = false;
+let browserIsFullscreen = false;
 
 // birdie attributes
 let birds = [];
@@ -174,6 +178,11 @@ function openCalculatorWindow() { calculatorWin.classList.remove('hidden'); cent
 function closeCalculatorWindow() { calculatorWin.classList.add('hidden'); }
 function toggleCalculatorFullscreen() {calculatorIsFullscreen = toggleFullscreen(calculatorWin, calculatorIsFullscreen); }
 function minimizeCalculatorWindow() { closeCalculatorWindow(); }
+function openBrowserWindow() { browserWin.classList.remove('hidden'); centerWindow(browserWin); }
+function closeBrowserWindow() { browserWin.classList.add('hidden'); }
+function toggleBrowserFullscreen() {browserIsFullscreen = toggleFullscreen(browserWin, browserIsFullscreen); }
+function minimizeBrowserWindow() { closeBrowserWindow(); }
+
 
 // BG changer
 function updateBgImg(url) {
@@ -561,6 +570,15 @@ function setupEventListeners() {
             }
         });
     }
+
+    if (searchbar && searchwindow) {
+        searchbar.addEventListener('input', (event) => {
+            searchwindow.src = searchbar.value;
+        });
+        searchwindow.onerror = () => {
+            alert("this site is not allowed.");
+        };
+    };
 }
 
 // hire me app logic
@@ -594,6 +612,7 @@ function init() {
     dragElement(codeEditorWin);
     dragElement(mailWindow);
     dragElement(calculatorWin);
+    dragElement(browserWin);
 
     renderWallpaperExplorer();
 
@@ -629,7 +648,6 @@ function animateBirds() {
 // Start everything up
 init();
 
-// Ensure all windows are hidden at startup
 document.getElementById('welcome-msg').classList.add('hidden');
 document.getElementById('txt-editor').classList.add('hidden');
 document.getElementById('code-editor').classList.add('hidden');
