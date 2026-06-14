@@ -71,6 +71,7 @@ class AppManager {
         this.toggleFullscreen = this.toggleFullscreen.bind(this);
     }
     registerApp(element, id) {
+        const app = this.apps.get(id);
         this.apps.set(id, {
             element: element,
             isVisible: false,
@@ -90,6 +91,7 @@ class AppManager {
     }
     
     openApp(id) {
+        const app = this.apps.get(id);
         const elmnt = app.element;
         app.isVisible = true;
         app.isFullscreen = false;
@@ -101,13 +103,16 @@ class AppManager {
     }
 
     closeApp(id) {
+        const app = this.apps.get(id);
         app.element.classList.add('hidden');
         app.isVisible = false;
     }
     minApp(id) {
+        const app = this.apps.get(id);
         this.closeApp(id); //might add a task bar to reopen apps
     }
     toggleFullscreen(id) {
+        const app = this.apps.get(id);
         const elmnt = app.element;
         let newFullscreenState = !app.isFullscreen;
         app.isFullscreen = newFullscreenState;
@@ -237,38 +242,7 @@ function dragElement(elmnt) {
             elmnt.style.transform = 'none';
         };
     };
-}
-
-
-function openCodeEditorWindow() { codeEditorWin.classList.remove('hidden'); centerWindow(codeEditorWin); }
-function closeCodeEditorWindow() { codeEditorWin.classList.add('hidden'); }
-function toggleCodeEditorFullscreen() { codeEditorIsFullscreen = toggleFullscreen(codeEditorWin, codeEditorIsFullscreen); }
-function minimizeCodeEditorWindow() { closeCodeEditorWindow(); }
-function openTxtEditorWindow() { txtEditorWin.classList.remove('hidden'); centerWindow(txtEditorWin); }
-function closeTxtEditorWindow() { txtEditorWin.classList.add('hidden'); }
-function toggleTxtEditorFullscreen() { txtEditorIsFullscreen = toggleFullscreen(txtEditorWin, txtEditorIsFullscreen); }
-function minimizeTxtEditorWindow() { closeTxtEditorWindow(); }
-function openWelcomeWindow() { wm.classList.remove('hidden'); centerWindow(wm); }
-function closeWelcomeWindow() { wm.classList.add('hidden'); }
-function toggleWelcomeFullscreen() { welcomeIsFullscreen = toggleFullscreen(wm, welcomeIsFullscreen); }
-function minimizeWelcomeWindow() { closeWelcomeWindow(); }
-function openSettingsWindow() { settingsWin.classList.remove('hidden'); centerWindow(settingsWin); }
-function closeSettingsWindow() { settingsWin.classList.add('hidden'); }
-function toggleSettingsFullscreen() { settingsIsFullscreen = toggleFullscreen(settingsWin, settingsIsFullscreen); }
-function minimizeSettingsWindow() { closeSettingsWindow(); }
-function openMailWindow() {mailWindow.classList.remove('hidden');}
-function closeMailWindow() {mailWindow.classList.add('hidden'); document.getElementById('mail-body').value = '';}
-function minimizeMailWindow() {mailWindow.classList.add('hidden');}
-function toggleMailFullscreen() {mailIsFullscreen = toggleFullscreen(mailWindow, mailIsFullscreen);}
-function openCalculatorWindow() { calculatorWin.classList.remove('hidden'); centerWindow(calculatorWin); }
-function closeCalculatorWindow() { calculatorWin.classList.add('hidden'); }
-function toggleCalculatorFullscreen() {calculatorIsFullscreen = toggleFullscreen(calculatorWin, calculatorIsFullscreen); }
-function minimizeCalculatorWindow() { closeCalculatorWindow(); }
-function openBrowserWindow() { browserWin.classList.remove('hidden'); centerWindow(browserWin); }
-function closeBrowserWindow() { browserWin.classList.add('hidden'); }
-function toggleBrowserFullscreen() {browserIsFullscreen = toggleFullscreen(browserWin, browserIsFullscreen); }
-function minimizeBrowserWindow() { closeBrowserWindow(); }
-
+};
 
 // BG changer
 function updateBgImg(url) {
