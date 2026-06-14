@@ -594,6 +594,49 @@ function setupEventListeners() {
             alert("this site is not allowed.");
         };
     };
+
+    document.addEventListener("DOMContentLoaded", () => {
+        anime({
+            targets: '.bookmark',
+            translateY: [-20, 0],
+            opacity: [0, 1],
+            delay: anime.stagger(100), 
+            easing: 'spring(1, 80, 10, 0)'
+        });
+    
+        const bookmarks = document.querySelectorAll('.bookmark');
+    
+        bookmarks.forEach(btn => {
+            btn.addEventListener('mouseenter', () => {
+                anime({
+                    targets: btn,
+                    scale: 1.1,
+                    rotate: anime.random(-3, 3),
+                    easing: 'spring(1, 80, 10, 0)',
+                    duration: 400
+                });
+            });
+
+            btn.addEventListener('mouseleave', () => {
+                anime({
+                    targets: btn,
+                    scale: 1,
+                    rotate: 0,
+                    easing: 'spring(1, 50, 10, 0)',
+                    duration: 400
+                });
+            });
+    
+            btn.addEventListener('mousedown', () => {
+                anime({
+                    targets: btn,
+                    scale: 0.95,
+                    easing: 'easeOutQuint',
+                    duration: 150
+                });
+            });
+        });
+    });
 }
 
 // hire me app logic
