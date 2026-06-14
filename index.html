@@ -36,23 +36,23 @@
 
     <div id="viewport">
         <div class="apps-panel" id="apps">
-            <button class="app-launcher" type="button" onclick="openWelcomeWindow()">
+            <button class="app-launcher" type="button" onclick="AMI.openApp('welcome')">
                 <i class="fa-solid fa-file-lines fa-2x appName" style="margin-bottom: 5px;"></i>
                 <span class="appName">welcome msg</span>
             </button>
-            <button class="app-launcher" type="button" onclick="openTxtEditorWindow()">
+            <button class="app-launcher" type="button" onclick="AMI.openApp('txtEditor')">
                 <i class="fa-solid fa-file-lines fa-2x appName" style="margin-bottom: 5px;"></i>
                 <span class="appName">txt editor</span>
             </button>
-            <button class="app-launcher" type="button" onclick="openCodeEditorWindow()">
+            <button class="app-launcher" type="button" onclick="AMI.openApp('codeEditor')">
                 <i class="fa-solid fa-file-lines fa-2x appName" style="margin-bottom: 5px;"></i>
                 <span class="appName">code editor</span>
             </button>
-            <button class="app-launcher" type="button" onclick="openCalculatorWindow()">
+            <button class="app-launcher" type="button" onclick="AMI.openApp('calculator')">
                 <i class="fa-solid fa-calculator fa-2x appName" style="margin-bottom: 5px;"></i>
                 <span class="appName">calculator</span>
             </button>
-            <button class="app-launcher" type="button" onclick="openBrowserWindow()">
+            <button class="app-launcher" type="button" onclick="AMI.openApp('browser')">
                 <i class="fa-brands fa-solid fa-chrome fa-2x appName" style="margin-bottom: 5px;"></i>
                 <span class="appName">Web browser</span>
             </button>
@@ -60,11 +60,11 @@
                 <i class="fa-solid fa-envelope fa-2x appName" style="margin-bottom: 5px;"></i>
                 <span class="appName">add app</span>
             </button>
-            <button class="app-launcher" type="button" onclick="openSettingsWindow()">
+            <button class="app-launcher" type="button" onclick="AMI.openApp('settings')">
                 <i class="fa-solid fa-gear fa-2x appName" style="margin-bottom: 5px;"></i>
                 <span class="appName">settings</span>
             </button>
-            <button class="app-launcher" type="button" onclick="openMailWindow()">
+            <button class="app-launcher" type="button" onclick="AMI.openApp('mail')">
                 <i class="fa-solid fa-envelope fa-2x appName" style="margin-bottom: 5px;"></i>
                 <span class="appName">Hire Me</span>
             </button>
@@ -76,9 +76,9 @@
                     <i class="fa-solid fa-file-lines"></i>
                     <span class="wTitle">Welcome msg</span>
                     <div class="window-controls">
-                        <button type="button">-</button>
-                        <button type="button" onclick="toggleWelcomeFullscreen()">[]</button>
-                        <button type="button" onclick="closeWelcomeWindow()">x</button>
+                        <button type="button" onclick="AMI.minApp('welcome')">-</button>
+                        <button type="button" onclick="AMI.toggleFullscreen('welcome')">[]</button>
+                        <button type="button" onclick="AMI.closeApp('welcome')">x</button>
                     </div>
                 </div>
                 <div class="text frosted-glass">
@@ -96,9 +96,9 @@
                     <i class="fa-solid fa-file-lines"></i>
                     <span class="wTitle">Txt Editor</span>
                     <div class="window-controls">
-                        <button type="button" onclick="minimizeTxtEditorWindow()">-</button>
-                        <button type="button" onclick="toggleTxtEditorFullscreen()">[]</button>
-                        <button type="button" onclick="closeTxtEditorWindow()">x</button>
+                        <button type="button" onclick="AMI.minApp('txtEditor')">-</button>
+                        <button type="button" onclick="AMI.toggleFullscreen('txtEditor')">[]</button>
+                        <button type="button" onclick="AMI.closeApp('txtEditor')">x</button>
                     </div>
                 </div>
                 <div class="text frosted-glass" style="height: calc(100% - 40px); display: flex; flex-direction: column; box-sizing: border-box;">
@@ -111,9 +111,9 @@
                     <i class="fa-solid fa-file-lines"></i>
                     <span class="wTitle">Code Editor</span>
                     <div class="window-controls">
-                        <button type="button" onclick="minimizeCodeEditorWindow()">-</button>
-                        <button type="button" onclick="toggleCodeEditorFullscreen()">[]</button>
-                        <button type="button" onclick="closeCodeEditorWindow()">x</button>
+                        <button type="button" onclick="AMI.minApp('codeEditor')">-</button>
+                        <button type="button" onclick="AMI.toggleFullscreen('codeEditor')">[]</button>
+                        <button type="button" onclick="AMI.closeApp('codeEditor')">x</button>
                     </div>
                 </div>
                 <div class="text frosted-glass" style="height: calc(100% - 40px); padding: 10px; box-sizing: border-box;">
@@ -138,9 +138,9 @@
                     <i class="fa-solid fa-gear"></i>
                     <span class="wTitle">Settings</span>
                     <div class="window-controls">
-                        <button type="button" onclick="minimizeSettingsWindow()">-</button>
-                        <button type="button" onclick="toggleSettingsFullscreen()">[]</button>
-                        <button type="button" onclick="closeSettingsWindow()">x</button>
+                        <button type="button" onclick="AMI.minApp('settings')">-</button>
+                        <button type="button" onclick="AMI.toggleFullscreen('settings')">[]</button>
+                        <button type="button" onclick="AMI.closeApp('settings')">x</button>
                     </div>
                 </div>
                 <div class="text frosted-glass">
@@ -190,9 +190,9 @@
                     <i class="fa-solid fa-envelope"></i>
                     <span class="wTitle">Birb Mail - Hire Me</span>
                     <div class="window-controls">
-                        <button type="button" onclick="minimizeMailWindow()">-</button>
-                        <button type="button" onclick="toggleMailFullscreen()">[]</button>
-                        <button type="button" onclick="closeMailWindow()">x</button>
+                        <button type="button" onclick="AMI.minApp('mail')">-</button>
+                        <button type="button" onclick="AMI.toggleFullscreen('mail')">[]</button>
+                        <button type="button" onclick="AMI.closeApp('mail')">x</button>
                     </div>
                 </div>
                 
@@ -214,9 +214,9 @@
                     <i class="fa-solid fa-calculator"></i>
                     <span class="wTitle">Calculator</span>
                     <div class="window-controls">
-                        <button type="button" onclick="minimizeCalculatorWindow()">-</button>
-                        <button type="button" onclick="toggleCalculatorFullscreen()">[]</button>
-                        <button type="button" onclick="closeCalculatorWindow()">x</button>
+                        <button type="button" onclick="AMI.minApp('calculator')">-</button>
+                        <button type="button" onclick="AMI.toggleFullscreen('calculator')">[]</button>
+                        <button type="button" onclick="AMI.closeApp('calculator')">x</button>
                     </div>
                 </div>
                 
@@ -255,9 +255,9 @@
                     <i class="fa-brands fa-solid fa-chrome"></i>
                     <span class="wTitle">Web Browser</span>
                     <div class="window-controls">
-                        <button type="button" onclick="minimizeBrowserWindow()">-</button>
-                        <button type="button" onclick="toggleBrowserFullscreen()">[]</button>
-                        <button type="button" onclick="closeBrowserWindow()">x</button>
+                        <button type="button" onclick="AMI.minApp('browser')">-</button>
+                        <button type="button" onclick="AMI.toggleFullscreen('browser')">[]</button>
+                        <button type="button" onclick="AMI.closeApp('browser')">x</button>
                     </div>
                 </div>
                 

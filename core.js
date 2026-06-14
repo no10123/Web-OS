@@ -63,6 +63,84 @@ const calcDisplay = document.getElementById("calc-display");
 const calcButtons = document.getElementById("calculator-buttons");
 let currentCalcString = "";
 
+//window maneger
+class AppManager {
+    constructor() {
+        this.apps = new Map();
+        this.centerWindow = this.centerWindow.bind(this);
+        this.toggleFullscreen = this.toggleFullscreen.bind(this);
+    }
+    registerApp(element, id) {
+        this.apps.set(id, {
+            element: element,
+            isVisible: false,
+            isFullscreen: false
+        });
+    }
+    centerWindow(id) {
+        const app = this.apps.get(id);
+        const elmnt = app.element;
+        const viewportRect = viewport.getBoundingClientRect();
+        const windowRect = elmnt.getBoundingClientRect();
+        const left = Math.max(15, Math.round((viewportRect.width - windowRect.width) / 2));
+        const top = Math.max(15, Math.round((viewportRect.height - windowRect.height) / 2));
+        elmnt.style.left = `${left}px`;
+        elmnt.style.top = `${top}px`;
+        elmnt.style.transform = 'none';
+    }
+    
+    openApp(id) {
+        const elmnt = app.element;
+        app.isVisible = true;
+        app.isFullscreen = false;
+        elmnt.classList.remove('hidden', 'fullscreen');
+        elmnt.style.width = '';
+        elmnt.style.height = '';
+        elmnt.style.zIndex = '';
+        this.centerWindow(id);
+    }
+
+    closeApp(id) {
+        app.element.classList.add('hidden');
+        app.isVisible = false;
+    }
+    minApp(id) {
+        this.closeApp(id); //might add a task bar to reopen apps
+    }
+    toggleFullscreen(id) {
+        const elmnt = app.element;
+        let newFullscreenState = !app.isFullscreen;
+        app.isFullscreen = newFullscreenState;
+        elmnt.classList.toggle('fullscreen', newFullscreenState);
+        if (newFullscreenState) {
+            elmnt.dataset.prevLeft = elmnt.style.left;
+            elmnt.dataset.prevTop = elmnt.style.top;
+            elmnt.style.left = '0px';
+            elmnt.style.top = '0px';
+            elmnt.style.width = '100%';
+            elmnt.style.height = '100%';
+            elmnt.style.zIndex = '9999';
+        } else {
+            elmnt.style.width = '';
+            elmnt.style.height = '';
+            elmnt.style.zIndex = '';
+            if (elmnt.dataset.prevLeft && elmnt.dataset.prevTop) {
+                elmnt.style.left = elmnt.dataset.prevLeft;
+                elmnt.style.top = elmnt.dataset.prevTop;
+            } else {
+                this.centerWindow(id); 
+            }
+        }
+    }
+    isAppVisible(id) {
+        const app = this.apps.get(id);
+        return app ? !app.element.classList.contains('hidden') : false;
+    }
+}
+
+const AMI = new AppManager();
+window.AppManager = AMI;
+
 // basic stuff
 function updateTime() {
     currentTime = new Date().toLocaleString();
@@ -83,13 +161,11 @@ function resize() {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
     
-    if (!wm.classList.contains('hidden') && !welcomeIsFullscreen) centerWindow(wm);
-    if (!settingsWin.classList.contains('hidden') && !settingsIsFullscreen) centerWindow(settingsWin);
-    if (!txtEditorWin.classList.contains('hidden') && !txtEditorIsFullscreen) centerWindow(txtEditorWin);
-    if (!codeEditorWin.classList.contains('hidden') && !codeEditorIsFullscreen) centerWindow(codeEditorWin);
-    if (!mailWindow.classList.contains('hidden') && !mailIsFullscreen) centerWindow(mailWindow);
-    if (!browserWin.classList.contains('hidden') && !browserIsFullscreen) centerWindow(browserWin);
-    if (!calculatorWin.classList.contains('hidden') && !calculatorIsFullscreen) centerWindow(calculatorWin);
+    AMI.apps.forEach((app, id) => {
+        if (AMI.isAppVisible(id) && !app.isFullscreen) {
+            AMI.centerWindow(id);
+        }
+    });
 }
 
 function getWindowBounds(elmnt) {
@@ -664,13 +740,19 @@ function init() {
     if (!wm.classList.contains('hidden')) centerWindow(wm);
     if (!settingsWin.classList.contains('hidden')) centerWindow(settingsWin);
     
-    dragElement(wm);
-    dragElement(settingsWin);
-    dragElement(txtEditorWin);
-    dragElement(codeEditorWin);
-    dragElement(mailWindow);
-    dragElement(calculatorWin);
-    dragElement(browserWin);
+    const systemApps = [
+        { e: wm,            n: 'welcome' },
+        { e: settingsWin,   n: 'settings' },
+        { e: txtEditorWin,  n: 'txtEditor' },
+        { e: codeEditorWin, n: 'codeEditor' },
+        { e: mailWindow,    n: 'mail' },
+        { e: calculatorWin, n: 'calculator' },
+        { e: browserWin,    n: 'browser' }
+    ];
+    systemApps.forEach(({ e, n }) => {
+        AMI.registerApp(e,n);
+        dragElement(e);
+    });
 
     renderWallpaperExplorer();
 
