@@ -736,8 +736,8 @@ function init() {
         loginBypass,
         hideLogin,
         showLoginError,
-        openWelcomeWindow: openWelcomeWindow,
-        openSettingsWindow: openSettingsWindow
+        openWelcomeWindow: () => AMI.openApp('welcome'),
+        openSettingsWindow: () => AMI.openApp('settings')
     };
 
     requestAnimationFrame(animateBirds);
