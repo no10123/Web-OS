@@ -772,3 +772,126 @@ body.dark-mode .appName {
     color: var(--mantle);
     border-color: var(--mauve);
 }
+
+.app-icon-margin {
+    margin-bottom: 5px;
+}
+
+.flex-col-window {
+    height: calc(100% - 40px);
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+}
+
+.txt-editor-area {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    color: inherit;
+    resize: none;
+    outline: none;
+    font-family: inherit;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.code-editor-container {
+    height: calc(100% - 40px);
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.code-editor-area {
+    width: 100%;
+    height: 100%;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    border: none;
+    resize: none;
+    outline: none;
+    font-family: monospace;
+    padding: 15px;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+.bg-selection-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: calc(100% - 48px);
+    box-sizing: border-box;
+    gap: 10px;
+}
+
+.app-window-content {
+    height: calc(100% - 40px);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 15px;
+    box-sizing: border-box;
+}
+
+.mail-to-text {
+    margin: 0;
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.mail-input {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: inherit;
+    padding: 8px;
+    border-radius: 4px;
+    font-family: inherit;
+    outline: none;
+}
+
+.mail-textarea {
+    flex-grow: 1;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: inherit;
+    resize: none;
+    outline: none;
+    font-family: inherit;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.send-email-btn {
+    padding: 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    align-items: center;
+}
+
+.calc-display-area {
+    background: rgba(0, 0, 0, 0.2);
+    padding: 10px;
+    text-align: right;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 1.2em;
+}
+
+.calc-button-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+}
+
+.calc-btn-tall {
+    grid-row: span 2;
+}
+
+.calc-btn-wide {
+    grid-column: span 2;
+}

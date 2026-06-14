@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="cat.css">
     <link rel="stylesheet" href="cursor.css">
     <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="extracted.css">
 </head>
 <body class="dark-mode">
     <div class="blob-layer" aria-hidden="true"></div>
@@ -37,35 +38,35 @@
     <div id="viewport">
         <div class="apps-panel" id="apps">
             <button class="app-launcher" type="button" onclick="AMI.openApp('welcome')">
-                <i class="fa-solid fa-file-lines fa-2x appName" style="margin-bottom: 5px;"></i>
+                <i class="fa-solid fa-file-lines fa-2x appName app-icon-margin"></i>
                 <span class="appName">welcome msg</span>
             </button>
             <button class="app-launcher" type="button" onclick="AMI.openApp('txtEditor')">
-                <i class="fa-solid fa-file-lines fa-2x appName" style="margin-bottom: 5px;"></i>
+                <i class="fa-solid fa-file-lines fa-2x appName app-icon-margin"></i>
                 <span class="appName">txt editor</span>
             </button>
             <button class="app-launcher" type="button" onclick="AMI.openApp('codeEditor')">
-                <i class="fa-solid fa-file-lines fa-2x appName" style="margin-bottom: 5px;"></i>
+                <i class="fa-solid fa-file-lines fa-2x appName app-icon-margin"></i>
                 <span class="appName">code editor</span>
             </button>
             <button class="app-launcher" type="button" onclick="AMI.openApp('calculator')">
-                <i class="fa-solid fa-calculator fa-2x appName" style="margin-bottom: 5px;"></i>
+                <i class="fa-solid fa-calculator fa-2x appName app-icon-margin"></i>
                 <span class="appName">calculator</span>
             </button>
             <button class="app-launcher" type="button" onclick="AMI.openApp('browser')">
-                <i class="fa-brands fa-solid fa-chrome fa-2x appName" style="margin-bottom: 5px;"></i>
+                <i class="fa-brands fa-solid fa-chrome fa-2x appName app-icon-margin"></i>
                 <span class="appName">Web browser</span>
             </button>
             <button class="app-launcher" type="button">
-                <i class="fa-solid fa-envelope fa-2x appName" style="margin-bottom: 5px;"></i>
+                <i class="fa-solid fa-envelope fa-2x appName app-icon-margin"></i>
                 <span class="appName">add app</span>
             </button>
             <button class="app-launcher" type="button" onclick="AMI.openApp('settings')">
-                <i class="fa-solid fa-gear fa-2x appName" style="margin-bottom: 5px;"></i>
+                <i class="fa-solid fa-gear fa-2x appName app-icon-margin"></i>
                 <span class="appName">settings</span>
             </button>
             <button class="app-launcher" type="button" onclick="AMI.openApp('mail')">
-                <i class="fa-solid fa-envelope fa-2x appName" style="margin-bottom: 5px;"></i>
+                <i class="fa-solid fa-envelope fa-2x appName app-icon-margin"></i>
                 <span class="appName">Hire Me</span>
             </button>
         </div>
@@ -101,8 +102,8 @@
                         <button type="button" onclick="AMI.closeApp('txtEditor')">x</button>
                     </div>
                 </div>
-                <div class="text frosted-glass" style="height: calc(100% - 40px); display: flex; flex-direction: column; box-sizing: border-box;">
-                    <textarea style="width: 100%; height: 100%; background: transparent; border: none; color: inherit; resize: none; outline: none; font-family: inherit; padding: 10px; box-sizing: border-box;" placeholder="Start typing your notes here..."></textarea>
+                <div class="text frosted-glass flex-col-window">
+                    <textarea class="txt-editor-area" placeholder="Start typing your notes here..."></textarea>
                 </div>
             </div>
 
@@ -116,8 +117,8 @@
                         <button type="button" onclick="AMI.closeApp('codeEditor')">x</button>
                     </div>
                 </div>
-                <div class="text frosted-glass" style="height: calc(100% - 40px); padding: 10px; box-sizing: border-box;">
-                    <textarea spellcheck="false" style="width: 100%; height: 100%; background: #1e1e1e; color: #d4d4d4; border: none; resize: none; outline: none; font-family: monospace; padding: 15px; border-radius: 8px; box-sizing: border-box;">
+                <div class="text frosted-glass code-editor-container">
+                    <textarea spellcheck="false" class="code-editor-area">
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -170,7 +171,7 @@
                     <div class="fav-color-container" id="bird-colors-container">
                         <span class="color-text">Bird color list: </span>
                     </div>
-                    <div class="fav-color-container" style="display: flex; flex-direction: column; align-items: flex-start; width: calc(100% - 48px); box-sizing: border-box; gap: 10px;">
+                    <div class="fav-color-container bg-selection-container">
                         <span class="color-text"><i class="fa-solid fa-images"></i> BG selection: </span>
                         <div class="explorer-container">
                             <div id="explorer-header" class="explorer-header"></div>
@@ -196,14 +197,14 @@
                     </div>
                 </div>
                 
-                <div class="text frosted-glass" style="height: calc(100% - 40px); display: flex; flex-direction: column; gap: 10px; padding: 15px; box-sizing: border-box;">
-                    <p style="margin: 0; font-size: 0.9em; opacity: 0.8;">To: reimacdougall@gmail.com</p>
+                <div class="text frosted-glass app-window-content">
+                    <p class="mail-to-text">To: reimacdougall@gmail.com</p>
                     
-                    <input type="text" id="mail-subject" placeholder="Subject (e.g., Job Opportunity)" value="Interested in your work!" style="background: transparent; border: 1px solid rgba(255,255,255,0.2); color: inherit; padding: 8px; border-radius: 4px; font-family: inherit; outline: none;">
+                    <input type="text" id="mail-subject" placeholder="Subject (e.g., Job Opportunity)" value="Interested in your work!" class="mail-input">
                     
-                    <textarea id="mail-body" placeholder="Write your message here..." style="flex-grow: 1; background: transparent; border: 1px solid rgba(255,255,255,0.2); color: inherit; resize: none; outline: none; font-family: inherit; padding: 10px; border-radius: 4px;"></textarea>
+                    <textarea id="mail-body" placeholder="Write your message here..." class="mail-textarea"></textarea>
                     
-                    <button onclick="sendEmailViaMailto()" class="copy pointer" style="padding: 10px; border-radius: 4px; font-weight: bold; display: flex; justify-content: center; gap: 8px; align-items: center;">
+                    <button onclick="sendEmailViaMailto()" class="copy pointer send-email-btn">
                         Send Email <i class="fa-solid fa-paper-plane"></i>
                     </button>
                 </div>
@@ -220,10 +221,10 @@
                     </div>
                 </div>
                 
-                <div class="text frosted-glass" style="height: calc(100% - 40px); display: flex; flex-direction: column; gap: 10px; padding: 15px; box-sizing: border-box;">
-                    <div id="calc-display" style="background: rgba(0,0,0,0.2); padding: 10px; text-align: right; border-radius: 4px; font-family: monospace; font-size: 1.2em;">0</div>
+                <div class="text frosted-glass app-window-content">
+                    <div id="calc-display" class="calc-display-area">0</div>
                     
-                    <div id="calculator-buttons" class="calc-grid" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px;">
+                    <div id="calculator-buttons" class="calc-grid calc-button-grid">
                         <button type="button" class="Calc-btn" data-value="AC">AC</button>
                         <button type="button" class="Calc-btn" data-value="%">%</button>
                         <button type="button" class="Calc-btn" data-value="/">/</button>
@@ -242,9 +243,9 @@
                         <button type="button" class="Calc-btn" data-value="1">1</button>
                         <button type="button" class="Calc-btn" data-value="2">2</button>
                         <button type="button" class="Calc-btn" data-value="3">3</button>
-                        <button type="button" class="Calc-btn" data-value="=" style="grid-row: span 2;">=</button>
+                        <button type="button" class="Calc-btn calc-btn-tall" data-value="=">=</button>
                         
-                        <button type="button" class="Calc-btn" data-value="0" style="grid-column: span 2;">0</button>
+                        <button type="button" class="Calc-btn calc-btn-wide" data-value="0">0</button>
                         <button type="button" class="Calc-btn" data-value=".">.</button>
                     </div>
                 </div>
@@ -261,7 +262,7 @@
                     </div>
                 </div>
                 
-                <div class="text frosted-glass" style="height: calc(100% - 40px); display: flex; flex-direction: column; gap: 10px; padding: 15px; box-sizing: border-box;">
+                <div class="text frosted-glass app-window-content">
                     <input id="searchbar" type="text" value="home.html">
                     <div id="bookmark-bar">
                         <button class="bookmark" onclick="visitSite('home.html')">Home</button>
@@ -275,9 +276,6 @@
                     <iframe id="searchwindow" src="home.html" height="1000"></iframe>
                 </div>
             </div>
-            </div>
-        </div>
-
         </div>
     </div>
 
