@@ -263,7 +263,15 @@
                 
                 <div class="text frosted-glass" style="height: calc(100% - 40px); display: flex; flex-direction: column; gap: 10px; padding: 15px; box-sizing: border-box;">
                     <input id="searchbar" type="text" value="home.html">
-                    <iframe id="searchwindow" src="home.html"></iframe>
+                    <div id="bookmark-bar">
+                        <button class="bookmark" onclick="visitSite('home.html')">Home</button>
+                        <button class="bookmark" onclick="visitSite('https://startmyeducation.net/signin.html')">Games</button>
+                        <button class="bookmark" onclick="visitSite('https://excalidraw.com/')">Exacalidraw</button>
+                        <button class="bookmark" onclick="visitSite('https://www.desmos.com/')">Desmos</button>
+                        <button class="bookmark" onclick="visitSite('https://animejs.com/easing-editor/spring/default')">AnimeJs</button>
+                        <button class="bookmark" onclick="visitSite('https://reactbits.dev/')">React bits</button>
+                    </div>
+                    <iframe id="searchwindow" src="home.html" height="1000"></iframe>
                 </div>
             </div>
             </div>

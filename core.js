@@ -512,8 +512,13 @@ const actions = {
         }
     },
     addBirdColor: () => setBirdColorCount(Math.min(birdColors.length + 1, 8)),
-    removeBirdColor: () => setBirdColorCount(Math.max(birdColors.length - 1, 1))
+    removeBirdColor: () => setBirdColorCount(Math.max(birdColors.length - 1, 1)),
 };
+
+function visitSite(url) {
+    searchwindow.src = url
+    searchbar.value  = url
+}
 
 function setupEventListeners() {
     window.addEventListener('mousemove', (event) => {
