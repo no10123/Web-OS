@@ -20,7 +20,7 @@ const MB = document.getElementById("bird-type");
 const searchbar = document.getElementById("searchbar");
 const searchwindow = document.getElementById("searchwindow");
 
-blobLayer.style.display = "none"; // temp fix
+blobLayer.style.display = "none";
 
 let currentTime = new Date().toLocaleString();
 let width, height;
@@ -28,7 +28,6 @@ let mouseX = -1000;
 let mouseY = -1000;
 let isMouseDown = false;
 
-// birdie attributes
 let birds = [];
 let birdCount = 75;
 const defaultBirdColors = ['#b4befe', '#cba6f7', '#cdd6f4'];
@@ -42,12 +41,17 @@ let frameCount = -1;
 let explorerPath = { theme: null, category: null };
 let favorites = JSON.parse(localStorage.getItem('bgFavorites')) || [];
 
-// calculator vars
 const calcDisplay = document.getElementById("calc-display");
 const calcButtons = document.getElementById("calculator-buttons");
 let currentCalcString = "";
 
-// window manager
+let isSelecting = false;
+let selectionBox = null;
+let startSelX = 0;
+let startSelY = 0;
+let selectedApps = new Set();
+let selectedWindows = new Set();
+
 class AppManager {
     constructor() {
         this.apps = new Map();
@@ -61,13 +65,14 @@ class AppManager {
             isFullscreen: false
         });
     }
-    centerWindow(id) {
+    centerWindow(id, offsetMultiplier = 0) {
         const app = this.apps.get(id);
         const elmnt = app.element;
         const viewportRect = document.getElementById("viewport").getBoundingClientRect();
         const windowRect = elmnt.getBoundingClientRect();
-        const left = Math.max(15, Math.round((viewportRect.width - windowRect.width) / 2));
-        const top = Math.max(15, Math.round((viewportRect.height - windowRect.height) / 2));
+        const offset = offsetMultiplier * 25;
+        const left = Math.max(15, Math.round((viewportRect.width - windowRect.width) / 2)) + offset;
+        const top = Math.max(15, Math.round((viewportRect.height - windowRect.height) / 2)) + offset;
         elmnt.style.left = `${left}px`;
         elmnt.style.top = `${top}px`;
         elmnt.style.transform = 'none';
@@ -75,14 +80,33 @@ class AppManager {
     
     openApp(id) {
         const app = this.apps.get(id);
-        const elmnt = app.element;
+    
+        if (!app) {
+            console.error(
+                `no "${id}" app`
+            );
+            return;
+        }
+    
+        if (app.isVisible) {
+            return;
+        }
+    
         app.isVisible = true;
-        app.isFullscreen = false;
+    
+        app.element.classList.remove('hidden');
+    
+        this.centerWindow(id);
         elmnt.classList.remove('hidden', 'fullscreen');
         elmnt.style.width = '';
         elmnt.style.height = '';
         elmnt.style.zIndex = '';
-        this.centerWindow(id);
+        
+        let visibleCount = 0;
+        this.apps.forEach(a => {
+            if (a.isVisible) visibleCount++;
+        });
+        this.centerWindow(id, visibleCount - 1);
     }
 
     closeApp(id) {
@@ -91,7 +115,7 @@ class AppManager {
         app.isVisible = false;
     }
     minApp(id) {
-        this.closeApp(id); //might add a task bar to reopen apps
+        this.closeApp(id);
     }
     toggleFullscreen(id) {
         const app = this.apps.get(id);
@@ -127,9 +151,9 @@ class AppManager {
 }
 
 const AMI = new AppManager();
+window.AMI = AMI;
 window.AppManager = AMI;
 
-// basic stuff
 function updateTime() {
     currentTime = new Date().toLocaleString();
     if (timeText) timeText.textContent = `Time: ${currentTime}`;
@@ -144,7 +168,6 @@ function hexToRGBA(hex, alpha = 0.35) {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 }
 
-// window stuff
 function resize() {
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
@@ -183,9 +206,18 @@ function dragElement(elmnt) {
             elmnt.style.transform = 'none';
         };
     };
-};
+}
 
-// BG changer
+function setupAppLauncher(appIcon, appId) {
+    appIcon.addEventListener('click', (e) => {
+        if (e.button !== 0) return; 
+        
+        if (appId) {
+            AMI.openApp(appId);
+        }
+    });
+}
+
 function updateBgImg(url) {
     if (!url || url === "none") {
         document.body.style.backgroundImage = "none";
@@ -281,7 +313,7 @@ function renderWallpaperExplorer() {
 }
 
 function createExplorerNode(name, iconClass, clickCallback, type="btn", dblClickCallback = null) {
-    const item = document.createElement((type == "btn") ? 'button' : 'div')
+    const item = document.createElement((type == "btn") ? 'button' : 'div');
     item.className = 'explorer-item pointer';
     item.style.border = 'none';
     if (type == "btn") {
@@ -325,19 +357,19 @@ function handleExplorerBack() {
     renderWallpaperExplorer();
 }
 
-// BIRD
+//BIRB
 const birdStates = [
-    (x, y, X, Y) => ({ dx: 30, dy: 20 * Math.sin(X) }),                                      // m = 1
-    (x, y, X, Y) => ({ dx: Math.cos(Y * 0.02) * 2, dy: Math.sin(X * 0.02) * 2 }),            // m = 2
-    (x, y, X, Y) => ({ dx: (Math.sin(Y * 0.01) * 3) + (Math.sin(y * 0.03) * 1), dy: (Math.sin(X * 0.01) * 3) + (Math.cos(x * 0.05) * 2) }), // m = 3
-    (x, y, X, Y) => ({ dx: Math.cos(Y) * 8, dy: Math.sin(X) * 8 }),                          // m = 4
-    (x, y, X, Y) => ({ dx: 8, dy: Math.tan(X * 0.01) * 4 }),                                 // m = 5
-    (x, y, X, Y) => ({ dx: Math.cos(Y) * 8, dy: Math.sin(X) * 8 }),                          // m = 6
-    (x, y) => {                                                                              // m = 7 (Mouse Pull)
+    (x, y, X, Y) => ({ dx: 30, dy: 20 * Math.sin(X) }),                                      
+    (x, y, X, Y) => ({ dx: Math.cos(Y * 0.02) * 2, dy: Math.sin(X * 0.02) * 2 }),            
+    (x, y, X, Y) => ({ dx: (Math.sin(Y * 0.01) * 3) + (Math.sin(y * 0.03) * 1), dy: (Math.sin(X * 0.01) * 3) + (Math.cos(x * 0.05) * 2) }), 
+    (x, y, X, Y) => ({ dx: Math.cos(Y) * 8, dy: Math.sin(X) * 8 }),                          
+    (x, y, X, Y) => ({ dx: 8, dy: Math.tan(X * 0.01) * 4 }),                                 
+    (x, y, X, Y) => ({ dx: Math.cos(Y) * 8, dy: Math.sin(X) * 8 }),                          
+    (x, y) => {                                                                             
         let pull = isMouseDown ? 0.05 : 0.01;
         return { dx: -(x - mouseX) * pull, dy: -(y - mouseY) * pull };
     },
-    (x, y) => {                                                                              // m = 8 (Mouse Repel)
+    (x, y) => {                                                                             
         let dx = x - mouseX;
         let dy = y - mouseY;
         let distance = Math.sqrt(dx**2 + dy**2);
@@ -441,7 +473,6 @@ function setBirdColorCount(nextCount) {
     updateBirdColors();
 }
 
-// stuff that gets triggered
 function showLoginError(message) {
     if(loginError) loginError.textContent = message;
 }
@@ -468,8 +499,145 @@ function hideLogin() {
     if(loginForm) loginForm.reset();
 }
 
+function parseAppHTML(htmlText) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlText, "text/html");
+
+    return {
+        title:
+            doc.querySelector("title")?.textContent ||
+            "Untitled App",
+
+        icon:
+            doc.querySelector(
+                'meta[name="app-icon"]'
+            )?.content ||
+            "fa-file",
+
+        width:
+            parseInt(
+                doc.querySelector(
+                    'meta[name="app-width"]'
+                )?.content
+            ) || 700,
+
+        height:
+            parseInt(
+                doc.querySelector(
+                    'meta[name="app-height"]'
+                )?.content
+            ) || 500,
+
+        author:
+            doc.querySelector(
+                'meta[name="app-author"]'
+            )?.content ||
+            "Unknown",
+
+        version:
+            doc.querySelector(
+                'meta[name="app-version"]'
+            )?.content ||
+            "1.0.0",
+
+        styles:
+            [...doc.querySelectorAll("style")]
+                .map(s => s.textContent)
+                .join("\n"),
+
+        scripts:
+            [...doc.querySelectorAll("script")]
+                .map(s => s.textContent),
+
+        body:
+            doc.body.innerHTML
+    };
+}
+
+async function loadAppFile(file) {
+    const text = await file.text();
+    const app = parseAppHTML(text);
+    createDynamicApp(app);
+}
+
+function createDynamicApp(app) {
+    const id = app.title.toLowerCase().replace(/\s+/g, "-");
+    // launcher
+    const launcher = document.createElement("button");
+    launcher.className = "app-launcher";
+    launcher.innerHTML = `
+        <i class="fa-solid ${app.icon}
+           fa-2x appName app-icon-margin"></i>
+
+        <span class="appName">
+            ${app.title}
+        </span>`;
+    launcher.onclick = () => AMI.openApp(id);
+    document.getElementById("apps").appendChild(launcher);
+
+    // window
+
+    const windowEl = document.createElement("div");
+    windowEl.className = "dragable hidden";
+    windowEl.id = id;
+    windowEl.style.width = `${app.width}px`;
+    windowEl.innerHTML = `
+        <div class="drag">
+            <i class="fa-solid ${app.icon}"></i>
+
+            <span class="wTitle">
+                ${app.title}
+            </span>
+
+            <div class="window-controls">
+                <button onclick="AMI.minApp('${id}')">-</button>
+                <button onclick="AMI.toggleFullscreen('${id}')">[]</button>
+                <button onclick="AMI.closeApp('${id}')">x</button>
+            </div>
+        </div>
+
+        <div class="text frosted-glass flex-col-window" id="${id}-Window">
+            ${app.body}
+        </div>`;
+
+    document.getElementById("windows").appendChild(windowEl);
+    injectAppStyles(id, app.styles);
+    runAppScripts(id, app.scripts);
+    makeWindowDraggable(windowEl);
+}
+
+function injectAppStyles(id, css) {
+    if (!css.trim()) return;
+    injectScopedStyles(appId, app.styles);
+}
+
+function scopeCSS(appId, css) {
+    return css.split("}").map(rule => {
+            const parts = rule.split("{");
+            if (parts.length < 2) return "";
+            let selector = parts[0].trim();
+            let body = parts[1];
+            if (!selector) return "";
+            selector = `#${appId}-Window ${selector}`;
+            return `${selector} { ${body} }`;
+        }).join("\n");
+}
+
+function injectScopedStyles(appId, cssText) {
+    const style = document.createElement("style");
+    style.textContent = scopeCSS(appId, cssText);
+    document.head.appendChild(style);
+}
+
+function runAppScripts(id, scripts) {
+    scripts.forEach(code => {
+        const script = document.createElement("script");
+        script.textContent = code;
+        document.body.appendChild(script);
+    });
+}
+
 const actions = {
-    // general controls
     toggleLogin: () => {
         if (loginOverlay.classList.contains('active')) hideLogin();
         else {
@@ -484,7 +652,6 @@ const actions = {
         }
     },
 
-    // Bird controls
     copyColor: async () => await navigator.clipboard.writeText("#a6e3a1"),
     nextBirdType: () => { mb = (mb % maxM) + 1; if(MB) MB.textContent = mb; },
     randomBirdType: () => { mb = Math.ceil(Math.random() * maxM); if(MB) MB.textContent = mb; },
@@ -522,6 +689,17 @@ function setupEventListeners() {
         if (target && actions[target.dataset.action]) {
             actions[target.dataset.action](target);
         }
+    });
+
+    document
+    .getElementById("appUpload")
+    .addEventListener("change", e => {
+
+        const file = e.target.files[0];
+
+        if (!file) return;
+
+        loadAppFile(file);
     });
 
     if (birdCounter) {
@@ -583,9 +761,9 @@ function setupEventListeners() {
         searchwindow.onerror = () => {
             alert("this site is not allowed.");
         };
-    };
+    }
 
-    document.addEventListener("DOMContentLoaded", () => {
+    const initAnime = () => {
         anime({
             targets: '.bookmark',
             translateY: [-20, 0],
@@ -626,10 +804,92 @@ function setupEventListeners() {
                 });
             });
         });
+    };
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initAnime);
+    } else {
+        initAnime();
+    }
+
+    window.addEventListener('mousedown', (e) => {
+        if (e.target.closest('.dragable') || e.target.closest('.app-launcher') || e.target.closest('#settings')) {
+            return; 
+        }
+    
+        isSelecting = true;
+        startSelX = e.clientX;
+        startSelY = e.clientY;
+    
+        selectedApps.forEach(app => app.classList.remove('selected'));
+        selectedApps.clear();
+    
+        selectionBox = document.createElement('div');
+        selectionBox.classList.add('selection-box');
+        selectionBox.style.left = `${startSelX}px`;
+        selectionBox.style.top = `${startSelY}px`;
+        document.body.appendChild(selectionBox);
     });
+    
+    window.addEventListener('mousemove', (e) => {
+        if (!isSelecting || !selectionBox) return;
+    
+        const currentX = e.clientX;
+        const currentY = e.clientY;
+        const left = Math.min(startSelX, currentX);
+        const top = Math.min(startSelY, currentY);
+        const width = Math.abs(currentX - startSelX);
+        const height = Math.abs(currentY - startSelY);
+    
+        selectionBox.style.left = `${left}px`;
+        selectionBox.style.top = `${top}px`;
+        selectionBox.style.width = `${width}px`;
+        selectionBox.style.height = `${height}px`;
+    
+        const boxRect = selectionBox.getBoundingClientRect();
+        
+        document.querySelectorAll('.app-launcher').forEach(appEl => {
+            const appRect = appEl.getBoundingClientRect();
+            
+            if (
+                boxRect.left < appRect.right &&
+                boxRect.right > appRect.left &&
+                boxRect.top < appRect.bottom &&
+                boxRect.bottom > appRect.top
+            ) {
+                appEl.classList.add('selected');
+                selectedApps.add(appEl);
+            } else {
+                appEl.classList.remove('selected');
+                selectedApps.delete(appEl);
+            }
+        });
+    });
+    
+    window.addEventListener('mouseup', () => {
+        if (isSelecting) {
+            isSelecting = false;
+            if (selectionBox) {
+                selectionBox.remove();
+                selectionBox = null;
+            }
+        }
+    });
+
+    function cancelSelection() {
+        if (isSelecting) {
+            isSelecting = false;
+            if (selectionBox) {
+                selectionBox.remove();
+                selectionBox = null;
+            }
+        }
+    }
+    
+    window.addEventListener('contextmenu', cancelSelection);
+    window.addEventListener('mouseleave', cancelSelection);
 }
 
-// send logic
 function sendEmailViaMailto() {
     const emailAddress = "reimacdougall@gmail.com";
     const subject = document.getElementById('mail-subject').value;
@@ -647,13 +907,18 @@ function init() {
     if(birdCounter) birdCounter.value = String(birdCount);
     updateBirdColors();
 
+    let visibleIndex = 0;
     systemApps.forEach(({ n }) => {
         const appElement = document.getElementById(n);
+        
+        console.log("debug: ", n, appElement);
+        
         if (appElement) {
             AMI.registerApp(appElement, n);
             dragElement(appElement);
             if (!appElement.classList.contains('hidden')) {
-                AMI.centerWindow(n);
+                AMI.centerWindow(n, visibleIndex);
+                visibleIndex++;
             }
         }
     });
@@ -689,5 +954,4 @@ function animateBirds() {
     requestAnimationFrame(animateBirds);
 }
 
-// Start everything up
 init();

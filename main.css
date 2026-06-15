@@ -153,15 +153,6 @@ a:visited {
     margin-bottom: 0;
 }
 
-#veiwport {
-    position: fixed;
-    left: 0;
-    right: 0;
-    top: 92px;
-    bottom: 70px;
-    z-index: 2;
-}
-
 #windows {
     position: absolute;
     inset: 0;
@@ -195,6 +186,13 @@ a:visited {
     width: 28px;
     height: 28px;
     display: block;
+}
+
+.appName {
+    -webkit-user-select: none; /* safari */
+    -moz-user-select: none;    /* firefox */
+    -ms-user-select: none;     /* edge */
+    user-select: none;         /* standard */
 }
 
 .app-launcher .app-plus {
@@ -894,4 +892,23 @@ body.dark-mode .appName {
 
 .calc-btn-wide {
     grid-column: span 2;
+}
+
+.selection-box {
+    position: absolute;
+    border: 1px solid rgba(203, 166, 247, 0.8); /* Selection colors */
+    background-color: rgba(203, 166, 247, 0.2);
+    z-index: 999999;
+    pointer-events: none;
+}
+
+.dragable.selected {
+    box-shadow: 0 0 15px rgba(203, 166, 247, 0.6), 0 0 0 1px rgba(203, 166, 247, 0.8);
+    transition: box-shadow 0.2s ease;
+}
+
+.app-launcher.selected {
+    box-shadow: 0 0 15px rgba(203, 166, 247, 0.6), 0 0 0 1px rgba(203, 166, 247, 0.8);
+    transition: box-shadow 0.2s ease;
+    border-radius: 8px;
 }

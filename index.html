@@ -39,52 +39,20 @@
 
     <!--templates for dynamic.js-->
     <div id="templates">
-    <template id="t-welcome" class="dragable hidden">
-        <div class="drag" id="welcome-msgheader">
-            <i class="fa-solid fa-file-lines"></i>
-            <span class="wTitle">Welcome msg</span>
-            <div class="window-controls">
-                <button type="button" onclick="AMI.minApp('welcome')">-</button>
-                <button type="button" onclick="AMI.toggleFullscreen('welcome')">[]</button>
-                <button type="button" onclick="AMI.closeApp('welcome')">x</button>
-            </div>
-        </div>
-        <div class="text frosted-glass">
+        <template id="t-welcome" class="dragable hidden">
             <h1>Welcome to Birb OS!</h1>
             <p>This is a bird themed web-os with tools:</p>
             <ul>
                 <li>text editor</li>
                 <li>code editor</li>
             </ul>
-        </div>
-    </template>
+        </template>
 
-    <template id="t-txtEditor" class="dragable hidden">
-        <div class="drag" id="txt-editorheader">
-            <i class="fa-solid fa-file-lines"></i>
-            <span class="wTitle">Txt Editor</span>
-            <div class="window-controls">
-                <button type="button" onclick="AMI.minApp('txtEditor')">-</button>
-                <button type="button" onclick="AMI.toggleFullscreen('txtEditor')">[]</button>
-                <button type="button" onclick="AMI.closeApp('txtEditor')">x</button>
-            </div>
-        </div>
-        <div class="text frosted-glass flex-col-window">
+        <template id="t-txtEditor" class="dragable hidden">
             <textarea class="txt-editor-area" placeholder="Start typing your notes here..."></textarea>
-        </div>
-    </template>
+        </template>
 
-    <template id="t-codeEditor" class="dragable hidden">
-        <div class="drag" id="code-editorheader">
-            <i class="fa-solid fa-file-lines"></i>
-            <span class="wTitle">Code Editor</span>
-            <div class="window-controls">
-                <button type="button" onclick="AMI.minApp('codeEditor')">-</button>
-                <button type="button" onclick="AMI.toggleFullscreen('codeEditor')">[]</button>
-                <button type="button" onclick="AMI.closeApp('codeEditor')">x</button>
-            </div>
-        </div>
-        <div class="text frosted-glass code-editor-container">
+        <template id="t-codeEditor" class="dragable hidden">
             <textarea spellcheck="false" class="code-editor-area">
 <!DOCTYPE html>
 <html lang="en">
@@ -98,20 +66,9 @@
 </body>
 </html>
 </textarea>
-        </div>
-    </template>
+        </template>
     
-    <template id="t-settings" class="dragable hidden">
-        <div class="drag" id="settingsheader">
-            <i class="fa-solid fa-gear"></i>
-            <span class="wTitle">Settings</span>
-            <div class="window-controls">
-                <button type="button" onclick="AMI.minApp('settings')">-</button>
-                <button type="button" onclick="AMI.toggleFullscreen('settings')">[]</button>
-                <button type="button" onclick="AMI.closeApp('settings')">x</button>
-            </div>
-        </div>
-        <div class="text frosted-glass">
+        <template id="t-settings" class="dragable hidden">
             <h1>Settings: </h1>
             <p>Change the color theme and jump back to the main message.</p>
             <div class="fav-color-container">
@@ -150,21 +107,9 @@
                 <button class="copy" data-action="ShowHome">Back to main</button>
                 <button class="copy" data-action="HideMsg">Hide msg</button>
             </div>
-        </div>
-    </template>
+        </template>
 
-    <template id="t-mail" class="dragable hidden">
-        <div class="drag" id="mail-appheader">
-            <i class="fa-solid fa-envelope"></i>
-            <span class="wTitle">Birb Mail - Hire Me</span>
-            <div class="window-controls">
-                <button type="button" onclick="AMI.minApp('mail')">-</button>
-                <button type="button" onclick="AMI.toggleFullscreen('mail')">[]</button>
-                <button type="button" onclick="AMI.closeApp('mail')">x</button>
-            </div>
-        </div>
-        
-        <div class="text frosted-glass app-window-content">
+        <template id="t-mail" class="dragable hidden">
             <p class="mail-to-text">To: reimacdougall@gmail.com</p>
             
             <input type="text" id="mail-subject" placeholder="Subject (e.g., Job Opportunity)" value="Interested in your work!" class="mail-input">
@@ -174,21 +119,9 @@
             <button onclick="sendEmailViaMailto()" class="copy pointer send-email-btn">
                 Send Email <i class="fa-solid fa-paper-plane"></i>
             </button>
-        </div>
-    </template>
+        </template>
 
-    <template id="t-calculator" class="dragable hidden">
-        <div class="drag" id="calculator-appheader">
-            <i class="fa-solid fa-calculator"></i>
-            <span class="wTitle">Calculator</span>
-            <div class="window-controls">
-                <button type="button" onclick="AMI.minApp('calculator')">-</button>
-                <button type="button" onclick="AMI.toggleFullscreen('calculator')">[]</button>
-                <button type="button" onclick="AMI.closeApp('calculator')">x</button>
-            </div>
-        </div>
-        
-        <div class="text frosted-glass app-window-content">
+        <template id="t-calculator" class="dragable hidden">
             <div id="calc-display" class="calc-display-area">0</div>
             
             <div id="calculator-buttons" class="calc-grid calc-button-grid">
@@ -215,21 +148,9 @@
                 <button type="button" class="Calc-btn calc-btn-wide" data-value="0">0</button>
                 <button type="button" class="Calc-btn" data-value=".">.</button>
             </div>
-        </div>
-    </template>
+        </template>
 
-    <template id="t-browser" class="dragable hidden">
-        <div class="drag" id="browserheader">
-            <i class="fa-brands fa-solid fa-chrome"></i>
-            <span class="wTitle">Web Browser</span>
-            <div class="window-controls">
-                <button type="button" onclick="AMI.minApp('browser')">-</button>
-                <button type="button" onclick="AMI.toggleFullscreen('browser')">[]</button>
-                <button type="button" onclick="AMI.closeApp('browser')">x</button>
-            </div>
-        </div>
-        
-        <div class="text frosted-glass app-window-content">
+        <template id="t-browser" class="dragable hidden">
             <input id="searchbar" type="text" value="home.html">
             <div id="bookmark-bar">
                 <button class="bookmark" onclick="visitSite('home.html')">Home</button>
@@ -241,8 +162,11 @@
                 <button class="bookmark" onclick="visitSite('https://glacierarcade.win/')">Arcade</button>
             </div>
             <iframe id="searchwindow" src="home.html" height="1000"></iframe>
-        </div>
-    </template>
+        </template>
+
+        <template id="t-addApp" class="dragable hidden">
+            <input type="file" id="appUpload" accept=".html"/>
+        </template>
     </div>
     
     <div class="fav-color-container os-shell">
