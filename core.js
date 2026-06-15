@@ -7,13 +7,7 @@ const loginUsername = document.getElementById('login-username');
 const loginPassword = document.getElementById('login-password');
 const loginError = document.getElementById('login-error');
 const osTarget = 'index.html?login=true';
-const viewport = document.getElementById("viewport"); 
-const apps = document.getElementById("apps");
-const wm = document.getElementById("welcome-msg");
-const settingsWin = document.getElementById("settings");
-const browserWin = document.getElementById("browser");
-const txtEditorWin = document.getElementById("txt-editor");
-const codeEditorWin = document.getElementById("code-editor");
+
 const colorPicker = document.getElementById('colorPicker');
 const timeText = document.getElementById("timeElement");
 const blobLayer = document.querySelector('.blob-layer');
@@ -23,8 +17,8 @@ const birdCounter = document.getElementById('bird-count');
 const birdColorCountInput = document.getElementById('bird-color-count');
 const birdColorsContainer = document.getElementById('bird-colors-container');
 const MB = document.getElementById("bird-type");
-const searchbar = document.getElementById("searchbar")
-const searchwindow = document.getElementById("searchwindow")
+const searchbar = document.getElementById("searchbar");
+const searchwindow = document.getElementById("searchwindow");
 
 blobLayer.style.display = "none"; // temp fix
 
@@ -33,15 +27,6 @@ let width, height;
 let mouseX = -1000;
 let mouseY = -1000;
 let isMouseDown = false;
-
-// window states
-let welcomeIsFullscreen = false;
-let settingsIsFullscreen = false;
-let txtEditorIsFullscreen = false;
-let codeEditorIsFullscreen = false;
-let mailIsFullscreen = false;
-let calculatorIsFullscreen = false;
-let browserIsFullscreen = false;
 
 // birdie attributes
 let birds = [];
@@ -57,13 +42,12 @@ let frameCount = -1;
 let explorerPath = { theme: null, category: null };
 let favorites = JSON.parse(localStorage.getItem('bgFavorites')) || [];
 
-//calculator vars
-const calculatorWin = document.getElementById("calculator-app");
+// calculator vars
 const calcDisplay = document.getElementById("calc-display");
 const calcButtons = document.getElementById("calculator-buttons");
 let currentCalcString = "";
 
-//window maneger
+// window manager
 class AppManager {
     constructor() {
         this.apps = new Map();
@@ -71,7 +55,6 @@ class AppManager {
         this.toggleFullscreen = this.toggleFullscreen.bind(this);
     }
     registerApp(element, id) {
-        const app = this.apps.get(id);
         this.apps.set(id, {
             element: element,
             isVisible: false,
@@ -81,7 +64,7 @@ class AppManager {
     centerWindow(id) {
         const app = this.apps.get(id);
         const elmnt = app.element;
-        const viewportRect = viewport.getBoundingClientRect();
+        const viewportRect = document.getElementById("viewport").getBoundingClientRect();
         const windowRect = elmnt.getBoundingClientRect();
         const left = Math.max(15, Math.round((viewportRect.width - windowRect.width) / 2));
         const top = Math.max(15, Math.round((viewportRect.height - windowRect.height) / 2));
@@ -108,7 +91,6 @@ class AppManager {
         app.isVisible = false;
     }
     minApp(id) {
-        const app = this.apps.get(id);
         this.closeApp(id); //might add a task bar to reopen apps
     }
     toggleFullscreen(id) {
@@ -117,6 +99,7 @@ class AppManager {
         let newFullscreenState = !app.isFullscreen;
         app.isFullscreen = newFullscreenState;
         elmnt.classList.toggle('fullscreen', newFullscreenState);
+        
         if (newFullscreenState) {
             elmnt.dataset.prevLeft = elmnt.style.left;
             elmnt.dataset.prevTop = elmnt.style.top;
@@ -173,51 +156,9 @@ function resize() {
     });
 }
 
-function getWindowBounds(elmnt) {
-    const viewportRect = viewport.getBoundingClientRect();
-    const windowRect = elmnt.getBoundingClientRect();
-    return {
-        left: Math.max(15, Math.round((viewportRect.width - windowRect.width) / 2)),
-        top: Math.max(15, Math.round((viewportRect.height - windowRect.height) / 2)),
-    };
-}
-
-function centerWindow(elmnt) {
-    const bounds = getWindowBounds(elmnt);
-    elmnt.style.left = `${bounds.left}px`;
-    elmnt.style.top = `${bounds.top}px`;
-    elmnt.style.transform = 'none';
-}
-
-function toggleFullscreen(elmnt, isFullscreenVar) {
-    const isFS = !isFullscreenVar;
-    elmnt.classList.toggle('fullscreen', isFS);
-
-    if (isFS) {
-        elmnt.dataset.prevLeft = elmnt.style.left;
-        elmnt.dataset.prevTop = elmnt.style.top;
-        elmnt.style.left = '0px';
-        elmnt.style.top = '0px';
-        elmnt.style.width = '100%';
-        elmnt.style.height = '100%';
-        elmnt.style.zIndex = '9999';
-    } else {
-        elmnt.style.width = '';
-        elmnt.style.height = '';
-        elmnt.style.zIndex = '';
-        if (elmnt.dataset.prevLeft && elmnt.dataset.prevTop) {
-            elmnt.style.left = elmnt.dataset.prevLeft;
-            elmnt.style.top = elmnt.dataset.prevTop;
-        } else {
-            centerWindow(elmnt);
-        }
-    }
-    return isFS;
-}
-
 function dragElement(elmnt) {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-    const header = document.getElementById(elmnt.id + 'header');
+    const header = document.getElementById(elmnt.id + '-header');
     const dragHandle = header || elmnt;
 
     dragHandle.onmousedown = (e) => {
@@ -339,7 +280,7 @@ function renderWallpaperExplorer() {
     }
 }
 
-function createExplorerNode(name, iconClass, clickCallback,type="btn", dblClickCallback = null) {
+function createExplorerNode(name, iconClass, clickCallback, type="btn", dblClickCallback = null) {
     const item = document.createElement((type == "btn") ? 'button' : 'div')
     item.className = 'explorer-item pointer';
     item.style.border = 'none';
@@ -361,7 +302,6 @@ function createExplorerNode(name, iconClass, clickCallback,type="btn", dblClickC
         fileInput.addEventListener('change', (e) => {
             const uploadedFile = e.target.files[0];
             if (uploadedFile) {
-                // temp url for uploaded img
                 const imgUrl = URL.createObjectURL(uploadedFile);
                 updateBgImg(imgUrl);
             }
@@ -539,7 +479,6 @@ const actions = {
     },
     toggleCT: (btn) => {
         document.body.classList.toggle('dark-mode');
-
         if (btn) {
             btn.textContent = document.body.classList.contains('dark-mode') ? 'Light' : 'Dark';
         }
@@ -566,8 +505,8 @@ const actions = {
 };
 
 function visitSite(url) {
-    searchwindow.src = url
-    searchbar.value  = url
+    searchwindow.src = url;
+    searchbar.value  = url;
 }
 
 function setupEventListeners() {
@@ -627,6 +566,7 @@ function setupEventListeners() {
             }
         });
     }
+    
     if (calcButtons) {
         calcButtons.addEventListener('click', (event) => {
             const btn = event.target.closest('.Calc-btn');
@@ -689,9 +629,6 @@ function setupEventListeners() {
     });
 }
 
-// hire me app logic
-const mailWindow = document.getElementById('mail-app');
-
 // send logic
 function sendEmailViaMailto() {
     const emailAddress = "reimacdougall@gmail.com";
@@ -699,7 +636,7 @@ function sendEmailViaMailto() {
     const body = document.getElementById('mail-body').value;
     const mailtoLink = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     window.open(mailtoLink, '_blank');
-    closeMailWindow(); //when they hit send
+    AMI.closeApp('mail');
 }
 
 function init() {
@@ -710,22 +647,15 @@ function init() {
     if(birdCounter) birdCounter.value = String(birdCount);
     updateBirdColors();
 
-    // ui
-    if (!wm.classList.contains('hidden')) centerWindow(wm);
-    if (!settingsWin.classList.contains('hidden')) centerWindow(settingsWin);
-    
-    const systemApps = [
-        { e: wm,            n: 'welcome' },
-        { e: settingsWin,   n: 'settings' },
-        { e: txtEditorWin,  n: 'txtEditor' },
-        { e: codeEditorWin, n: 'codeEditor' },
-        { e: mailWindow,    n: 'mail' },
-        { e: calculatorWin, n: 'calculator' },
-        { e: browserWin,    n: 'browser' }
-    ];
-    systemApps.forEach(({ e, n }) => {
-        AMI.registerApp(e,n);
-        dragElement(e);
+    systemApps.forEach(({ n }) => {
+        const appElement = document.getElementById(n);
+        if (appElement) {
+            AMI.registerApp(appElement, n);
+            dragElement(appElement);
+            if (!appElement.classList.contains('hidden')) {
+                AMI.centerWindow(n);
+            }
+        }
     });
 
     renderWallpaperExplorer();
@@ -761,8 +691,3 @@ function animateBirds() {
 
 // Start everything up
 init();
-
-document.getElementById('welcome-msg').classList.add('hidden');
-document.getElementById('txt-editor').classList.add('hidden');
-document.getElementById('code-editor').classList.add('hidden');
-document.getElementById('settings').classList.add('hidden');

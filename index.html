@@ -35,259 +35,226 @@
         </div>
     </div>
 
-    <div id="viewport">
-        <div class="apps-panel" id="apps">
-            <button class="app-launcher" type="button" onclick="AMI.openApp('welcome')">
-                <i class="fa-solid fa-file-lines fa-2x appName app-icon-margin"></i>
-                <span class="appName">welcome msg</span>
-            </button>
-            <button class="app-launcher" type="button" onclick="AMI.openApp('txtEditor')">
-                <i class="fa-solid fa-file-lines fa-2x appName app-icon-margin"></i>
-                <span class="appName">txt editor</span>
-            </button>
-            <button class="app-launcher" type="button" onclick="AMI.openApp('codeEditor')">
-                <i class="fa-solid fa-file-lines fa-2x appName app-icon-margin"></i>
-                <span class="appName">code editor</span>
-            </button>
-            <button class="app-launcher" type="button" onclick="AMI.openApp('calculator')">
-                <i class="fa-solid fa-calculator fa-2x appName app-icon-margin"></i>
-                <span class="appName">calculator</span>
-            </button>
-            <button class="app-launcher" type="button" onclick="AMI.openApp('browser')">
-                <i class="fa-brands fa-solid fa-chrome fa-2x appName app-icon-margin"></i>
-                <span class="appName">Web browser</span>
-            </button>
-            <button class="app-launcher" type="button">
-                <i class="fa-solid fa-envelope fa-2x appName app-icon-margin"></i>
-                <span class="appName">add app</span>
-            </button>
-            <button class="app-launcher" type="button" onclick="AMI.openApp('settings')">
-                <i class="fa-solid fa-gear fa-2x appName app-icon-margin"></i>
-                <span class="appName">settings</span>
-            </button>
-            <button class="app-launcher" type="button" onclick="AMI.openApp('mail')">
-                <i class="fa-solid fa-envelope fa-2x appName app-icon-margin"></i>
-                <span class="appName">Hire Me</span>
-            </button>
+    <div id="viewport"></div>
+
+    <!--templates for dynamic.js-->
+    <div id="templates">
+    <template id="t-welcome" class="dragable hidden">
+        <div class="drag" id="welcome-msgheader">
+            <i class="fa-solid fa-file-lines"></i>
+            <span class="wTitle">Welcome msg</span>
+            <div class="window-controls">
+                <button type="button" onclick="AMI.minApp('welcome')">-</button>
+                <button type="button" onclick="AMI.toggleFullscreen('welcome')">[]</button>
+                <button type="button" onclick="AMI.closeApp('welcome')">x</button>
+            </div>
         </div>
+        <div class="text frosted-glass">
+            <h1>Welcome to Birb OS!</h1>
+            <p>This is a bird themed web-os with tools:</p>
+            <ul>
+                <li>text editor</li>
+                <li>code editor</li>
+            </ul>
+        </div>
+    </template>
 
-        <div id="windows">
-            <div id="welcome-msg" class="dragable hidden">
-                <div class="drag" id="welcome-msgheader">
-                    <i class="fa-solid fa-file-lines"></i>
-                    <span class="wTitle">Welcome msg</span>
-                    <div class="window-controls">
-                        <button type="button" onclick="AMI.minApp('welcome')">-</button>
-                        <button type="button" onclick="AMI.toggleFullscreen('welcome')">[]</button>
-                        <button type="button" onclick="AMI.closeApp('welcome')">x</button>
-                    </div>
-                </div>
-                <div class="text frosted-glass">
-                    <h1>Welcome to Birb OS!</h1>
-                    <p>This is a bird themed web-os with tools:</p>
-                    <ul>
-                        <li>text editor</li>
-                        <li>code editor</li>
-                    </ul>
-                </div>
+    <template id="t-txtEditor" class="dragable hidden">
+        <div class="drag" id="txt-editorheader">
+            <i class="fa-solid fa-file-lines"></i>
+            <span class="wTitle">Txt Editor</span>
+            <div class="window-controls">
+                <button type="button" onclick="AMI.minApp('txtEditor')">-</button>
+                <button type="button" onclick="AMI.toggleFullscreen('txtEditor')">[]</button>
+                <button type="button" onclick="AMI.closeApp('txtEditor')">x</button>
             </div>
+        </div>
+        <div class="text frosted-glass flex-col-window">
+            <textarea class="txt-editor-area" placeholder="Start typing your notes here..."></textarea>
+        </div>
+    </template>
 
-            <div id="txt-editor" class="dragable hidden">
-                <div class="drag" id="txt-editorheader">
-                    <i class="fa-solid fa-file-lines"></i>
-                    <span class="wTitle">Txt Editor</span>
-                    <div class="window-controls">
-                        <button type="button" onclick="AMI.minApp('txtEditor')">-</button>
-                        <button type="button" onclick="AMI.toggleFullscreen('txtEditor')">[]</button>
-                        <button type="button" onclick="AMI.closeApp('txtEditor')">x</button>
-                    </div>
-                </div>
-                <div class="text frosted-glass flex-col-window">
-                    <textarea class="txt-editor-area" placeholder="Start typing your notes here..."></textarea>
-                </div>
+    <template id="t-codeEditor" class="dragable hidden">
+        <div class="drag" id="code-editorheader">
+            <i class="fa-solid fa-file-lines"></i>
+            <span class="wTitle">Code Editor</span>
+            <div class="window-controls">
+                <button type="button" onclick="AMI.minApp('codeEditor')">-</button>
+                <button type="button" onclick="AMI.toggleFullscreen('codeEditor')">[]</button>
+                <button type="button" onclick="AMI.closeApp('codeEditor')">x</button>
             </div>
-
-            <div id="code-editor" class="dragable hidden">
-                <div class="drag" id="code-editorheader">
-                    <i class="fa-solid fa-file-lines"></i>
-                    <span class="wTitle">Code Editor</span>
-                    <div class="window-controls">
-                        <button type="button" onclick="AMI.minApp('codeEditor')">-</button>
-                        <button type="button" onclick="AMI.toggleFullscreen('codeEditor')">[]</button>
-                        <button type="button" onclick="AMI.closeApp('codeEditor')">x</button>
-                    </div>
-                </div>
-                <div class="text frosted-glass code-editor-container">
-                    <textarea spellcheck="false" class="code-editor-area">
+        </div>
+        <div class="text frosted-glass code-editor-container">
+            <textarea spellcheck="false" class="code-editor-area">
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
 </head>
 <body>
-    
+
 </body>
 </html>
 </textarea>
-                </div>
-            </div>
-            
-            <div id="settings" class="dragable hidden">
-                <div class="drag" id="settingsheader">
-                    <i class="fa-solid fa-gear"></i>
-                    <span class="wTitle">Settings</span>
-                    <div class="window-controls">
-                        <button type="button" onclick="AMI.minApp('settings')">-</button>
-                        <button type="button" onclick="AMI.toggleFullscreen('settings')">[]</button>
-                        <button type="button" onclick="AMI.closeApp('settings')">x</button>
-                    </div>
-                </div>
-                <div class="text frosted-glass">
-                    <h1>Settings: </h1>
-                    <p>Change the color theme and jump back to the main message.</p>
-                    <div class="fav-color-container">
-                        <span class="color-text">color theme: </span>
-                        <input id="colorPicker" class="copy" type="color" value="#976fb6ff">
-                    </div>
-                    <div class="fav-color-container">
-                        <span class="color-text">Bird counter: </span>
-                        <input id="bird-count" class="copy pointer" type="number" value="1" min="1">
-                        <button class="copy" data-action="addBird">+</button>
-                        <button class="copy" data-action="removeBird">-</button>
-                    </div>
-                    <div class="fav-color-container">
-                        <span class="color-text">Bird colors: </span>
-                        <input id="bird-color-count" class="copy pointer" type="number" value="3" min="1" max="8">
-                        <button class="copy" data-action="addBirdColor">+</button>
-                        <button class="copy" data-action="removeBirdColor">-</button>
-                    </div>
-                    <div class="fav-color-container">
-                        <span class="color-text">Contrast Theme: </span>
-                        <button class="copy" data-action="toggleCT" id="CT-btn">Dark</button>
-                    </div>
-                    <br>
-                    <div class="fav-color-container" id="bird-colors-container">
-                        <span class="color-text">Bird color list: </span>
-                    </div>
-                    <div class="fav-color-container bg-selection-container">
-                        <span class="color-text"><i class="fa-solid fa-images"></i> BG selection: </span>
-                        <div class="explorer-container">
-                            <div id="explorer-header" class="explorer-header"></div>
-                            <div id="explorer-body" class="explorer-body"></div>
-                        </div>
-                    </div>
-                    <p class="settings-note">Tip: the color picker updates the background glow and glass panel instantly.</p>
-                    <div class="fav-color-container">
-                        <button class="copy" data-action="ShowHome">Back to main</button>
-                        <button class="copy" data-action="HideMsg">Hide msg</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="mail-app" class="dragable hidden">
-                <div class="drag" id="mail-appheader">
-                    <i class="fa-solid fa-envelope"></i>
-                    <span class="wTitle">Birb Mail - Hire Me</span>
-                    <div class="window-controls">
-                        <button type="button" onclick="AMI.minApp('mail')">-</button>
-                        <button type="button" onclick="AMI.toggleFullscreen('mail')">[]</button>
-                        <button type="button" onclick="AMI.closeApp('mail')">x</button>
-                    </div>
-                </div>
-                
-                <div class="text frosted-glass app-window-content">
-                    <p class="mail-to-text">To: reimacdougall@gmail.com</p>
-                    
-                    <input type="text" id="mail-subject" placeholder="Subject (e.g., Job Opportunity)" value="Interested in your work!" class="mail-input">
-                    
-                    <textarea id="mail-body" placeholder="Write your message here..." class="mail-textarea"></textarea>
-                    
-                    <button onclick="sendEmailViaMailto()" class="copy pointer send-email-btn">
-                        Send Email <i class="fa-solid fa-paper-plane"></i>
-                    </button>
-                </div>
-            </div>
-
-            <div id="calculator-app" class="dragable hidden">
-                <div class="drag" id="calculator-appheader">
-                    <i class="fa-solid fa-calculator"></i>
-                    <span class="wTitle">Calculator</span>
-                    <div class="window-controls">
-                        <button type="button" onclick="AMI.minApp('calculator')">-</button>
-                        <button type="button" onclick="AMI.toggleFullscreen('calculator')">[]</button>
-                        <button type="button" onclick="AMI.closeApp('calculator')">x</button>
-                    </div>
-                </div>
-                
-                <div class="text frosted-glass app-window-content">
-                    <div id="calc-display" class="calc-display-area">0</div>
-                    
-                    <div id="calculator-buttons" class="calc-grid calc-button-grid">
-                        <button type="button" class="Calc-btn" data-value="AC">AC</button>
-                        <button type="button" class="Calc-btn" data-value="%">%</button>
-                        <button type="button" class="Calc-btn" data-value="/">/</button>
-                        <button type="button" class="Calc-btn" data-value="*">*</button>
-                        
-                        <button type="button" class="Calc-btn" data-value="7">7</button>
-                        <button type="button" class="Calc-btn" data-value="8">8</button>
-                        <button type="button" class="Calc-btn" data-value="9">9</button>
-                        <button type="button" class="Calc-btn" data-value="-">-</button>
-                        
-                        <button type="button" class="Calc-btn" data-value="4">4</button>
-                        <button type="button" class="Calc-btn" data-value="5">5</button>
-                        <button type="button" class="Calc-btn" data-value="6">6</button>
-                        <button type="button" class="Calc-btn" data-value="+">+</button>
-                        
-                        <button type="button" class="Calc-btn" data-value="1">1</button>
-                        <button type="button" class="Calc-btn" data-value="2">2</button>
-                        <button type="button" class="Calc-btn" data-value="3">3</button>
-                        <button type="button" class="Calc-btn calc-btn-tall" data-value="=">=</button>
-                        
-                        <button type="button" class="Calc-btn calc-btn-wide" data-value="0">0</button>
-                        <button type="button" class="Calc-btn" data-value=".">.</button>
-                    </div>
-                </div>
-            </div>
-
-            <div id="browser" class="dragable hidden">
-                <div class="drag" id="browserheader">
-                    <i class="fa-brands fa-solid fa-chrome"></i>
-                    <span class="wTitle">Web Browser</span>
-                    <div class="window-controls">
-                        <button type="button" onclick="AMI.minApp('browser')">-</button>
-                        <button type="button" onclick="AMI.toggleFullscreen('browser')">[]</button>
-                        <button type="button" onclick="AMI.closeApp('browser')">x</button>
-                    </div>
-                </div>
-                
-                <div class="text frosted-glass app-window-content">
-                    <input id="searchbar" type="text" value="home.html">
-                    <div id="bookmark-bar">
-                        <button class="bookmark" onclick="visitSite('home.html')">Home</button>
-                        <button class="bookmark" onclick="visitSite('https://startmyeducation.net/signin.html')">Games</button>
-                        <button class="bookmark" onclick="visitSite('https://excalidraw.com/')">Exacalidraw</button>
-                        <button class="bookmark" onclick="visitSite('https://www.desmos.com/')">Desmos</button>
-                        <button class="bookmark" onclick="visitSite('https://animejs.com/easing-editor/spring/default')">AnimeJs</button>
-                        <button class="bookmark" onclick="visitSite('https://reactbits.dev/')">React bits</button>
-                        <button class="bookmark" onclick="visitSite('https://glacierarcade.win/')">Arcade</button>
-                    </div>
-                    <iframe id="searchwindow" src="home.html" height="1000"></iframe>
-                </div>
+        </div>
+    </template>
+    
+    <template id="t-settings" class="dragable hidden">
+        <div class="drag" id="settingsheader">
+            <i class="fa-solid fa-gear"></i>
+            <span class="wTitle">Settings</span>
+            <div class="window-controls">
+                <button type="button" onclick="AMI.minApp('settings')">-</button>
+                <button type="button" onclick="AMI.toggleFullscreen('settings')">[]</button>
+                <button type="button" onclick="AMI.closeApp('settings')">x</button>
             </div>
         </div>
-    </div>
+        <div class="text frosted-glass">
+            <h1>Settings: </h1>
+            <p>Change the color theme and jump back to the main message.</p>
+            <div class="fav-color-container">
+                <span class="color-text">color theme: </span>
+                <input id="colorPicker" class="copy" type="color" value="#976fb6ff">
+            </div>
+            <div class="fav-color-container">
+                <span class="color-text">Bird counter: </span>
+                <input id="bird-count" class="copy pointer" type="number" value="1" min="1">
+                <button class="copy" data-action="addBird">+</button>
+                <button class="copy" data-action="removeBird">-</button>
+            </div>
+            <div class="fav-color-container">
+                <span class="color-text">Bird colors: </span>
+                <input id="bird-color-count" class="copy pointer" type="number" value="3" min="1" max="8">
+                <button class="copy" data-action="addBirdColor">+</button>
+                <button class="copy" data-action="removeBirdColor">-</button>
+            </div>
+            <div class="fav-color-container">
+                <span class="color-text">Contrast Theme: </span>
+                <button class="copy" data-action="toggleCT" id="CT-btn">Dark</button>
+            </div>
+            <br>
+            <div class="fav-color-container" id="bird-colors-container">
+                <span class="color-text">Bird color list: </span>
+            </div>
+            <div class="fav-color-container bg-selection-container">
+                <span class="color-text"><i class="fa-solid fa-images"></i> BG selection: </span>
+                <div class="explorer-container">
+                    <div id="explorer-header" class="explorer-header"></div>
+                    <div id="explorer-body" class="explorer-body"></div>
+                </div>
+            </div>
+            <p class="settings-note">Tip: the color picker updates the background glow and glass panel instantly.</p>
+            <div class="fav-color-container">
+                <button class="copy" data-action="ShowHome">Back to main</button>
+                <button class="copy" data-action="HideMsg">Hide msg</button>
+            </div>
+        </div>
+    </template>
 
+    <template id="t-mail" class="dragable hidden">
+        <div class="drag" id="mail-appheader">
+            <i class="fa-solid fa-envelope"></i>
+            <span class="wTitle">Birb Mail - Hire Me</span>
+            <div class="window-controls">
+                <button type="button" onclick="AMI.minApp('mail')">-</button>
+                <button type="button" onclick="AMI.toggleFullscreen('mail')">[]</button>
+                <button type="button" onclick="AMI.closeApp('mail')">x</button>
+            </div>
+        </div>
+        
+        <div class="text frosted-glass app-window-content">
+            <p class="mail-to-text">To: reimacdougall@gmail.com</p>
+            
+            <input type="text" id="mail-subject" placeholder="Subject (e.g., Job Opportunity)" value="Interested in your work!" class="mail-input">
+            
+            <textarea id="mail-body" placeholder="Write your message here..." class="mail-textarea"></textarea>
+            
+            <button onclick="sendEmailViaMailto()" class="copy pointer send-email-btn">
+                Send Email <i class="fa-solid fa-paper-plane"></i>
+            </button>
+        </div>
+    </template>
+
+    <template id="t-calculator" class="dragable hidden">
+        <div class="drag" id="calculator-appheader">
+            <i class="fa-solid fa-calculator"></i>
+            <span class="wTitle">Calculator</span>
+            <div class="window-controls">
+                <button type="button" onclick="AMI.minApp('calculator')">-</button>
+                <button type="button" onclick="AMI.toggleFullscreen('calculator')">[]</button>
+                <button type="button" onclick="AMI.closeApp('calculator')">x</button>
+            </div>
+        </div>
+        
+        <div class="text frosted-glass app-window-content">
+            <div id="calc-display" class="calc-display-area">0</div>
+            
+            <div id="calculator-buttons" class="calc-grid calc-button-grid">
+                <button type="button" class="Calc-btn" data-value="AC">AC</button>
+                <button type="button" class="Calc-btn" data-value="%">%</button>
+                <button type="button" class="Calc-btn" data-value="/">/</button>
+                <button type="button" class="Calc-btn" data-value="*">*</button>
+                
+                <button type="button" class="Calc-btn" data-value="7">7</button>
+                <button type="button" class="Calc-btn" data-value="8">8</button>
+                <button type="button" class="Calc-btn" data-value="9">9</button>
+                <button type="button" class="Calc-btn" data-value="-">-</button>
+                
+                <button type="button" class="Calc-btn" data-value="4">4</button>
+                <button type="button" class="Calc-btn" data-value="5">5</button>
+                <button type="button" class="Calc-btn" data-value="6">6</button>
+                <button type="button" class="Calc-btn" data-value="+">+</button>
+                
+                <button type="button" class="Calc-btn" data-value="1">1</button>
+                <button type="button" class="Calc-btn" data-value="2">2</button>
+                <button type="button" class="Calc-btn" data-value="3">3</button>
+                <button type="button" class="Calc-btn calc-btn-tall" data-value="=">=</button>
+                
+                <button type="button" class="Calc-btn calc-btn-wide" data-value="0">0</button>
+                <button type="button" class="Calc-btn" data-value=".">.</button>
+            </div>
+        </div>
+    </template>
+
+    <template id="t-browser" class="dragable hidden">
+        <div class="drag" id="browserheader">
+            <i class="fa-brands fa-solid fa-chrome"></i>
+            <span class="wTitle">Web Browser</span>
+            <div class="window-controls">
+                <button type="button" onclick="AMI.minApp('browser')">-</button>
+                <button type="button" onclick="AMI.toggleFullscreen('browser')">[]</button>
+                <button type="button" onclick="AMI.closeApp('browser')">x</button>
+            </div>
+        </div>
+        
+        <div class="text frosted-glass app-window-content">
+            <input id="searchbar" type="text" value="home.html">
+            <div id="bookmark-bar">
+                <button class="bookmark" onclick="visitSite('home.html')">Home</button>
+                <button class="bookmark" onclick="visitSite('https://startmyeducation.net/signin.html')">Games</button>
+                <button class="bookmark" onclick="visitSite('https://excalidraw.com/')">Exacalidraw</button>
+                <button class="bookmark" onclick="visitSite('https://www.desmos.com/')">Desmos</button>
+                <button class="bookmark" onclick="visitSite('https://animejs.com/easing-editor/spring/default')">AnimeJs</button>
+                <button class="bookmark" onclick="visitSite('https://reactbits.dev/')">React bits</button>
+                <button class="bookmark" onclick="visitSite('https://glacierarcade.win/')">Arcade</button>
+            </div>
+            <iframe id="searchwindow" src="home.html" height="1000"></iframe>
+        </div>
+    </template>
+    </div>
+    
     <div class="fav-color-container os-shell">
         <div class="os-header">
             <span class="os-title">Birb OS</span>
             <span class="os-time" id="timeElement">Time: </span>
         </div>
-    </div>
+    
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <script src="imageTree.js"></script>
+    <script src="dynamic.js"></script>
     <script src="core.js"></script>
 </body>
 </html>
