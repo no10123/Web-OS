@@ -78,30 +78,19 @@ class AppManager {
         elmnt.style.transform = 'none';
     }
     
-    openApp(id) {
-        const app = this.apps.get(id);
-    
-        if (!app) {
-            console.error(
-                `no "${id}" app`
-            );
-            return;
-        }
-    
-        if (app.isVisible) {
-            return;
-        }
-    
-        app.isVisible = true;
-    
-        app.element.classList.remove('hidden');
-    
+   	openApp(id) {
+    	const app = this.apps.get(id);
+    	if (!app) {
+        	console.error(`No app "${id}"`);
+        	return;
+    	}
+    	app.isVisible = true;
+    	const elmnt = app.element;
+
+    	elmnt.classList.remove("hidden");
+        elmnt.classList.remove("fullscreen");
         this.centerWindow(id);
-        elmnt.classList.remove('hidden', 'fullscreen');
-        elmnt.style.width = '';
-        elmnt.style.height = '';
-        elmnt.style.zIndex = '';
-        
+
         let visibleCount = 0;
         this.apps.forEach(a => {
             if (a.isVisible) visibleCount++;
@@ -557,6 +546,11 @@ function parseAppHTML(htmlText) {
 async function loadAppFile(file) {
     const text = await file.text();
     const app = parseAppHTML(text);
+    const customName = document.getElementById("customAppName")?.value.trim();
+    let customIcon = document.getElementById("customAppIcon")?.value.trim().toLowerCase();
+	if (customIcon && !customIcon.startsWith("fa-")) customIcon = "fa-" + customIcon;
+    if (customName) app.title = customName;
+    if (customIcon) app.icon = customIcon;
     createDynamicApp(app);
 }
 
@@ -596,45 +590,41 @@ function createDynamicApp(app) {
             </div>
         </div>
 
-        <div class="text frosted-glass flex-col-window" id="${id}-Window">
-            ${app.body}
-        </div>`;
+        <div class="text frosted-glass flex-col-window" id="${id}-Window"></div>`;
 
-    document.getElementById("windows").appendChild(windowEl);
-    injectAppStyles(id, app.styles);
-    runAppScripts(id, app.scripts);
-    makeWindowDraggable(windowEl);
-}
+	document.getElementById("windows").appendChild(windowEl);
+	AMI.registerApp(windowEl, id);
+	dragElement(windowEl);
 
-function injectAppStyles(id, css) {
-    if (!css.trim()) return;
-    injectScopedStyles(appId, app.styles);
-}
+	const windowBody = document.getElementById(`${id}-Window`);
+    const iframe = document.createElement("iframe");
 
-function scopeCSS(appId, css) {
-    return css.split("}").map(rule => {
-            const parts = rule.split("{");
-            if (parts.length < 2) return "";
-            let selector = parts[0].trim();
-            let body = parts[1];
-            if (!selector) return "";
-            selector = `#${appId}-Window ${selector}`;
-            return `${selector} { ${body} }`;
-        }).join("\n");
-}
-
-function injectScopedStyles(appId, cssText) {
-    const style = document.createElement("style");
-    style.textContent = scopeCSS(appId, cssText);
-    document.head.appendChild(style);
-}
-
-function runAppScripts(id, scripts) {
-    scripts.forEach(code => {
-        const script = document.createElement("script");
-        script.textContent = code;
-        document.body.appendChild(script);
-    });
+	windowBody.style.padding = "0";
+	windowBody.style.overflow = "hidden";
+    
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.border = "none";
+    iframe.style.background = "white";
+    iframe.sandbox = "allow-scripts allow-forms";
+	iframe.style.display = "block";
+    iframe.srcdoc = `
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <style>
+    ${app.styles}
+    </style>
+    </head>
+    <body>
+    ${app.body}
+    
+    <script>
+    ${app.scripts.join("\n")}
+    <\/script>
+    </body>
+    </html>`;
+    windowBody.appendChild(iframe);
 }
 
 const actions = {

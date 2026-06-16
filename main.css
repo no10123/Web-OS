@@ -181,6 +181,13 @@ a:visited {
     margin: 0;
 }
 
+#apps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-content: flex-start;
+}
+
 .app-launcher img,
 .app-launcher .app-plus {
     width: 28px;

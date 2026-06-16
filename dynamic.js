@@ -22,12 +22,7 @@ systemApps.forEach(app => {
 function CreateApp(n, i, t) {
 
     AP += `
-        <button
-            class="app-launcher"
-            type="button"
-            onclick="AMI.openApp('${n}')"
-            id="App-${n}"
-        >
+        <button class="app-launcher" type="button" onclick="AMI.openApp('${n}')" id="App-${n}">
             <i class="fa-solid ${i} fa-2x appName app-icon-margin"></i>
             <span class="appName">${t}</span>
         </button>
@@ -35,10 +30,8 @@ function CreateApp(n, i, t) {
 
     W += `
         <div id="${n}" class="dragable hidden">
-
             <div class="drag">
                 <i class="fa-solid ${i}"></i>
-
                 <span class="wTitle">${t}</span>
 
                 <div class="window-controls">
@@ -47,14 +40,8 @@ function CreateApp(n, i, t) {
                     <button type="button" onclick="AMI.closeApp('${n}')">×</button>
                 </div>
             </div>
-
-            <div
-                class="text frosted-glass flex-col-window"
-                id="${n}-Window"
-            ></div>
-
-        </div>
-    `;
+            <div class="text frosted-glass flex-col-window" id="${n}-Window"></div>
+        </div>`;
 }
 
 systemApps.forEach(({ n, i, t }) => {
