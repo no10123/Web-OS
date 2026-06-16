@@ -988,3 +988,205 @@ body.dark-mode .appName {
     flex-direction: column;
     gap: 10px;
 }
+
+/* clock stuff */
+/* --- Base Styles --- */
+#clock-bg {
+    background-color: var(--base);
+    border-radius: 5px;
+}
+
+.centered {
+    text-align: center;
+    margin: 0 auto;
+}
+
+/* --- Core Button Styles (Untouched) --- */
+.clock-btn {
+    background-color: #00343e;
+    color: var(--text);
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: monospace;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 0px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.clock-btn:hover {
+    background-color: #004755;
+}
+
+.clock-btn:active {
+    background-color: #00161b;
+    transform: scale(0.95);
+}
+
+/* --- Fancy Clock --- */
+.clock-timer {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 15px 30px;
+    align-items: center; 
+    padding: 10px;
+}
+
+.timer-left {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; 
+    gap: 10px;
+}
+
+.timer-left h1 {
+    margin: 0;
+    text-align: left;
+}
+
+#clock-circle {
+    width: 130px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    border: 8px solid #19a7a8;
+    background: rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 10px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+#clock-circle p {
+    margin: 0; 
+    line-height: 1.2;
+}
+
+.timer-right {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch; 
+    gap: 15px;
+}
+
+#select-timer {
+    display: flex;
+    flex-direction: column;
+    gap: 0px; 
+}
+
+#select-timer input.clock-btn {
+    flex: 1; 
+    width: 120px;
+    margin: 0; 
+    outline: none; 
+}
+
+#select-timer input.clock-btn::-webkit-outer-spin-button,
+#select-timer input.clock-btn::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.timer-right > button.clock-btn {
+    width: 100px; 
+}
+
+.timmer-bottom {
+    grid-column: 2;
+    grid-row: 2;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0px;
+    margin: 0;
+    justify-content: flex-start; 
+}
+
+.timmer-bottom .clock-btn {
+    height: 40px;
+    padding: 0 15px;
+    margin: 0 !important;
+}
+
+select.clock-btn {
+    cursor: pointer;
+    text-align: center;
+}
+
+label.clock-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    height: 40px;
+    padding: 0 15px;
+    background-color: #00343e;
+    color: var(--text);
+    font-family: monospace;
+    font-weight: bold;
+    user-select: none;
+}
+
+label.clock-btn:has(input:checked) {
+    background-color: #117c7c;
+    color: #000;
+}
+
+label.clock-btn:hover {
+    background-color: #004755;
+}
+
+#customAppName,
+#customAppIcon,
+#appUpload {
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-bottom: 12px;
+    padding: 10px;
+
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.15);
+
+    background: rgba(255,255,255,0.08);
+    color: var(--text);
+}
+
+#customAppName:focus,
+#customAppIcon:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+#appUpload::file-selector-button {
+    margin-right: 10px;
+    border: none;
+    border-radius: 6px;
+
+    padding: 8px 12px;
+
+    background: #00343e;
+    color: white;
+    cursor: pointer;
+}
+
+.clock-time,
+.clock-alarms,
+.clock-stopwatch,
+.clock-timer {
+    width: 100%;
+}
+

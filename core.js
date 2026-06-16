@@ -666,6 +666,19 @@ function visitSite(url) {
     searchbar.value  = url;
 }
 
+// clock stuff
+/*
+import { createTimer } from 'animejs/timer';
+const [ $time, $count ] = utils.$('.value');
+const timer = createTimer({
+  duration: 1000,
+  loop: true,
+  frameRate: 30,
+  onUpdate: self => $time.innerHTML = self.currentTime,
+  onLoop: self => $count.innerHTML = self._currentIteration
+});
+*/
+
 function setupEventListeners() {
     window.addEventListener('mousemove', (event) => {
         mouseX = event.clientX;

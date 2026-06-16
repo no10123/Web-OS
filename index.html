@@ -169,6 +169,72 @@
             <input type="text" id="customAppIcon" placeholder="fa icon  (optional)">
             <input type="file" id="appUpload" accept=".html"/>
         </template>
+
+        <template id="t-clock">
+            <div id="clock-bg">
+                <div class="clock-time hidden">
+                    <button class="clock-btn">edit</button>
+                    <button class="clock-btn">+</button>
+                    <h1 class="centered">World clock: </h1>
+                    <div id="Times">
+                        <p id="t-GMT-5">GMT-5: 0:00:00 am</p>
+                    </div>
+                </div>
+                <div class="clock-alarms  hidden">
+                    <button class="clock-btn">edit</button>
+                    <button class="clock-btn">+</button>
+                    <h1 class="centered">Alarms: </h1>
+                    <div id="Alarm-list"></div>
+                </div>
+                <div class="clock-stopwatch  hidden">
+                    <h1 class="centered">Stop watch: </h1>
+                    <div id="stopwatch-circle"></div>
+                    <p id="stopwatch-time"></p>
+                    <button class="clock-btn">Lap</button>
+                    <button class="clock-btn">Start</button>
+                    <div id="lap-list"></div>
+                </div>
+                <div class="clock-timer">
+                    <div class="timer-left">
+                        <h1 class="centered">Timer:</h1>
+                        <div id="clock-circle" class="centered">
+                            <p id="time-ring" class="centered">0:00 pm</p>
+                            <p id="time-left" class="centered">00:00</p>
+                        </div>
+                    </div>
+                    
+                    <div class="timer-right">
+                        <div id="select-timer">
+                            <input class="clock-btn centered" type="number" value="0" id="time-hours">
+                            <input class="clock-btn centered" type="number" value="0" id="time-minutes">
+                            <input class="clock-btn centered" type="number" value="0" id="time-seconds">
+                        </div>
+                        <button class="clock-btn">cancel</button>
+                        <button class="clock-btn">Start</button>
+                    </div>
+
+                    <div class="timmer-bottom">
+                        <label class="clock-btn"><input type="checkbox" id="countdown" style="display: none;">countdown</label>
+                        <button class="clock-btn centered" id="pause-play">pause</button>
+                        <select name="ring sound" id="ring" class="clock-btn">
+                            <option value="none">none</option>
+                            <option value="alert">notification</option>
+                            <option value="alarm1">ding</option>
+                            <option value="alarm2">drums</option>
+                            <option value="alarm3">harmony</option>
+                            <option value="alarm4">louder ding</option>
+                        </select>
+                    </div>
+                </div>
+
+                <br>
+                
+                <button class="clock-btn" onclick='clockPage("time")'>Time</button>
+                <button class="clock-btn" onclick='clockPage("alarms")'>Alarms</button>
+                <button class="clock-btn" onclick='clockPage("stopwatch")'>Stopwatch</button>
+                <button class="clock-btn" onclick='clockPage("timer")'>Timer</button>
+            </div>
+        </template>
     </div>
     
     <div class="fav-color-container os-shell">

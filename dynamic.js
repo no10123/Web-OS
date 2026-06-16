@@ -9,6 +9,7 @@ const systemApps = [
     { n: 'codeEditor', i: 'fa-file-lines',       t: 'code editor' },
     { n: 'calculator', i: 'fa-calculator',       t: 'calculator' },
     { n: 'browser',    i: 'fa-brands fa-chrome', t: 'web browser' },
+    { n: 'clock',      i: 'fa-clock',            t: 'clock' },
     { n: 'addApp',     i: 'fa-envelope',         t: 'add app' },
     { n: 'settings',   i: 'fa-gear',             t: 'settings' },
     { n: 'mail',       i: 'fa-envelope',         t: 'hire me!' }
