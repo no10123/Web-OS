@@ -171,7 +171,7 @@ function resize() {
 function dragElement(elmnt) {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
     const header = document.getElementById(elmnt.id + '-header');
-    const dragHandle = header || elmnt;
+    const dragHandle = elmnt.querySelector('.drag');
 
     dragHandle.onmousedown = (e) => {
         if (elmnt.classList.contains('fullscreen')) return;
