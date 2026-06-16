@@ -919,3 +919,72 @@ body.dark-mode .appName {
     transition: box-shadow 0.2s ease;
     border-radius: 8px;
 }
+
+#customAppName,
+#customAppIcon {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 12px 14px;
+    margin-bottom: 10px;
+
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+
+    background: rgba(255,255,255,0.08);
+    color: var(--text);
+
+    font-size: 0.95rem;
+    outline: none;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.15s ease;
+}
+
+#customAppName:focus,
+#customAppIcon:focus {
+    border-color: var(--accent, #cba6f7);
+    background: rgba(255,255,255,0.12);
+}
+
+#appUpload {
+    width: 100%;
+    padding: 10px;
+
+    border-radius: 12px;
+    border: 1px dashed rgba(255,255,255,0.25);
+
+    background: rgba(255,255,255,0.05);
+    color: var(--text);
+
+    cursor: pointer;
+}
+
+#appUpload:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+#appUpload::file-selector-button {
+    padding: 8px 14px;
+    margin-right: 12px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: var(--accent, #cba6f7);
+    color: white;
+
+    cursor: pointer;
+}
+
+#appUpload::file-selector-button:hover {
+    transform: translateY(-1px);
+}
+
+#addApp-Window {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
