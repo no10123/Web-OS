@@ -198,23 +198,25 @@
                     <div class="timer-left">
                         <h1 class="centered">Timer:</h1>
                         <div id="clock-circle" class="centered">
-                            <p id="time-ring" class="centered">0:00 pm</p>
+                            <p id="time-ring" class="Tvalue centered">0:00 pm</p>
                             <p id="time-left" class="centered">00:00</p>
+                            <p id="time-loops" class="Tvalue centered">0</p>
                         </div>
                     </div>
                     
                     <div class="timer-right">
                         <div id="select-timer">
-                            <input class="clock-btn centered" type="number" value="0" id="time-hours">
-                            <input class="clock-btn centered" type="number" value="0" id="time-minutes">
-                            <input class="clock-btn centered" type="number" value="0" id="time-seconds">
+                            <input class="clock-btn centered" type="number" value="0" id="time-h">
+                            <input class="clock-btn centered" type="number" value="0" id="time-m">
+                            <input class="clock-btn centered" type="number" value="0" id="time-s">
                         </div>
                         <button class="clock-btn">cancel</button>
-                        <button class="clock-btn">Start</button>
+                        <button class="clock-btn" onclick="createNewTimer()">Start</button>
                     </div>
 
                     <div class="timmer-bottom">
                         <label class="clock-btn"><input type="checkbox" id="countdown" style="display: none;">countdown</label>
+                        <label class="clock-btn"><input type="checkbox" id="loop" style="display: none;">loop</label>
                         <button class="clock-btn centered" id="pause-play">pause</button>
                         <select name="ring sound" id="ring" class="clock-btn">
                             <option value="none">none</option>
@@ -247,6 +249,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
     <script src="imageTree.js"></script>
     <script src="dynamic.js"></script>
-    <script src="core.js"></script>
+    <script type="module" src="core.js"></script>
 </body>
 </html>

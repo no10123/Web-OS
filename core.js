@@ -667,17 +667,49 @@ function visitSite(url) {
 }
 
 // clock stuff
-/*
-import { createTimer } from 'animejs/timer';
-const [ $time, $count ] = utils.$('.value');
-const timer = createTimer({
-  duration: 1000,
-  loop: true,
-  frameRate: 30,
-  onUpdate: self => $time.innerHTML = self.currentTime,
-  onLoop: self => $count.innerHTML = self._currentIteration
-});
-*/
+let Cpage = "timer"
+function clockPage(page) {
+    if (page == Cpage) return;
+    document.getElementById('clock-bg').querySelectorAll(':scope > div').forEach(div => {div.classList.add('hidden');});
+    document.getElementById(`clock-${page}`)
+    Cpage = page
+};
+
+import { createTimer } from 'https://esm.run/animejs/timer';
+const [ $time, $count ] = Array.from(document.querySelectorAll('.Tvalue'));
+let timers = [];
+let mainTimer;
+class Clock {
+    constructor(duration, countdown, loop, end) {
+        this.timer = createTimer({
+            duration: duration,
+            loop: loop,
+            reversed: countdown,
+            frameRate: 30,
+            onUpdate: self => $time.innerHTML = `${Math.floor(self.currentTime / 360000)}:${Math.floor(self.currentTime / 60000)}`,
+            onLoop: self => $count.innerHTML = self._currentIteration,
+            onComplete: self => end,
+        });
+    };
+}
+
+function playRing(ring) {
+    (new Audio(`sfx/${ring}.mp3`)).play();
+}
+
+window.createNewTimer = createNewTimer;
+function createNewTimer () {
+    let [h, m, s] = ['h', 'm', 's'].map(id => document.getElementById(`time-${id}`).value);
+    const countdown = document.getElementById("countdown").checked;
+    const loop = document.getElementById("loop").checked;
+    const ring = document.getElementById("ring").value;
+    m = m + h * 60;
+    s = s + m * 60;
+    ms = s * 1000;
+    let func = ring == "none" ? () => {} : ("ring" == "alert" ? () => {alert('Your timer is done!')} : playRing(ring));
+    timers.push(new Clock(ms, countdown, loop, func))
+};
+
 
 function setupEventListeners() {
     window.addEventListener('mousemove', (event) => {
