@@ -41,7 +41,7 @@ function CreateApp(n, i, t) {
                     <button type="button" onclick="AMI.closeApp('${n}')">×</button>
                 </div>
             </div>
-            <div class="text frosted-glass flex-col-window" id="${n}-Window"></div>
+            <div class="text frosted-glass-large flex-col-window" id="${n}-Window"></div>
         </div>`;
 }
 

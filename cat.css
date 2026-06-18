@@ -1,5 +1,7 @@
-/*catppuccin mocha color theme*/
+/* catpuchin mocha theme */
+
 :root {
+    /* palette */
     --rosewater: #f5e0dc;
     --flamingo: #f2cdcd;
     --pink: #f5c2e7;
@@ -14,19 +16,215 @@
     --sapphire: #74c7ec;
     --blue: #89b4fa;
     --lavender: #b4befe;
+
     --text: #cdd6f4;
     --subtext1: #bac2de;
     --subtext0: #a6adc8;
+
     --overlay2: #9399b2;
     --overlay1: #7f849c;
     --overlay0: #6c7086;
+
     --surface2: #313244;
     --surface1: #212134;
     --surface0: #1e1e2e;
+
     --base: #1e1e2e;
     --mantle: #181825;
     --crust: #11111b;
+}
 
-    --fa-dark: #1f3252ff;
-    --theme: #976fb6ff;
+/* theme colors */
+
+:root {
+    --fa-dark: #1f3252;
+    --theme: 151,111,182;
+
+    --accent: var(--mauve);
+
+    --window-header-bg: #1d2033;
+
+    --button-bg: #353b67;
+    --button-hover-bg: #495085;
+
+    --clock-btn-bg: #00343e;
+    --clock-btn-hover-bg: #004755;
+    --clock-btn-active-bg: #00161b;
+    --clock-selected-bg: #117c7c;
+
+    --clock-ring-color: #19a7a8;
+
+    --editor-bg: #1e1e1e;
+    --editor-text: #d4d4d4;
+
+    --code-pill-bg: #25283f;
+    --code-pill-text: #cad3f5;
+}
+
+/* glass */
+
+:root {
+    --glass-rgb: 255,255,255;
+
+    --glass-bg-opacity: 0.35;
+    --glass-border-opacity: 0.18;
+    --glass-highlight-opacity: 0.12;
+    --glass-highlight-low-opacity: 0.03;
+
+    --shadow-opacity: 0.22;
+}
+
+/* blobs - not needed for now */
+
+:root {
+    --blob-start: rgba(43,26,77,0.95);
+    --blob-end: rgba(57,25,55,0.75);
+    --blob-opacity: 0.9;
+}
+
+/* opacity */
+
+:root {
+    --overlay-opacity: 0.28;
+    --panel-opacity: 0.4;
+    --ring-bg-opacity: 0.08;
+    --placeholder-opacity: 0.55;
+    --glass-bg-opacity: 0.35;
+    --shadow-opacity: 0.22;
+    --glass-highlight-opacity: 0.12;
+    --glass-highlight-low-opacity: 0.03;
+    --panel-opacity: 0.4;
+    --ring-bg-opacity: 0.08;
+}
+
+/* border-radius */
+
+:root {
+    --radius-4: 4px;
+    --radius-8: 8px;
+    --radius-12: 12px;
+    --radius-18: 18px;
+    --radius-20: 20px;
+
+    --radius-window: 28px;
+    --radius-round: 50%;
+    --radius-pill: 9999px;
+}
+
+/* spaces */
+
+:root {
+    --space-0: 0;
+    --space-2: 2px;
+    --space-4: 4px;
+    --space-5: 5px;
+    --space-6: 6px;
+    --space-8: 8px;
+    --space-10: 10px;
+    --space-12: 12px;
+    --space-13: 13px;
+    --space-14: 14px;
+    --space-15: 15px;
+    --space-16: 16px;
+    --space-18: 18px;
+    --space-20: 20px;
+    --space-24: 24px;
+    --space-30: 30px;
+    --space-32: 32px;
+}
+
+/* font - size */
+
+:root {
+    --font-12: 12px;
+    --font-13: 13px;
+    --font-14: 14px;
+    --font-16: 16px;
+    --font-18: 18px;
+    --font-22: 22px;
+    --font-24: 24px;
+    --font-28: 28px;
+    --font-48: 48px;
+}
+
+/* blur */
+
+:root {
+    --glass-blur: 10px;
+    --glass-saturation: 130%;
+
+    --blob-blur: 40px;
+
+    --login-blur: 8px;
+
+    --calc-blur: 5px;
+}
+
+/* apps */
+
+:root {
+    --launcher-width: 72px;
+    --launcher-icon-size: 28px;
+
+    --login-avatar-size: 110px;
+    --login-card-width: 420px;
+
+    --window-width: 600px;
+    --window-control-size: 24px;
+
+    --window-header-height: 40px;
+
+    --clock-circle-size: 180px;
+    --clock-ring-width: 8px;
+
+    --clock-input-width: 120px;
+    --clock-button-width: 100px;
+    --clock-button-height: 40px;
+
+    --explorer-max-height: 70px;
+
+    --drag-text-height: 55vh;
+
+    --fullscreen-content-offset: 52px;
+}
+
+/* shadows */
+
+:root {
+    --glass-shadow:
+        0 24px 80px rgba(0,0,0,0.22);
+
+    --selection-shadow:
+        0 0 15px rgba(203,166,247,0.6),
+        0 0 0 1px rgba(203,166,247,0.8);
+}
+
+/* transitions */
+
+:root {
+    --transition-fast: .15s ease;
+    --transition-normal: .2s ease;
+    --transition-slow: .35s ease;
+    --transition-login: .25s ease;
+}
+
+/* layers / z - index */
+
+:root {
+    --z-background: 0;
+    --z-canvas: 1;
+    --z-content: 2;
+    --z-shell: 4;
+    --z-overlay: 5;
+    --z-window: 9;
+    --z-sidebar: 10;
+    --z-selection: 999999;
+}
+
+/* misc */
+
+:root {
+    --pure-white: #ffffff;
+    --white: #ffffff;
+    --black: #000000;
 }

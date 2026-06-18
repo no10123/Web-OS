@@ -1,4 +1,3 @@
-/* base */
 body {
     position: relative;
     background-color: var(--base);
@@ -27,30 +26,29 @@ canvas {
     pointer-events: none;
 }
 
-/* text elements */
-h1, p, ul, .fav-color-container, .coppy {
+h1, p, ul, .fav-color-container, .copy {
     position: relative;
     z-index: 2;
 }
 
 h1 {
     color: var(--text);
-    margin-top: 24px;
-    margin-left: 24px;
-    font-size: 48px;
+    margin-top: var(--space-24);
+    margin-left: var(--space-24);
+    font-size: var(--font-hero);
 }
 
 p {
     color: var(--subtext1);
-    font-size: 18px;
-    margin: 0 0 12px 0;
-    padding-left: 24px;
+    font-size: var(--font-lg);
+    margin: 0 0 var(--space-10) 0;
+    padding-left: var(--space-24);
 }
 
 ul {
     list-style-type: square;
     color: var(--subtext1);
-    margin: 0 0 24px 0;
+    margin: 0 0 var(--space-24) 0;
     padding-left: 44px;
 }
 
@@ -71,9 +69,9 @@ a:visited {
     position: fixed;
     inset: 0;
     z-index: 0;
-    background: radial-gradient(circle at 30% 30%, rgba(43,26,77,0.95), rgba(57,25,55,0.75));
-    filter: blur(40px);
-    opacity: 0.9;
+    background: radial-gradient(circle at 30% 30%, var(--blob-start), var(--blob-end));
+    filter: blur(var(--blob-blur));
+    opacity: var(--blob-opacity);
     border-radius: 30% 70% 70% 30%/30% 30% 70% 70%;
     pointer-events: none;
     transform: translateZ(0);
@@ -89,14 +87,14 @@ a:visited {
     box-sizing: border-box;
     backdrop-filter: blur(10px) saturate(130%);
     -webkit-backdrop-filter: blur(10px) saturate(130%);
-    background-color: rgba(var(--theme), 0.35); 
-    border-radius: 28px;
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22);
+    background-color: rgba(var(--theme-rgb), var(--glass-bg-opacity)); 
+    border-radius: var(--radius-window);
+    border: 1px solid rgba(255, 255, 255, var(--glass-border-opacity));
+    box-shadow: 0 var(--space-24) 80px rgba(0, 0, 0, var(--shadow-opacity));
     padding: 13px;
     max-width: 200vh;
-    margin: 15px;
-    background-image: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.03));
+    margin: var(--space-15);
+    background-image: linear-gradient(180deg, rgba(255,255,255,var(--glass-highlight-opacity)), rgba(255,255,255,var(--glass-highlight-low-opacity)));
     background-size: cover;
     background-repeat: no-repeat;
     overflow: hidden;
@@ -104,24 +102,35 @@ a:visited {
 
 .frosted-glass-large {
     padding: 32px;
-    max-width: 800px;
     margin: 30px;
+    position: relative;
+    z-index: 2;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px) saturate(130%);
+    -webkit-backdrop-filter: blur(10px) saturate(130%);
+    background-color: rgba(var(--theme-rgb), var(--glass-bg-opacity));
+    border-radius: var(--radius-window);
+    border: 1px solid rgba(255, 255, 255, var(--glass-border-opacity));
+    box-shadow: 0 var(--space-24) 80px rgba(0, 0, 0, var(--shadow-opacity));
+    background-image: linear-gradient(180deg, rgba(255,255,255,var(--glass-highlight-opacity)), rgba(255,255,255,var(--glass-highlight-low-opacity)));
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
 }
 
-/* web OS */
 .os-shell {
     position: fixed;
-    left: 15px;
-    right: 15px;
+    left: var(--space-15);
+    right: var(--space-15);
     top: 0;
     z-index: 4;
-    padding: 10px 16px;
+    padding: var(--space-10) 16px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
     flex-direction: row;
-    border-radius: 18px 18px 0 0;
+    border-radius: var(--radius-18);
     margin: 0;
 }
 
@@ -135,7 +144,7 @@ a:visited {
 
 .os-title {
     color: var(--text);
-    font-size: 16px;
+    font-size: var(--font-base);
     font-weight: 700;
     line-height: 1.2;
 }
@@ -144,7 +153,7 @@ a:visited {
     margin-left: auto;
     text-align: right;
     color: var(--subtext1);
-    font-size: 14px;
+    font-size: var(--font-md);
     line-height: 1.3;
     white-space: nowrap;
 }
@@ -159,12 +168,11 @@ a:visited {
     pointer-events: none;
 }
 
-/* app launcher + icons*/
 .apps-panel {
     display: flex;
     align-items: flex-start;
     gap: 18px;
-    margin: 0 15px 15px;
+    margin: 0 var(--space-15) var(--space-15);
     padding: 0 13px 13px;
 }
 
@@ -172,8 +180,8 @@ a:visited {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 6px;
-    width: 72px;
+    gap: var(--space-6);
+    width: var(--launcher-width);
     color: var(--text);
     background: transparent;
     border: 0;
@@ -190,22 +198,22 @@ a:visited {
 
 .app-launcher img,
 .app-launcher .app-plus {
-    width: 28px;
-    height: 28px;
+    width: var(--launcher-icon-size);
+    height: var(--launcher-icon-size);
     display: block;
 }
 
 .appName {
-    -webkit-user-select: none; /* safari */
-    -moz-user-select: none;    /* firefox */
-    -ms-user-select: none;     /* edge */
-    user-select: none;         /* standard */
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .app-launcher .app-plus {
     display: grid;
     place-items: center;
-    border-radius: 8px;
+    border-radius: var(--radius-8);
     background: rgba(53, 59, 103, 0.9);
     font-size: 22px;
     line-height: 1;
@@ -213,64 +221,54 @@ a:visited {
 }
 
 .app-launcher span {
-    font-size: 13px;
+    font-size: var(--font-sm);
     line-height: 1.2;
     text-align: center;
     text-transform: lowercase;
 }
 
-/* drag windows */
-.dragable {
-    position: absolute;
-    z-index: 9;
-    width: min(700px, calc(100vw - 30px));
-    box-sizing: border-box;
-    pointer-events: auto;
-}
-
 .drag {
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 10px 12px;
-    background: #1d2033;
+    gap: var(--space-8);
+    padding: var(--space-10) 12px;
+    background: var(--window-header-bg);
     color: var(--text);
-    border-radius: 18px 18px 0 0;
+    border-radius: var(--radius-18) var(--radius-18) 0 0;
     user-select: none;
     cursor: move;
 }
 
 .drag img {
-    width: 20px;
-    height: 20px;
+    width: var(--space-20);
+    height: var(--space-20);
     object-fit: contain;
     display: block;
 }
 
 .wTitle {
     flex: 1 1 auto;
-    font-size: 14px;
+    font-size: var(--font-md);
     font-weight: 700;
 }
 
 .window-controls {
     display: flex;
-    gap: 6px;
+    gap: var(--space-6);
 }
 
 .window-controls button {
-    width: 24px;
-    height: 24px;
+    width: var(--window-control-size);
+    height: var(--window-control-size);
     padding: 0;
     margin: 0;
-    border-radius: 7px;
+    border-radius: var(--radius-8);
     background: rgba(53, 59, 103, 0.95);
     color: var(--text);
     border: none;
     line-height: 1;
 }
 
-/* login */
 .login-overlay {
     position: fixed;
     inset: 0;
@@ -278,7 +276,7 @@ a:visited {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 24px;
+    padding: var(--space-24);
     background: rgba(9, 10, 24, 0.28);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
@@ -293,7 +291,7 @@ a:visited {
 }
 
 .login-card {
-    width: min(92vw, 420px);
+    width: min(92vw, var(--login-card-width));
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -302,11 +300,11 @@ a:visited {
 }
 
 .login-avatar {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
+    width: var(--login-avatar-size);
+    height: var(--login-avatar-size);
+    border-radius: var(--radius-round);
     overflow: hidden;
-    border: 2px solid rgba(255, 255, 255, 0.18);
+    border: 2px solid rgba(255, 255, 255, var(--glass-border-opacity));
     box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.05);
     flex: 0 0 auto;
 }
@@ -321,7 +319,7 @@ a:visited {
 .login-title {
     color: var(--text);
     margin: 0;
-    font-size: 28px;
+    font-size: var(--font-3xl);
 }
 
 .login-form {
@@ -338,8 +336,8 @@ a:visited {
 .login-field-label {
     display: block;
     color: var(--subtext1);
-    font-size: 14px;
-    margin: 0 0 8px 2px;
+    font-size: var(--font-md);
+    margin: 0 0 var(--space-8) var(--space-2);
 }
 
 .login-field {
@@ -348,9 +346,9 @@ a:visited {
     outline: 0;
     background: transparent;
     color: var(--text);
-    font-size: 16px;
-    padding: 10px 2px 12px;
-    border-bottom: 2px solid transparent;
+    font-size: var(--font-base);
+    padding: var(--space-10) var(--space-2) 12px;
+    border-bottom: var(--space-2) solid transparent;
     border-image: linear-gradient(90deg, #a6e3a1 0%, #89b4fa 100%) 1;
 }
 
@@ -366,72 +364,70 @@ a:visited {
     min-height: 1.2em;
     margin: 0;
     color: #f38ba8;
-    font-size: 14px;
+    font-size: var(--font-md);
 }
 
 .login-submit {
     width: 100%;
     margin-left: 0;
-    margin-top: 4px;
+    margin-top: var(--space-4);
 }
 
 .login-note {
     margin: 0;
     color: var(--subtext1);
-    font-size: 14px;
+    font-size: var(--font-md);
     line-height: 1.5;
 }
 
-/* bg selector */
 .explorer-container {
     width: 100%;
-    background: rgba(24, 24, 37, 0.4);
-    border-radius: 12px;
-    padding: 12px;
+    background: rgba(24, 24, 37, var(--panel-opacity));
+    border-radius: var(--radius-12);
+    padding: var(--space-10);
     box-sizing: border-box;
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .explorer-header {
-    margin-bottom: 12px;
-    min-height: 24px;
+    margin-bottom: var(--space-10);
+    min-height: var(--space-24);
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-size: 14px;
+    gap: var(--space-8);
+    font-size: var(--font-md);
     color: var(--text);
 }
 
 .explorer-back-btn {
-    background: #353b67;
+    background: var(--button-bg);
     color: var(--text);
     border: none;
-    padding: 2px 8px;
-    border-radius: 4px;
-    font-size: 12px;
+    padding: var(--space-2) var(--space-8);
+    border-radius: var(--radius-4);
+    font-size: var(--font-sm);
 }
 
 .explorer-body {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 12px;
-    max-height: 70px;
+    gap: var(--space-12);
+    max-height: var(--explorer-max-height);
     overflow-y: auto;
-    padding-right: 4px;
+    padding-right: var(--space-4);
 }
 
-/* files */
 .explorer-item {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 10px 6px;
-    border-radius: 8px;
+    padding: 10px var(--space-6);
+    border-radius: var(--radius-8);
     background: rgba(255, 255, 255, 0.03);
     color: var(--subtext1);
     text-align: center;
-    font-size: 12px;
+    font-size: var(--font-xs);
     transition: all 0.15s ease;
     border: 1px solid transparent;
 }
@@ -444,7 +440,7 @@ a:visited {
 
 .explorer-item i {
     font-size: 26px;
-    margin-bottom: 6px;
+    margin-bottom: var(--space-6);
 }
 
 .explorer-item i.fa-folder {
@@ -456,44 +452,43 @@ a:visited {
 }
 
 .explorer-body::-webkit-scrollbar {
-    width: 6px;
+    width: var(--space-6);
 }
 .explorer-body::-webkit-scrollbar-thumb {
-    background: #495085;
-    border-radius: 4px;
+    background: var(--button-hover-bg);
+    border-radius: var(--radius-4);
 }
 
-/* ui */
 .fav-color-container {
     display: inline-flex;
     align-items: center;
-    background-color: #25283f;
-    padding: 6px 10px;
-    border-radius: 4px;
+    background-color: var(--code-pill-bg);
+    padding: var(--space-6) var(--space-10);
+    border-radius: var(--radius-4);
     font-family: 'Courier New', Courier, monospace;
-    color: #cad3f5;
-    margin: 0 0 24px 24px;
+    color: var(--code-pill-text);
+    margin: 0 0 var(--space-24) var(--space-24);
 }
 
 .color-box {
     display: inline-block;
-    width: 14px;
-    height: 14px;
-    margin-right: 8px;
-    border: 1px solid #ffffff;
+    width: var(--font-md);
+    height: var(--font-md);
+    margin-right: var(--space-8);
+    border: 1px solid var(--pure-white);
 }
 
 .copy {
     color: var(--text);
-    background-color: #353b67;
-    border-radius: 4px;
+    background-color: var(--button-bg);
+    border-radius: var(--radius-4);
     border: none;
-    padding: 4px 8px;
-    margin-left: 10px;
+    padding: var(--space-4) var(--space-8);
+    margin-left: var(--space-10);
 }
 
 .circle {
-    border-radius: 50%;
+    border-radius: var(--radius-round);
 }
 
 button:hover, .pointer:hover {
@@ -517,59 +512,27 @@ button:hover, .pointer:hover {
     color: var(--text);
 }
 
-.dragable .text {
-    max-height: 55vh;   
-    overflow-y: auto;   
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    padding-right: 12px;
-}
-
-/* side bar */
-.dragable .text::-webkit-scrollbar {
-    width: 18px; 
-}
-
-.dragable .text::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.dragable .text::-webkit-scrollbar-thumb {
-    background: #353b67;
-    border-right: 8px solid transparent;  
-    border-top: 26px solid transparent;    
-    border-bottom: 26px solid transparent; 
-    background-clip: padding-box;
-    border-radius: 9999px; 
-}
-
-.dragable .text::-webkit-scrollbar-thumb:hover {
-    background: #495085;
-    background-clip: padding-box;
-}
-
 #clock-display {
     font-size: 3rem;
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: var(--space-10);
 }
 
 .settings-note {
     color: var(--subtext1);
-    font-size: 14px;
-    margin: 0 0 12px 24px;
+    font-size: var(--font-14);
+    margin: 0 0 var(--space-10) var(--space-24);
 }
 
-/* sidebar + nav buttons (sidebar right) */
 .sidebar {
     position: fixed;
-    right: 5px;
+    right: var(--space-5);
     top: 50%;
     transform: translateY(-50%);
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding: 20px 15px;
+    padding: 20px var(--space-15);
     margin: 0;
     z-index: 10;
     width: auto;
@@ -578,11 +541,11 @@ button:hover, .pointer:hover {
 .nav-btn {
     background: transparent;
     border: none;
-    color: var(--subtext1, #a6adc8);
-    font-size: 24px;
+    color: var(--subtext1);
+    font-size: var(--font-2xl);
     cursor: pointer;
     padding: 12px;
-    border-radius: 12px;
+    border-radius: var(--radius-12);
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
@@ -590,7 +553,7 @@ button:hover, .pointer:hover {
 }
 
 .nav-btn:hover {
-    color: var(--text, #cdd6f4);
+    color: var(--text);
     background: rgba(8, 7, 8, 0.696);
 }
 
@@ -602,7 +565,6 @@ button:hover, .pointer:hover {
     margin-right: 90px;
 }
 
-/* Visibility toggles and transitions */
 #msg, #welcome-msg, #settings {
     opacity: 1;
     transition: opacity 0.35s ease;
@@ -613,28 +575,10 @@ button:hover, .pointer:hover {
     pointer-events: none;
 }
 
-/* Fullscreen modifiers */
 #welcome-msg, #settings {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-}
-
-#welcome-msg.fullscreen, #settings.fullscreen {
-    left: 0 !important;
-    top: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    transform: none !important;
-    margin: 0;
-}
-
-#welcome-msg.fullscreen .text, #settings.fullscreen .text {
-    width: 100%;
-    height: calc(100% - 52px);
-    overflow: auto;
-    border-radius: 0 0 28px 28px;
-    max-height: none;
 }
 
 #apps {
@@ -643,7 +587,6 @@ button:hover, .pointer:hover {
     z-index: 1;
 }
 
-/* CT mode for img bgs*/
 .appName {
     color: var(--text);
 }
@@ -652,21 +595,19 @@ body.dark-mode .appName {
     color: var(--fa-dark);
 }
 
-/* Calculator Grid Layout */
 .calc-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 8px;
-    margin-top: 10px;
+    gap: var(--space-8);
+    margin-top: var(--space-10);
 }
 
-/* calculator */
 .Calc-btn {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: var(--text);
-    padding: 15px;
-    border-radius: 10px;
+    padding: var(--space-15);
+    border-radius: var(--radius-12);
     cursor: pointer;
     font-family: 'Segoe UI', sans-serif;
     font-weight: 600;
@@ -685,8 +626,8 @@ body.dark-mode .appName {
 }
 
 .Calc-btn[data-value="="] {
-    background: rgba(var(--theme), 0.4);
-    border-color: rgba(var(--theme), 0.6);
+    background: rgba(var(--theme-rgb), 0.4);
+    border-color: rgba(var(--theme-rgb), 0.6);
 }
 
 .Calc-btn[data-value="="]:hover {
@@ -696,13 +637,13 @@ body.dark-mode .appName {
 #calc-display {
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 15px;
-    border-radius: 8px;
+    padding: var(--space-15);
+    border-radius: var(--radius-8);
     text-align: right;
     color: var(--text);
     font-family: 'Courier New', monospace;
     font-size: 1.5em;
-    margin-bottom: 5px;
+    margin-bottom: var(--space-5);
 }
 
 #browser input {
@@ -710,45 +651,10 @@ body.dark-mode .appName {
     -webkit-user-select: text;
 }
 
-/* fixses fullscreen */
-.dragable {
-    position: absolute;
-    z-index: 9;
-    width: min(700px, calc(100vw - 30px));
-    box-sizing: border-box;
-    pointer-events: auto;
-}
-
-.dragable .text {
-    max-height: 55vh;   
-    overflow-y: auto;   
-    overflow-x: hidden;
-    scroll-behavior: smooth;
-    padding-right: 12px;
-}
-
-.dragable.fullscreen, #welcome-msg.fullscreen, #settings.fullscreen {
-    left: 0 !important;
-    top: 0 !important;
-    width: 100% !important;
-    height: 100% !important;
-    transform: none !important;
-    margin: 0;
-}
-
-.dragable.fullscreen .text, #welcome-msg.fullscreen .text, #settings.fullscreen .text {
-    width: 100%;
-    height: calc(100% - 52px); /* Adjusts for header */
-    overflow: auto;
-    border-radius: 0 0 28px 28px;
-    max-height: none;
-}
-
-/* bookmark stuff */
 #bookmark-bar {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: var(--space-10);
     padding: 12px 16px;
     background-color: var(--mantle);
     border-bottom: 1px solid var(--crust);
@@ -759,13 +665,13 @@ body.dark-mode .appName {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 8px 16px;
+    padding: var(--space-8) 16px;
     background-color: var(--surface1);
     color: var(--text);
-    font-size: 14px;
+    font-size: var(--font-md);
     font-weight: 500;
     border: 1px solid var(--surface2);
-    border-radius: 20px;
+    border-radius: var(--radius-20);
     cursor: pointer;
     text-decoration: none;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
@@ -779,7 +685,7 @@ body.dark-mode .appName {
 }
 
 .app-icon-margin {
-    margin-bottom: 5px;
+    margin-bottom: var(--space-5);
 }
 
 .flex-col-window {
@@ -798,27 +704,27 @@ body.dark-mode .appName {
     resize: none;
     outline: none;
     font-family: inherit;
-    padding: 10px;
+    padding: var(--space-10);
     box-sizing: border-box;
 }
 
 .code-editor-container {
     height: calc(100% - 40px);
-    padding: 10px;
+    padding: var(--space-10);
     box-sizing: border-box;
 }
 
 .code-editor-area {
     width: 100%;
     height: 100%;
-    background: #1e1e1e;
-    color: #d4d4d4;
+    background: var(--editor-bg);
+    color: var(--editor-text);
     border: none;
     resize: none;
     outline: none;
     font-family: monospace;
-    padding: 15px;
-    border-radius: 8px;
+    padding: var(--space-15);
+    border-radius: var(--radius-8);
     box-sizing: border-box;
 }
 
@@ -828,15 +734,15 @@ body.dark-mode .appName {
     align-items: flex-start;
     width: calc(100% - 48px);
     box-sizing: border-box;
-    gap: 10px;
+    gap: var(--space-10);
 }
 
 .app-window-content {
     height: calc(100% - 40px);
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    padding: 15px;
+    gap: var(--space-10);
+    padding: var(--space-15);
     box-sizing: border-box;
 }
 
@@ -850,8 +756,8 @@ body.dark-mode .appName {
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.2);
     color: inherit;
-    padding: 8px;
-    border-radius: 4px;
+    padding: var(--space-8);
+    border-radius: var(--radius-4);
     font-family: inherit;
     outline: none;
 }
@@ -864,25 +770,25 @@ body.dark-mode .appName {
     resize: none;
     outline: none;
     font-family: inherit;
-    padding: 10px;
-    border-radius: 4px;
+    padding: var(--space-10);
+    border-radius: var(--radius-4);
 }
 
 .send-email-btn {
-    padding: 10px;
-    border-radius: 4px;
+    padding: var(--space-10);
+    border-radius: var(--radius-4);
     font-weight: bold;
     display: flex;
     justify-content: center;
-    gap: 8px;
+    gap: var(--space-8);
     align-items: center;
 }
 
 .calc-display-area {
     background: rgba(0, 0, 0, 0.2);
-    padding: 10px;
+    padding: var(--space-10);
     text-align: right;
-    border-radius: 4px;
+    border-radius: var(--radius-4);
     font-family: monospace;
     font-size: 1.2em;
 }
@@ -890,7 +796,7 @@ body.dark-mode .appName {
 .calc-button-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 5px;
+    gap: var(--space-5);
 }
 
 .calc-btn-tall {
@@ -903,40 +809,35 @@ body.dark-mode .appName {
 
 .selection-box {
     position: absolute;
-    border: 1px solid rgba(203, 166, 247, 0.8); /* Selection colors */
+    border: 1px solid rgba(203, 166, 247, 0.8);
     background-color: rgba(203, 166, 247, 0.2);
     z-index: 999999;
     pointer-events: none;
 }
 
 .dragable.selected {
-    box-shadow: 0 0 15px rgba(203, 166, 247, 0.6), 0 0 0 1px rgba(203, 166, 247, 0.8);
+    box-shadow: var(--selection-shadow);
     transition: box-shadow 0.2s ease;
 }
 
 .app-launcher.selected {
-    box-shadow: 0 0 15px rgba(203, 166, 247, 0.6), 0 0 0 1px rgba(203, 166, 247, 0.8);
+    box-shadow: var(--selection-shadow);
     transition: box-shadow 0.2s ease;
-    border-radius: 8px;
+    border-radius: var(--radius-8);
 }
 
 #customAppName,
 #customAppIcon {
     width: 100%;
     box-sizing: border-box;
-
     padding: 12px 14px;
-    margin-bottom: 10px;
-
+    margin-bottom: var(--space-10);
     border: 1px solid rgba(255,255,255,0.15);
-    border-radius: 12px;
-
+    border-radius: var(--radius-12);
     background: rgba(255,255,255,0.08);
     color: var(--text);
-
     font-size: 0.95rem;
     outline: none;
-
     transition:
         border-color 0.2s ease,
         background 0.2s ease,
@@ -945,20 +846,17 @@ body.dark-mode .appName {
 
 #customAppName:focus,
 #customAppIcon:focus {
-    border-color: var(--accent, #cba6f7);
+    border-color: var(--accent);
     background: rgba(255,255,255,0.12);
 }
 
 #appUpload {
     width: 100%;
-    padding: 10px;
-
-    border-radius: 12px;
+    padding: var(--space-10);
+    border-radius: var(--radius-12);
     border: 1px dashed rgba(255,255,255,0.25);
-
     background: rgba(255,255,255,0.05);
     color: var(--text);
-
     cursor: pointer;
 }
 
@@ -967,15 +865,12 @@ body.dark-mode .appName {
 }
 
 #appUpload::file-selector-button {
-    padding: 8px 14px;
-    margin-right: 12px;
-
+    padding: var(--space-8) 14px;
+    margin-right: var(--space-12);
     border: none;
-    border-radius: 8px;
-
-    background: var(--accent, #cba6f7);
-    color: white;
-
+    border-radius: var(--radius-8);
+    background: var(--accent);
+    color: var(--pure-white);
     cursor: pointer;
 }
 
@@ -986,14 +881,13 @@ body.dark-mode .appName {
 #addApp-Window {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: var(--space-10);
 }
 
-/* clock stuff */
-/* --- Base Styles --- */
 #clock-bg {
     background-color: var(--base);
-    border-radius: 5px;
+    border-radius: var(--radius-4);
+    width: 150vh;
 }
 
 .centered {
@@ -1001,9 +895,8 @@ body.dark-mode .appName {
     margin: 0 auto;
 }
 
-/* --- Core Button Styles (Untouched) --- */
 .clock-btn {
-    background-color: #00343e;
+    background-color: var(--clock-btn-bg);
     color: var(--text);
     border: none;
     display: inline-flex;
@@ -1018,22 +911,21 @@ body.dark-mode .appName {
 }
 
 .clock-btn:hover {
-    background-color: #004755;
+    background-color: var(--clock-btn-hover-bg);
 }
 
 .clock-btn:active {
-    background-color: #00161b;
+    background-color: var(--clock-btn-active-bg);
     transform: scale(0.95);
 }
 
-/* --- Fancy Clock --- */
 .clock-timer {
     display: grid;
     grid-template-columns: auto 1fr;
     grid-template-rows: auto auto;
     gap: 15px 30px;
     align-items: center; 
-    padding: 10px;
+    padding: var(--space-10);
 }
 
 .timer-left {
@@ -1042,7 +934,7 @@ body.dark-mode .appName {
     display: flex;
     flex-direction: column;
     align-items: flex-start; 
-    gap: 10px;
+    gap: var(--space-10);
 }
 
 .timer-left h1 {
@@ -1051,17 +943,17 @@ body.dark-mode .appName {
 }
 
 #clock-circle {
-    width: 130px;
+    width: var(--clock-circle-size);
     aspect-ratio: 1;
-    border-radius: 50%;
-    border: 8px solid #19a7a8;
-    background: rgba(0, 0, 0, 0.08);
+    border-radius: var(--radius-round);
+    border: var(--clock-ring-width) solid var(--clock-ring-color);
+    background: rgba(0, 0, 0, var(--ring-bg-opacity));
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 4px;
-    padding: 10px;
+    gap: var(--space-4);
+    padding: var(--space-10);
     box-sizing: border-box;
     margin: 0;
 }
@@ -1133,7 +1025,7 @@ label.clock-btn {
     cursor: pointer;
     height: 40px;
     padding: 0 15px;
-    background-color: #00343e;
+    background-color: var(--clock-btn-bg);
     color: var(--text);
     font-family: monospace;
     font-weight: bold;
@@ -1141,46 +1033,12 @@ label.clock-btn {
 }
 
 label.clock-btn:has(input:checked) {
-    background-color: #117c7c;
+    background-color: var(--clock-selected-bg);
     color: #000;
 }
 
 label.clock-btn:hover {
-    background-color: #004755;
-}
-
-#customAppName,
-#customAppIcon,
-#appUpload {
-    width: 100%;
-    box-sizing: border-box;
-
-    margin-bottom: 12px;
-    padding: 10px;
-
-    border-radius: 8px;
-    border: 1px solid rgba(255,255,255,0.15);
-
-    background: rgba(255,255,255,0.08);
-    color: var(--text);
-}
-
-#customAppName:focus,
-#customAppIcon:focus {
-    outline: none;
-    border-color: var(--accent);
-}
-
-#appUpload::file-selector-button {
-    margin-right: 10px;
-    border: none;
-    border-radius: 6px;
-
-    padding: 8px 12px;
-
-    background: #00343e;
-    color: white;
-    cursor: pointer;
+    background-color: var(--clock-btn-hover-bg);
 }
 
 .clock-time,
@@ -1190,3 +1048,57 @@ label.clock-btn:hover {
     width: 100%;
 }
 
+.dragable {
+    position: absolute;
+    z-index: 9;
+    width: var(--window-width);
+    box-sizing: border-box;
+    pointer-events: auto;
+}
+
+.dragable .text {
+    max-height: var(--drag-text-height);
+    overflow-y: auto;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    padding-right: var(--space-12);
+}
+
+.dragable .text::-webkit-scrollbar {
+    width: 18px;
+}
+
+.dragable .text::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.dragable .text::-webkit-scrollbar-thumb {
+    background: var(--button-bg);
+    border-right: var(--space-8) solid transparent;
+    border-top: 26px solid transparent;
+    border-bottom: 26px solid transparent;
+    background-clip: padding-box;
+    border-radius: var(--radius-pill);
+}
+
+.dragable .text::-webkit-scrollbar-thumb:hover {
+    background: var(--button-hover-bg);
+    background-clip: padding-box;
+}
+
+.dragable.fullscreen, #welcome-msg.fullscreen, #settings.fullscreen {
+    left: 0 !important;
+    top: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    transform: none !important;
+    margin: 0;
+}
+
+.dragable.fullscreen .text, #welcome-msg.fullscreen .text, #settings.fullscreen .text {
+    width: 100%;
+    height: calc(100% - var(--fullscreen-content-offset));
+    overflow: auto;
+    border-radius: 0 0 var(--radius-window) var(--radius-window);
+    max-height: none;
+}
