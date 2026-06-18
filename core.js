@@ -676,21 +676,61 @@ function clockPage(page) {
 };
 
 import { createTimer } from 'https://esm.run/animejs/timer';
-const [ $time, $count ] = Array.from(document.querySelectorAll('.Tvalue'));
+const $time = document.getElementById('time-left');
+const $count = document.getElementById('time-loops');
 let timers = [];
 let mainTimer;
 class Clock {
-    constructor(duration, countdown, loop, end) {
+    constructor(id, duration, countdown, loop, onCompleteCallback) {
+        this.id = id;
         this.timer = createTimer({
             duration: duration,
             loop: loop,
-            reversed: countdown,
             frameRate: 30,
-            onUpdate: self => $time.innerHTML = `${Math.floor(self.currentTime / 360000)}:${Math.floor(self.currentTime / 60000)}`,
-            onLoop: self => $count.innerHTML = self._currentIteration,
-            onComplete: self => end,
+            onUpdate: self => {
+                let timeToShowMs = self.currentTime;
+                if (countdown) {
+                    timeToShowMs = (duration - (self.currentTime % duration));
+                    if (timeToShowMs >= duration) timeToShowMs = 0;
+                }
+                const totalSeconds = Math.floor(timeToShowMs / 1000);
+                const hours = Math.floor(totalSeconds / 3600);
+                const minutes = Math.floor((totalSeconds % 3600) / 60);
+                const seconds = totalSeconds % 60;
+                
+                const fHours = hours.toString().padStart(2, '0');
+                const fMinutes = minutes.toString().padStart(2, '0');
+                const fSeconds = seconds.toString().padStart(2, '0');
+                const formattedTime = `${fHours}:${fMinutes}:${fSeconds}`;
+                const dropdownOption = document.getElementById(`opt-${this.id}`);
+                if (dropdownOption) {
+                    dropdownOption.textContent = `${formattedTime}`;
+                }
+                if (mainTimer && mainTimer.id === this.id) {
+                    const timeDisplay = document.getElementById('time-left');
+                    if (timeDisplay) timeDisplay.innerHTML = formattedTime;
+                }
+            },
+            onLoop: self => {
+                if (mainTimer && mainTimer.id === this.id) {
+                    const loopsDisplay = document.getElementById('time-loops');
+                    if (loopsDisplay) loopsDisplay.innerHTML = self._currentIteration;
+                }
+            },
+            onComplete: () => {
+                if (onCompleteCallback) onCompleteCallback();
+            }
         });
-    };
+    }
+    pause() {
+        this.timer.pause();
+    }
+    resume() {
+        this.timer.resume(); 
+    }
+    destroy() {
+        this.timer.pause();
+    }
 }
 
 function playRing(ring) {
@@ -698,18 +738,88 @@ function playRing(ring) {
 }
 
 window.createNewTimer = createNewTimer;
+window.switchMainTimer = switchMainTimer;
+window.cancelTimer = cancelTimer;
+
 function createNewTimer () {
-    let [h, m, s] = ['h', 'm', 's'].map(id => document.getElementById(`time-${id}`).value);
+    let [h, m, s] = ['h', 'm', 's'].map(id => parseInt(document.getElementById(`time-${id}`).value, 10) || 0);
+    if (h === 0 && m === 0 && s === 0) return; 
     const countdown = document.getElementById("countdown").checked;
     const loop = document.getElementById("loop").checked;
     const ring = document.getElementById("ring").value;
     m = m + h * 60;
     s = s + m * 60;
-    ms = s * 1000;
-    let func = ring == "none" ? () => {} : ("ring" == "alert" ? () => {alert('Your timer is done!')} : playRing(ring));
-    timers.push(new Clock(ms, countdown, loop, func))
+    let ms = s * 1000;
+    let func = () => {}; 
+    if (ring === "alert") {
+        func = () => alert('Your timer is done!');
+    } else if (ring !== "none") {
+        func = () => playRing(ring);
+    }
+    const uniqueId = "timer_" + Date.now();
+    const newClock = new Clock(uniqueId, ms, countdown, loop, func);
+    timers.push(newClock);
+    mainTimer = newClock;
+    const selectBox = document.getElementById("r-timmers");
+    const newOption = document.createElement("option");
+    newOption.id = `opt-${uniqueId}`;
+    newOption.value = uniqueId;
+    newOption.textContent = "Loading..."; //placeholder for when timer ticks on update
+    if (selectBox.querySelector('option[value="none"]')) {
+        selectBox.innerHTML = ""; 
+    }
+    selectBox.appendChild(newOption);
+    selectBox.value = uniqueId;
+    document.getElementById("pause-resume").checked = false;
+    document.getElementById("pause-text").textContent = "pause";
 };
 
+function switchMainTimer() {
+    const selectBox = document.getElementById("r-timmers");
+    const selectedId = selectBox.value;
+    mainTimer = timers.find(t => t.id === selectedId) || null;
+    if (mainTimer) {
+        const isPaused = mainTimer.timer.paused; 
+        document.getElementById("pause-resume").checked = isPaused;
+        document.getElementById("pause-text").textContent = isPaused ? "resume" : "pause";
+    }
+}
+
+function cancelTimer() {
+    // nuke the timer, then select last created timer, if no timer reset ui.
+    if (!mainTimer) return;
+    mainTimer.destroy();
+    const optionEl = document.getElementById(`opt-${mainTimer.id}`);
+    if (optionEl) optionEl.remove();
+    timers = timers.filter(t => t.id !== mainTimer.id);
+    const selectBox = document.getElementById("r-timmers");
+    if (timers.length > 0) {
+        mainTimer = timers[timers.length - 1];
+        selectBox.value = mainTimer.id;
+        switchMainTimer();
+    } else {
+        mainTimer = null;
+        document.getElementById('time-left').innerHTML = "00:00:00";
+        document.getElementById('time-loops').innerHTML = "0";
+        selectBox.innerHTML = '<option value="none" disabled selected>No active timers</option>';
+        document.getElementById("pause-text").textContent = "pause";
+    }
+}
+
+window.togglePause = togglePause;
+
+function togglePause() {
+    if (timers.length === 0) return; 
+    const isPaused = document.getElementById("pause-resume").checked;
+    const pauseText = document.getElementById("pause-text");
+    if (isPaused) {
+        mainTimer.pause();
+        pauseText.textContent = "resume";
+    } else {
+        mainTimer.resume(); 
+        pauseText.textContent = "pause";
+    }
+}
 
 function setupEventListeners() {
     window.addEventListener('mousemove', (event) => {

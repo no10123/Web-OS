@@ -198,8 +198,8 @@
                     <div class="timer-left">
                         <h1 class="centered">Timer:</h1>
                         <div id="clock-circle" class="centered">
-                            <p id="time-ring" class="Tvalue centered">0:00 pm</p>
-                            <p id="time-left" class="centered">00:00</p>
+                            <p id="time-ring" class="centered">0:00 pm</p>
+                            <p id="time-left" class="Tvalue centered">00:00:00</p>
                             <p id="time-loops" class="Tvalue centered">0</p>
                         </div>
                     </div>
@@ -215,9 +215,12 @@
                     </div>
 
                     <div class="timmer-bottom">
-                        <label class="clock-btn"><input type="checkbox" id="countdown" style="display: none;">countdown</label>
+                        <label class="clock-btn"><input type="checkbox" id="countdown" style="display: none;" checked="true">countdown</label>
                         <label class="clock-btn"><input type="checkbox" id="loop" style="display: none;">loop</label>
-                        <button class="clock-btn centered" id="pause-play">pause</button>
+                        <label class="clock-btn">
+                            <input type="checkbox" id="pause-resume" style="display: none;" onclick="togglePause()">
+                            <span id="pause-text">pause</span>
+                        </label>
                         <select name="ring sound" id="ring" class="clock-btn">
                             <option value="none">none</option>
                             <option value="alert">notification</option>
@@ -225,6 +228,9 @@
                             <option value="alarm2">drums</option>
                             <option value="alarm3">harmony</option>
                             <option value="alarm4">louder ding</option>
+                        </select>
+                        <select name="rnning-timers" id="r-timmers" class="clock-btn">
+                            <option value="none" disabled selected>No active timers</option>
                         </select>
                     </div>
                 </div>
