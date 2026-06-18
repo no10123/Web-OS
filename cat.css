@@ -39,7 +39,8 @@
 :root {
     --fa-dark: #1f3252;
     --theme: 151,111,182;
-
+    --theme-rgb: 151,111,182;
+    
     --accent: var(--mauve);
 
     --window-header-bg: #1d2033;

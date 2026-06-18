@@ -70,7 +70,7 @@
     
         <template id="t-settings" class="dragable hidden">
             <h1>Settings: </h1>
-            <p>Change the color theme and jump back to the main message.</p>
+            <div class="spacer"></div>
             <div class="fav-color-container">
                 <span class="color-text">color theme: </span>
                 <input id="colorPicker" class="copy" type="color" value="#976fb6ff">
@@ -102,7 +102,7 @@
                     <div id="explorer-body" class="explorer-body"></div>
                 </div>
             </div>
-            <p class="settings-note">Tip: the color picker updates the background glow and glass panel instantly.</p>
+            <!--settings-note-->
             <div class="fav-color-container">
                 <button class="copy" data-action="ShowHome">Back to main</button>
                 <button class="copy" data-action="HideMsg">Hide msg</button>
@@ -172,7 +172,7 @@
 
         <template id="t-clock">
             <div id="clock-bg">
-                <div class="clock-time hidden">
+                <div id="clock-time" class="clock-time hidden">
                     <button class="clock-btn">edit</button>
                     <button class="clock-btn">+</button>
                     <h1 class="centered">World clock: </h1>
@@ -180,13 +180,13 @@
                         <p id="t-GMT-5">GMT-5: 0:00:00 am</p>
                     </div>
                 </div>
-                <div class="clock-alarms  hidden">
+                <div id="clock-alarms" class="clock-alarms  hidden">
                     <button class="clock-btn">edit</button>
                     <button class="clock-btn">+</button>
                     <h1 class="centered">Alarms: </h1>
                     <div id="Alarm-list"></div>
                 </div>
-                <div class="clock-stopwatch  hidden">
+                <div id="clock-stopwatch" class="clock-stopwatch  hidden">
                     <h1 class="centered">Stop watch: </h1>
                     <div id="stopwatch-circle"></div>
                     <p id="stopwatch-time"></p>
@@ -194,7 +194,7 @@
                     <button class="clock-btn">Start</button>
                     <div id="lap-list"></div>
                 </div>
-                <div class="clock-timer">
+                <div id="clock-timer" class="clock-timer">
                     <div class="timer-left">
                         <h1 class="centered">Timer:</h1>
                         <div id="clock-circle" class="centered">
@@ -210,7 +210,7 @@
                             <input class="clock-btn centered" type="number" value="0" id="time-m">
                             <input class="clock-btn centered" type="number" value="0" id="time-s">
                         </div>
-                        <button class="clock-btn">cancel</button>
+                        <button class="clock-btn" onclick="cancelTimer()">cancel</button>
                         <button class="clock-btn" onclick="createNewTimer()">Start</button>
                     </div>
 
@@ -229,7 +229,7 @@
                             <option value="alarm3">harmony</option>
                             <option value="alarm4">louder ding</option>
                         </select>
-                        <select name="rnning-timers" id="r-timmers" class="clock-btn">
+                        <select name="rnning-timers" id="r-timmers" class="clock-btn"  onchange="switchMainTimer()">
                             <option value="none" disabled selected>No active timers</option>
                         </select>
                     </div>

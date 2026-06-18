@@ -58,13 +58,15 @@ class AppManager {
         this.centerWindow = this.centerWindow.bind(this);
         this.toggleFullscreen = this.toggleFullscreen.bind(this);
     }
-    registerApp(element, id) {
+
+    registerApp(element, id, f) {
         this.apps.set(id, {
             element: element,
             isVisible: false,
-            isFullscreen: false
+            isFullscreen: f
         });
     }
+
     centerWindow(id, offsetMultiplier = 0) {
         const app = this.apps.get(id);
         const elmnt = app.element;
@@ -78,24 +80,36 @@ class AppManager {
         elmnt.style.transform = 'none';
     }
     
-   	openApp(id) {
-    	const app = this.apps.get(id);
-    	if (!app) {
-        	console.error(`No app "${id}"`);
-        	return;
-    	}
-    	app.isVisible = true;
-    	const elmnt = app.element;
+    openApp(id) {
+        const app = this.apps.get(id);
+        if (!app) {
+            console.error(`No app "${id}"`);
+            return;
+        }
+        app.isVisible = true;
+        const elmnt = app.element;
 
-    	elmnt.classList.remove("hidden");
-        elmnt.classList.remove("fullscreen");
-        this.centerWindow(id);
+        elmnt.classList.remove("hidden");
 
-        let visibleCount = 0;
-        this.apps.forEach(a => {
-            if (a.isVisible) visibleCount++;
-        });
-        this.centerWindow(id, visibleCount - 1);
+        if (app.isFullscreen) {
+            elmnt.classList.add("fullscreen");
+            elmnt.style.left = '0px';
+            elmnt.style.top = '0px';
+            elmnt.style.width = '100%';
+            elmnt.style.height = '100%';
+            elmnt.style.zIndex = '9999';
+        } else {
+            elmnt.classList.remove("fullscreen");
+            elmnt.style.width = '';
+            elmnt.style.height = '';
+            elmnt.style.zIndex = '';
+            
+            let visibleCount = 0;
+            this.apps.forEach(a => {
+                if (a.isVisible) visibleCount++;
+            });
+            this.centerWindow(id, visibleCount - 1);
+        }
     }
 
     closeApp(id) {
@@ -103,9 +117,11 @@ class AppManager {
         app.element.classList.add('hidden');
         app.isVisible = false;
     }
+
     minApp(id) {
         this.closeApp(id);
     }
+
     toggleFullscreen(id) {
         const app = this.apps.get(id);
         const elmnt = app.element;
@@ -133,6 +149,7 @@ class AppManager {
             }
         }
     }
+
     isAppVisible(id) {
         const app = this.apps.get(id);
         return app ? !app.element.classList.contains('hidden') : false;
@@ -667,17 +684,16 @@ function visitSite(url) {
 }
 
 // clock stuff
-let Cpage = "timer"
+let Cpage = "timer";
+window.clockPage = clockPage;
 function clockPage(page) {
-    if (page == Cpage) return;
-    document.getElementById('clock-bg').querySelectorAll(':scope > div').forEach(div => {div.classList.add('hidden');});
-    document.getElementById(`clock-${page}`)
-    Cpage = page
-};
+    if (page === Cpage) return;
+    document.querySelectorAll("#clock-time, #clock-alarms, #clock-stopwatch, #clock-timer").forEach(el => el.classList.add("hidden"));
+    document.getElementById(`clock-${page}`).classList.remove("hidden");;
+    Cpage = page;
+}
 
 import { createTimer } from 'https://esm.run/animejs/timer';
-const $time = document.getElementById('time-left');
-const $count = document.getElementById('time-loops');
 let timers = [];
 let mainTimer;
 class Clock {
@@ -728,9 +744,6 @@ class Clock {
     resume() {
         this.timer.resume(); 
     }
-    destroy() {
-        this.timer.pause();
-    }
 }
 
 function playRing(ring) {
@@ -740,6 +753,10 @@ function playRing(ring) {
 window.createNewTimer = createNewTimer;
 window.switchMainTimer = switchMainTimer;
 window.cancelTimer = cancelTimer;
+window.togglePause = togglePause;
+window.clockPage = clockPage;
+window.sendEmailViaMailto = sendEmailViaMailto;
+window.visitSite = visitSite;
 
 function createNewTimer () {
     let [h, m, s] = ['h', 'm', 's'].map(id => parseInt(document.getElementById(`time-${id}`).value, 10) || 0);
@@ -758,6 +775,7 @@ function createNewTimer () {
     }
     const uniqueId = "timer_" + Date.now();
     const newClock = new Clock(uniqueId, ms, countdown, loop, func);
+    newClock.timer.play();
     timers.push(newClock);
     mainTimer = newClock;
     const selectBox = document.getElementById("r-timmers");
@@ -788,7 +806,7 @@ function switchMainTimer() {
 function cancelTimer() {
     // nuke the timer, then select last created timer, if no timer reset ui.
     if (!mainTimer) return;
-    mainTimer.destroy();
+    mainTimer.timer.cancel();
     const optionEl = document.getElementById(`opt-${mainTimer.id}`);
     if (optionEl) optionEl.remove();
     timers = timers.filter(t => t.id !== mainTimer.id);
@@ -862,17 +880,17 @@ function setupEventListeners() {
     if (birdColorCountInput) {
         birdColorCountInput.addEventListener('input', (e) => setBirdColorCount(e.target.value));
     }
+    
+    function hexToRGB(hex) {
+        const bigint = parseInt(hex.slice(1), 16);
+        return [(bigint >> 16) & 255,(bigint >> 8) & 255,bigint & 255].join(',');
+    }
 
     if (colorPicker) {
         colorPicker.addEventListener('input', (event) => {
             const color = event.target.value;
-            const rgba = hexToRGBA(color, 0.35);
-            document.querySelectorAll('.frosted-glass').forEach((el) => {
-                el.style.backgroundColor = rgba;
-            });
-            if (blobLayer) {
-                blobLayer.style.background = `radial-gradient(circle at 30% 30%, ${hexToRGBA(color, 0.32)}, rgba(57,25,55,0.75))`;
-            }
+            document.documentElement.style.setProperty('--theme-rgb',hexToRGB(color));
+            document.documentElement.style.setProperty('--accent',color);
         });
     }
 
@@ -1053,17 +1071,26 @@ function init() {
     updateBirdColors();
 
     let visibleIndex = 0;
-    systemApps.forEach(({ n }) => {
+    systemApps.forEach(({ n, f }) => {
         const appElement = document.getElementById(n);
         
         console.log("debug: ", n, appElement);
         
         if (appElement) {
-            AMI.registerApp(appElement, n);
+            AMI.registerApp(appElement, n, f);
             dragElement(appElement);
             if (!appElement.classList.contains('hidden')) {
-                AMI.centerWindow(n, visibleIndex);
-                visibleIndex++;
+                if (f) {
+                    appElement.classList.add('fullscreen');
+                    appElement.style.left = '0px';
+                    appElement.style.top = '0px';
+                    appElement.style.width = '100%';
+                    appElement.style.height = '100%';
+                    appElement.style.zIndex = '9999';
+                } else {
+                    AMI.centerWindow(n, visibleIndex);
+                    visibleIndex++;
+                }
             }
         }
     });
@@ -1079,6 +1106,8 @@ function init() {
         openWelcomeWindow: () => AMI.openApp('welcome'),
         openSettingsWindow: () => AMI.openApp('settings')
     };
+
+    setTimeout(() => {clockPage("timer");}, 0);
 
     requestAnimationFrame(animateBirds);
 }

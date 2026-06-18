@@ -15,8 +15,11 @@ feutures:
 * search engine
 * clock app
 * ability to add custom apps
-* more settings (coming soon)
-* startup animation (coming soon)
+
+-- (coming soon):
+
+* more settings
+* startup animation
 * animated BG's
 * Terminal
 * file system
@@ -39,4 +42,3 @@ Built for stardance
 
 credits:
 https://pixabay.com/sound-effects/search/end%20time/ for alarm sfx
-
